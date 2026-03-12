@@ -1,0 +1,185 @@
+{
+  "customFileOrder": {
+    "/": [
+      "Attachment",
+      "规范",
+      "JAVASE",
+      "MySQL",
+      "JavaWeb",
+      "JavaWeb和Spring常用注解及工具基础篇.md",
+      "JavaWeb和Spring常用注解及工具进阶篇.md",
+      "MyBatis常用注解.md",
+      "常见错误-异常处理.md",
+      "其他第三方错误.md",
+      "blender快捷键.md"
+    ],
+    "规范": [
+      "规范/命名规范"
+    ],
+    "规范/命名规范": [
+      "规范/命名规范/java.md",
+      "规范/命名规范/sql.md"
+    ],
+    "Attachment": [
+      "Attachment/image-8.png",
+      "Attachment/image-4.png",
+      "Attachment/image-5.png",
+      "Attachment/image-6.png",
+      "Attachment/image-7.png",
+      "Attachment/image-1.png",
+      "Attachment/image-2.png",
+      "Attachment/image-3.png",
+      "Attachment/image.png"
+    ],
+    "JAVASE": [
+      "JAVASE/SE基础",
+      "JAVASE/比较抽象的SE基础",
+      "JAVASE/Attachment"
+    ],
+    "JAVASE/比较抽象的SE基础": [
+      "JAVASE/比较抽象的SE基础/接口.md",
+      "JAVASE/比较抽象的SE基础/抽象类,抽象方法.md",
+      "JAVASE/比较抽象的SE基础/匿名内部类.md",
+      "JAVASE/比较抽象的SE基础/lambda表达式与匿名内部类.md",
+      "JAVASE/比较抽象的SE基础/关于方法返回类型的探究.md",
+      "JAVASE/比较抽象的SE基础/关于集合泛型的探究.md"
+    ],
+    "JAVASE/Attachment": [
+      "JAVASE/Attachment/Pasted image 20250718205744.png",
+      "JAVASE/Attachment/Pasted image 20250718205815.png",
+      "JAVASE/Attachment/Pasted image 20250718205833.png"
+    ],
+    "JAVASE/SE基础": [
+      "JAVASE/SE基础/对象.md",
+      "JAVASE/SE基础/多态.md",
+      "JAVASE/SE基础/创建对象new与get,set方法与创建子类对象.md",
+      "JAVASE/SE基础/get与set方法用法解释.md",
+      "JAVASE/SE基础/this.md",
+      "JAVASE/SE基础/构造方法.md",
+      "JAVASE/SE基础/有参构造和无参构造.md",
+      "JAVASE/SE基础/User用户类详解.md",
+      "JAVASE/SE基础/方法重写@Override与super.md",
+      "JAVASE/SE基础/方法重载(形参实参).md",
+      "JAVASE/SE基础/自定义返回类型的方法.md",
+      "JAVASE/SE基础/try-catch-finally语句.md",
+      "JAVASE/SE基础/数据类型规范(待补充).md",
+      "JAVASE/SE基础/集合.md",
+      "JAVASE/SE基础/集合遍历.md",
+      "JAVASE/SE基础/Attachment"
+    ],
+    "JAVASE/SE基础/Attachment": [
+      "JAVASE/SE基础/Attachment/image-6.png",
+      "JAVASE/SE基础/Attachment/image-3.png",
+      "JAVASE/SE基础/Attachment/image-4.png",
+      "JAVASE/SE基础/Attachment/image-5.png",
+      "JAVASE/SE基础/Attachment/image.png",
+      "JAVASE/SE基础/Attachment/image-1.png",
+      "JAVASE/SE基础/Attachment/image-2.png",
+      "JAVASE/SE基础/Attachment/Pasted image 20250718205909.png",
+      "JAVASE/SE基础/Attachment/Pasted image 20250718210356.png"
+    ],
+    "JavaWeb": [
+      "JavaWeb/Http.md",
+      "JavaWeb/SpringBoot",
+      "JavaWeb/Attachment"
+    ],
+    "JavaWeb/Attachment": [
+      "JavaWeb/Attachment/image-23.png",
+      "JavaWeb/Attachment/image-22.png",
+      "JavaWeb/Attachment/image-21.png",
+      "JavaWeb/Attachment/image-20.png",
+      "JavaWeb/Attachment/image-19.png",
+      "JavaWeb/Attachment/image-18.png",
+      "JavaWeb/Attachment/image-17.png",
+      "JavaWeb/Attachment/image-16.png",
+      "JavaWeb/Attachment/image-15.png",
+      "JavaWeb/Attachment/image-13.png",
+      "JavaWeb/Attachment/image-14.png",
+      "JavaWeb/Attachment/image-12.png",
+      "JavaWeb/Attachment/image-4.png",
+      "JavaWeb/Attachment/image-5.png",
+      "JavaWeb/Attachment/image-6.png",
+      "JavaWeb/Attachment/image-7.png",
+      "JavaWeb/Attachment/image-8.png",
+      "JavaWeb/Attachment/image-9.png",
+      "JavaWeb/Attachment/image-10.png",
+      "JavaWeb/Attachment/image-11.png",
+      "JavaWeb/Attachment/image-1.png",
+      "JavaWeb/Attachment/image-2.png",
+      "JavaWeb/Attachment/image-3.png",
+      "JavaWeb/Attachment/image.png"
+    ],
+    "JavaWeb/SpringBoot": [
+      "JavaWeb/SpringBoot/JDBC.md",
+      "JavaWeb/SpringBoot/三层架构与解耦.md",
+      "JavaWeb/SpringBoot/预编译SQL.md",
+      "JavaWeb/SpringBoot/SpringBoot测试类.md",
+      "JavaWeb/SpringBoot/Mybatis",
+      "JavaWeb/SpringBoot/日志@SL4fj.md",
+      "JavaWeb/SpringBoot/Attachment"
+    ],
+    "JavaWeb/SpringBoot/Attachment": [
+      "JavaWeb/SpringBoot/Attachment/image-13.png",
+      "JavaWeb/SpringBoot/Attachment/idea64_N6ZMTBveF7.png",
+      "JavaWeb/SpringBoot/Attachment/image-11.png",
+      "JavaWeb/SpringBoot/Attachment/image-12.png",
+      "JavaWeb/SpringBoot/Attachment/image-8.png",
+      "JavaWeb/SpringBoot/Attachment/image-9.png",
+      "JavaWeb/SpringBoot/Attachment/image-10.png",
+      "JavaWeb/SpringBoot/Attachment/image-7.png",
+      "JavaWeb/SpringBoot/Attachment/idea64_8yYz94scHP.png",
+      "JavaWeb/SpringBoot/Attachment/image-6.png",
+      "JavaWeb/SpringBoot/Attachment/image-5.png",
+      "JavaWeb/SpringBoot/Attachment/image-3.png",
+      "JavaWeb/SpringBoot/Attachment/image-4.png",
+      "JavaWeb/SpringBoot/Attachment/image-2.png",
+      "JavaWeb/SpringBoot/Attachment/image-1.png",
+      "JavaWeb/SpringBoot/Attachment/image.png"
+    ],
+    "JavaWeb/SpringBoot/Mybatis": [
+      "JavaWeb/SpringBoot/Mybatis/Attachment",
+      "JavaWeb/SpringBoot/Mybatis/MyBatis.md",
+      "JavaWeb/SpringBoot/Mybatis/动态SQL.md",
+      "JavaWeb/SpringBoot/Mybatis/XML.md",
+      "JavaWeb/SpringBoot/Mybatis/配置文件ymal-yml.md"
+    ],
+    "JavaWeb/SpringBoot/Mybatis/Attachment": [
+      "JavaWeb/SpringBoot/Mybatis/Attachment/image-21.png",
+      "JavaWeb/SpringBoot/Mybatis/Attachment/image-19.png",
+      "JavaWeb/SpringBoot/Mybatis/Attachment/image-20.png",
+      "JavaWeb/SpringBoot/Mybatis/Attachment/image-1.png",
+      "JavaWeb/SpringBoot/Mybatis/Attachment/image-2.png",
+      "JavaWeb/SpringBoot/Mybatis/Attachment/image-3.png",
+      "JavaWeb/SpringBoot/Mybatis/Attachment/image-4.png",
+      "JavaWeb/SpringBoot/Mybatis/Attachment/image-5.png",
+      "JavaWeb/SpringBoot/Mybatis/Attachment/image-6.png",
+      "JavaWeb/SpringBoot/Mybatis/Attachment/image-7.png",
+      "JavaWeb/SpringBoot/Mybatis/Attachment/image-8.png",
+      "JavaWeb/SpringBoot/Mybatis/Attachment/image-9.png",
+      "JavaWeb/SpringBoot/Mybatis/Attachment/image-10.png",
+      "JavaWeb/SpringBoot/Mybatis/Attachment/image-11.png",
+      "JavaWeb/SpringBoot/Mybatis/Attachment/image-12.png",
+      "JavaWeb/SpringBoot/Mybatis/Attachment/image-13.png",
+      "JavaWeb/SpringBoot/Mybatis/Attachment/image-14.png",
+      "JavaWeb/SpringBoot/Mybatis/Attachment/image-15.png",
+      "JavaWeb/SpringBoot/Mybatis/Attachment/image-16.png",
+      "JavaWeb/SpringBoot/Mybatis/Attachment/image-17.png",
+      "JavaWeb/SpringBoot/Mybatis/Attachment/image-18.png",
+      "JavaWeb/SpringBoot/Mybatis/Attachment/image.png"
+    ],
+    "MySQL": [
+      "MySQL/多表.md",
+      "MySQL/查询"
+    ],
+    "MySQL/查询": [
+      "MySQL/查询/排序ORDER BY.md",
+      "MySQL/查询/去重DISTINCT.md",
+      "MySQL/查询/比较运算符"
+    ],
+    "MySQL/查询/比较运算符": [
+      "MySQL/查询/比较运算符/模糊查询LIKE.md"
+    ]
+  },
+  "draggingEnabled": true,
+  "selectedSortOrder": "manual-sorting"
+}

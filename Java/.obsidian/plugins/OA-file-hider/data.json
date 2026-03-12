@@ -1,0 +1,11 @@
+{
+  "hidden": true,
+  "hiddenList": [
+    "JAVA/Attachment",
+    "MySQL/Attachment",
+    "Attachment",
+    "JavaWeb/Attachment",
+    "JavaWeb/SpringBoot/Attachment",
+    "JavaWeb/SpringBoot/Mybatis/Attachment"
+  ]
+}
