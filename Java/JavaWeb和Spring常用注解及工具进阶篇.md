@@ -101,7 +101,7 @@ excution(* com.itheima..DeptService.*(..))
 ## @ComponentScan
 本注解适用于第三方本地包较少的情况下
 若一个项目想使用另一个项目的类/对象,
-1) 先在本项目的pom文件中引入另一个项目的依赖,该依赖是maven项目文件生成时自带的,一般在pom文件开头
+1) 先在本项目的工程文件中引入另一个项目的依赖,该依赖是maven项目文件生成时自带的,一般在工程文件开头
 ``` java
 <groupId>com.itheima</groupId>  
 <artifactId>springboot-aop-quickstart</artifactId>  
@@ -126,11 +126,11 @@ excution(* com.itheima..DeptService.*(..))
 # Maven的依赖继承
 依赖集成类似于java继承,可以单继承,多重继承,但不可多继承
 ## 继承操作
-### 创建父pom
- 一般自己项目的父pom也要继承自spring-boot-start-parent
-所以先让自己的父pom继承自该pom,然后再让自己的其他模块的pom继承自父pom
+### 创建父工程
+ 一般自己项目的父工程也要继承自spring-boot-start-parent
+所以先让自己的父工程继承自该工程,然后再让自己的其他模块的工程继承自父工程
 ``` java
-主pom:
+主工程:
 
 <parent>  
     <groupId>org.springframework.boot</groupId>  
@@ -139,12 +139,12 @@ excution(* com.itheima..DeptService.*(..))
         <relativePath/> 
 </parent>
 
-  <relativePath> <relativePath/> 是继承的父pom的相对路径,不过spring-boot-starter-parent是spring中央仓库自带的,所以不用写,让他自闭合即可
+  <relativePath> <relativePath/> 是继承的父工程的相对路径,不过spring-boot-starter-parent是spring中央仓库自带的,所以不用写,让他自闭合即可
 ```
 
-### 子pom继承父pom
+### 子工程继承父工程
 ```
-在子pom中先把父pom的坐标写进<parent></parent>
+在子工程中先把父工程的坐标写进<parent></parent>
 ```
 ``` java
 <parent>
@@ -155,10 +155,10 @@ excution(* com.itheima..DeptService.*(..))
 </parent>
 
 ```
-然后把父pom的相对位置加进去
+然后把父工程的相对位置加进去
 ```
-<relativePath>../tilas-parent/pom.xml<relativePath/> 
-../ 表示本子pom的上一级文件夹
+<relativePath>../tilas-parent/工程.xml<relativePath/> 
+../ 表示本子工程的上一级文件夹
 ```
 
 即
@@ -167,14 +167,14 @@ excution(* com.itheima..DeptService.*(..))
 <groupId>com.ggg456</groupId>  
 <artifactId>tlias-management-demo</artifactId>  
 <version>0.0.1-SNAPSHOT</version>
-<relativePath>../tilas-parent/pom.xml<relativePath/> 
+<relativePath>../tilas-parent/工程.xml<relativePath/> 
 </parent>
 ```
 
-## 在父pom中配置各个工具的公共依赖
-在父pom中的配置后的依赖,子pom中的相关依赖就可以直接删了
+## 在父工程中配置各个工具的公共依赖
+在父工程中的配置后的依赖,子工程中的相关依赖就可以直接删了
 ```
-并且父pom中可以通过 <dependencyMangement></dependencyMangement>
+并且父工程中可以通过 <dependencyMangement></dependencyMangement>
 锁定自身及子类的依赖版本
 <dependencyMangement>
 	<dependency>  
@@ -189,13 +189,13 @@ excution(* com.itheima..DeptService.*(..))
 
 
 ```
-锁定后,就可以把子pom中依赖的</version>删掉了
+锁定后,就可以把子工程中依赖的</version>删掉了
 
-## 在子pom中配置各自单独的依赖
-对于不同于主pom的依赖,一子pom中的版本为准
+## 在子工程中配置各自单独的依赖
+对于不同于主工程的依赖,一子工程中的版本为准
 
 ## 最后
-确定继承关系后,子pom中的依赖belike:
+确定继承关系后,子工程中的依赖belike:
 ``` java
 <dependency>  
 		<groupId>com.aliyun.oss</groupId>
@@ -212,3 +212,16 @@ excution(* com.itheima..DeptService.*(..))
 分模块拆分后的项目,若想打包package,需要按照依赖调用的顺序依次对各模块install,显然麻烦,因此需要**聚合**,将多个模块组成一个整体
 
 ## 聚合工程
+聚合工程是不具备具体业务的空工程,其中只有pom文件,所以一般来说,
+**聚合工程和最大的父工程是同一个工程**
+![[image-9.png|519x335]]
+
+## 操作
+在聚合工程(父工程)中,使用<moudle>引入子工程
+```  java
+<modules>
+	<module>../tilas-pojo</module>
+	<module>../tilas-pojo</module>
+	<module>../tilas-pojo</module>
+</modules>
+```

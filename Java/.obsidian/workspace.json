@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JavaWeb和Spring常用注解及工具进阶篇.md",
+                "file": "JavaWeb/test github.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "JavaWeb和Spring常用注解及工具进阶篇"
+              "title": "test github"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JavaWeb和Spring常用注解及工具进阶篇.md",
+                "file": "JavaWeb/test github.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "JavaWeb和Spring常用注解及工具进阶篇 的大纲"
+              "title": "test github 的大纲"
             }
           }
         ],
@@ -171,11 +171,14 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "34d6b36d87ac3e98",
+  "active": "81e6579c26b1aac1",
   "lastOpenFiles": [
-    "JavaWeb/test github.md",
     "JavaWeb和Spring常用注解及工具进阶篇.md",
+    "JavaWeb/test github.md",
     "JavaWeb/Http.md",
+    "Attachment/image-9.png",
+    "未命名.base",
+    "未命名 1.base",
     "JavaWeb/SpringBoot/日志@SL4fj.md",
     "常见错误-异常处理.md",
     "JavaWeb/SpringBoot/Mybatis/动态SQL.md",
@@ -188,8 +191,6 @@
     "未命名 4.base",
     "未命名 3.base",
     "未命名 2.base",
-    "未命名 1.base",
-    "未命名.base",
     "JavaWeb/SpringBoot/三层架构与解耦.md",
     "JavaWeb/未命名",
     "Attachment/image-8.png",
@@ -204,7 +205,6 @@
     "JavaWeb/SpringBoot/Attachment/image-11.png",
     "JavaWeb/SpringBoot/Attachment/idea64_N6ZMTBveF7.png",
     "其他第三方错误.md",
-    "JavaWeb/SpringBoot/Attachment/image-10.png",
     "JavaWeb/SpringBoot/Mybatis/XML.md",
     "JavaWeb/SpringBoot/Mybatis/Attachment",
     "JAVASE/SE基础/自定义返回类型的方法.md",
@@ -216,7 +216,6 @@
     "JAVASE/SE基础/方法重载(形参实参).md",
     "JAVASE/SE基础/有参构造和无参构造.md",
     "JAVASE/SE基础/对象.md",
-    "JAVASE/SE基础/多态.md",
     "Attachment",
     "规范/命名规范"
   ]
