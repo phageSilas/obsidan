@@ -3,11 +3,11 @@
   "autoCommitMessage": "vault backup: {{date}}",
   "commitMessageScript": "",
   "commitDateFormat": "YYYY-MM-DD HH:mm:ss",
-  "autoSaveInterval": 30,
-  "autoPushInterval": 0,
-  "autoPullInterval": 0,
+  "autoSaveInterval": 10,
+  "autoPushInterval": 10,
+  "autoPullInterval": 10,
   "autoPullOnBoot": true,
-  "autoCommitOnlyStaged": false,
+  "autoCommitOnlyStaged": true,
   "disablePush": false,
   "pullBeforePush": true,
   "disablePopups": false,
@@ -36,18 +36,18 @@
   "dateInHistoryView": true,
   "diffStyle": "split",
   "hunks": {
-    "showSigns": false,
+    "showSigns": true,
     "hunkCommands": false,
     "statusBar": "disabled"
   },
   "lineAuthor": {
-    "show": false,
+    "show": true,
     "followMovement": "inactive",
-    "authorDisplay": "initials",
-    "showCommitHash": false,
-    "dateTimeFormatOptions": "date",
+    "authorDisplay": "hide",
+    "showCommitHash": true,
+    "dateTimeFormatOptions": "natural language",
     "dateTimeFormatCustomString": "YYYY-MM-DD HH:mm",
-    "dateTimeTimezone": "viewer-local",
+    "dateTimeTimezone": "author-local",
     "coloringMaxAge": "1y",
     "colorNew": {
       "r": 255,
@@ -61,8 +61,8 @@
     },
     "textColorCss": "var(--text-muted)",
     "ignoreWhitespace": false,
-    "gutterSpacingFallbackLength": 5,
-    "lastShownAuthorDisplay": "initials",
-    "lastShownDateTimeFormatOptions": "date"
+    "gutterSpacingFallbackLength": 13,
+    "lastShownAuthorDisplay": "full",
+    "lastShownDateTimeFormatOptions": "natural language"
   }
 }

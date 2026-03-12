@@ -122,3 +122,54 @@ excution(* com.itheima..DeptService.*(..))
 可以直接导入需要的那个类
 ![[image-8.png]]
 
+
+# Maven的依赖继承
+依赖集成类似于java继承,可以单继承,多重继承,但不可多继承
+## 继承操作
+### 创建父pom
+ 一般自己项目的父pom也要继承自spring-boot-start-parent
+所以先让自己的父pom继承自该pom,然后再让自己的其他模块的pom继承自父pom
+``` java
+主pom:
+
+<parent>  
+    <groupId>org.springframework.boot</groupId>  
+    <artifactId>spring-boot-starter-parent</artifactId>  
+    <version>3.5.8</version>  
+        <relativePath/> 
+</parent>
+
+  <relativePath> <relativePath/> 是继承的父pom的相对路径,不过spring-boot-starter-parent是spring中央仓库自带的,所以不用写,让他自闭合即可
+```
+
+### 子pom继承父pom
+```
+在子pom中先把父pom的坐标写进<parent></parent>
+```
+``` java
+<parent>
+<groupId>com.ggg456</groupId>  
+<artifactId>tlias-management-demo</artifactId>  
+<version>0.0.1-SNAPSHOT</version>
+
+</parent>
+
+```
+然后把父pom的相对位置加进去
+```
+<relativePath>../tilas-parent/pom.xml<relativePath/> 
+../ 表示本子pom的上一级文件夹
+```
+
+即
+``` java
+<parent>
+<groupId>com.ggg456</groupId>  
+<artifactId>tlias-management-demo</artifactId>  
+<version>0.0.1-SNAPSHOT</version>
+<relativePath>../tilas-parent/pom.xml<relativePath/> 
+</parent>
+```
+
+## 在父pom中配置各个工具的依赖
+在父pom中的配置后的依赖,子pom中的相关依赖就可以直接删了
