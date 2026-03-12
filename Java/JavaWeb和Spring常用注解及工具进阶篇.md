@@ -173,6 +173,42 @@ excution(* com.itheima..DeptService.*(..))
 
 ## 在父pom中配置各个工具的公共依赖
 在父pom中的配置后的依赖,子pom中的相关依赖就可以直接删了
+```
+并且父pom中可以通过 <dependencyMangement></dependencyMangement>
+锁定自身及子类的依赖版本
+<dependencyMangement>
+	<dependency>  
+	    <groupId>com.aliyun.oss</groupId>  
+	    <artifactId>aliyun-sdk-oss</artifactId>  
+	    <version>3.17.4</version>  
+	</dependency>
+</dependencyMangement>
+
+<dependency> 负责直接引入依赖
+<dependencyMangement>负责管理依赖的版本
+
+
+```
+锁定后,就可以把子pom中依赖的</version>删掉了
 
 ## 在子pom中配置各自单独的依赖
 对于不同于主pom的依赖,一子pom中的版本为准
+
+## 最后
+确定继承关系后,子pom中的依赖belike:
+``` java
+<dependency>  
+		<groupId>com.aliyun.oss</groupId>
+	    <artifactId>aliyun-sdk-oss</artifactId>  
+</dependency>
+
+其中
+ <groupId>com.aliyun.oss</groupId> 父类中写了,可以省略,但不推荐
+<version>3.17.4</version> 父类中版本锁定了,可以省略
+
+```
+
+# Maven的模块聚合
+分模块拆分后的项目,若想打包package,需要按照依赖调用的顺序依次对各模块install,显然麻烦,因此需要**聚合**,将多个模块组成一个整体
+
+## 聚合工程
