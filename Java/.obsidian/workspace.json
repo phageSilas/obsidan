@@ -11,14 +11,13 @@
             "id": "81e6579c26b1aac1",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "bases",
               "state": {
-                "file": "JavaWeb和Spring常用注解及工具进阶篇.md",
-                "mode": "source",
-                "source": false
+                "file": "未命名 1.base",
+                "viewName": "表格"
               },
-              "icon": "lucide-file",
-              "title": "JavaWeb和Spring常用注解及工具进阶篇"
+              "icon": "lucide-table",
+              "title": "未命名 1"
             }
           }
         ]
@@ -142,13 +141,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JavaWeb和Spring常用注解及工具进阶篇.md",
+                "file": "未命名 1.base",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "JavaWeb和Spring常用注解及工具进阶篇 的大纲"
+              "title": "未命名 1 的大纲"
             }
           }
         ],
@@ -171,11 +170,13 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "34d6b36d87ac3e98",
+  "active": "81e6579c26b1aac1",
   "lastOpenFiles": [
+    "未命名.base",
+    "未命名 1.base",
+    "JavaWeb和Spring常用注解及工具进阶篇.md",
     "Attachment/image-8.png",
     "JavaWeb和Spring常用注解及工具基础篇.md",
-    "JavaWeb和Spring常用注解及工具进阶篇.md",
     "Attachment/image-7.png",
     "Attachment/image-6.png",
     "Attachment/image-5.png",
@@ -190,7 +191,6 @@
     "JavaWeb/SpringBoot/Attachment/idea64_N6ZMTBveF7.png",
     "其他第三方错误.md",
     "JavaWeb/SpringBoot/Attachment/image-10.png",
-    "JavaWeb/SpringBoot/Attachment/image-9.png",
     "JavaWeb/SpringBoot/预编译SQL.md",
     "JavaWeb/SpringBoot/SpringBoot测试类.md",
     "JavaWeb/SpringBoot/Mybatis/动态SQL.md",
@@ -210,8 +210,6 @@
     "JAVASE/SE基础/创建对象new与get,set方法与创建子类对象.md",
     "JAVASE/SE基础/get与set方法用法解释.md",
     "JAVASE/SE基础/this.md",
-    "未命名.base",
-    "未命名 1.base",
     "未命名 2.base",
     "Attachment",
     "规范/命名规范",
