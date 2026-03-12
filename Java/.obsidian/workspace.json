@@ -13,11 +13,11 @@
             "state": {
               "type": "bases",
               "state": {
-                "file": "未命名 1.base",
+                "file": "未命名 3.base",
                 "viewName": "表格"
               },
               "icon": "lucide-table",
-              "title": "未命名 1"
+              "title": "未命名 3"
             }
           }
         ]
@@ -141,13 +141,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "未命名 1.base",
+                "file": "未命名 3.base",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "未命名 1 的大纲"
+              "title": "未命名 3 的大纲"
             }
           }
         ],
@@ -172,8 +172,10 @@
   },
   "active": "81e6579c26b1aac1",
   "lastOpenFiles": [
-    "未命名.base",
+    "未命名 2.base",
+    "未命名 3.base",
     "未命名 1.base",
+    "未命名.base",
     "JavaWeb和Spring常用注解及工具进阶篇.md",
     "Attachment/image-8.png",
     "JavaWeb和Spring常用注解及工具基础篇.md",
@@ -210,7 +212,6 @@
     "JAVASE/SE基础/创建对象new与get,set方法与创建子类对象.md",
     "JAVASE/SE基础/get与set方法用法解释.md",
     "JAVASE/SE基础/this.md",
-    "未命名 2.base",
     "Attachment",
     "规范/命名规范",
     "规范",
