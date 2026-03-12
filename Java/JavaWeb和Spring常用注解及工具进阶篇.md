@@ -171,5 +171,8 @@ excution(* com.itheima..DeptService.*(..))
 </parent>
 ```
 
-## 在父pom中配置各个工具的依赖
+## 在父pom中配置各个工具的公共依赖
 在父pom中的配置后的依赖,子pom中的相关依赖就可以直接删了
+
+## 在子pom中配置各自单独的依赖
+对于不同于主pom的依赖,一子pom中的版本为准
