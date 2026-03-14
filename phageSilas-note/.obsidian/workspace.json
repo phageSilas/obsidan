@@ -1,0 +1,222 @@
+{
+  "main": {
+    "id": "44993b328236f139",
+    "type": "split",
+    "children": [
+      {
+        "id": "74a156ef73c3d902",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "81e6579c26b1aac1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Blender/blender快捷键.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "blender快捷键"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "9de3a0520e4eab38",
+    "type": "split",
+    "children": [
+      {
+        "id": "cb2c2bedbbb6622a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "34d6b36d87ac3e98",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "2da55a8935c461ad",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "79bfb3e5f791d339",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 399.5
+  },
+  "right": {
+    "id": "791d29b6d015dc2f",
+    "type": "split",
+    "children": [
+      {
+        "id": "0a71eaae6953eb2d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3cc4a5bc7688ab1d",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "JAVA/SE基础/自定义返回类型的方法.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "自定义返回类型的方法 的反向链接列表"
+            }
+          },
+          {
+            "id": "3a809975f6d38541",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "MySQL/查询/去重DISTINCT.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "去重DISTINCT 的出链列表"
+            }
+          },
+          {
+            "id": "239dc6658e94103b",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "d75365e4a9d91e91",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Blender/blender快捷键.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "blender快捷键 的大纲"
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "bases:新建数据库": false,
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "obsidian-excalidraw-plugin:新建绘图文件": false,
+      "obsidian-git:Open Git source control": false
+    }
+  },
+  "active": "81e6579c26b1aac1",
+  "lastOpenFiles": [
+    "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具进阶篇.md",
+    "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具基础篇.md",
+    "Blender/blender快捷键.md",
+    "JAVA/JavaWeb/常见错误-异常处理.md",
+    "JAVA/JavaWeb/其他第三方错误.md",
+    "Blender",
+    "JAVA",
+    "blender快捷键 1.md",
+    "JAVA/JavaWeb/test github.md",
+    "JAVA/JavaWeb/Http.md",
+    "Attachment/image-9.png",
+    "未命名.base",
+    "未命名 1.base",
+    "JAVA/JavaWeb/SpringBoot/日志@SL4fj.md",
+    "JAVA/JavaWeb/SpringBoot/Mybatis/动态SQL.md",
+    "JAVA/JavaWeb/SpringBoot/Mybatis/配置文件ymal-yml.md",
+    "JAVA/JavaWeb/SpringBoot/JDBC.md",
+    "JAVA/JavaWeb/SpringBoot/预编译SQL.md",
+    "JAVA/JavaWeb/SpringBoot/SpringBoot测试类.md",
+    "JAVA/JavaWeb/SpringBoot/Mybatis/MyBatis.md",
+    "未命名 5.base",
+    "未命名 4.base",
+    "未命名 3.base",
+    "未命名 2.base",
+    "JAVA/JavaWeb/SpringBoot/三层架构与解耦.md",
+    "JavaWeb/未命名",
+    "Attachment/image-8.png",
+    "Attachment/image-7.png",
+    "Attachment/image-6.png",
+    "Attachment/image-5.png",
+    "Attachment/image-4.png",
+    "JAVA/JavaWeb/MyBatis常用注解.md",
+    "JAVA/JavaWeb/SpringBoot/Attachment/image-13.png",
+    "JAVA/JavaWeb/SpringBoot/Attachment/image-12.png",
+    "JAVA/JavaWeb/SpringBoot/Attachment/image-11.png",
+    "JAVA/JavaWeb/SpringBoot/Attachment/idea64_N6ZMTBveF7.png",
+    "JAVA/JavaWeb/SpringBoot/Mybatis/XML.md",
+    "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment",
+    "JAVA/JAVASE/SE基础/自定义返回类型的方法.md",
+    "JAVA/JAVASE/SE基础/集合.md",
+    "JAVA/JAVASE/SE基础/数据类型规范(待补充).md",
+    "JAVA/JAVASE/比较抽象的SE基础/关于集合泛型的探究.md",
+    "JAVA/JAVASE/比较抽象的SE基础/关于方法返回类型的探究.md",
+    "JAVA/JAVASE/SE基础/方法重写@Override与super.md",
+    "JAVA/JAVASE/SE基础/方法重载(形参实参).md"
+  ]
+}

@@ -7,4 +7,4 @@ SpringBoot的
 自带的test文件夹下的xxTest类
 构造方法上写注解@SpringBootTest
 调用的成员方法上写注解@Test
-![[JavaWeb/SpringBoot/Attachment/image.png]]
+![[JAVA/JavaWeb/SpringBoot/Attachment/image.png]]

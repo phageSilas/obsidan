@@ -21,7 +21,7 @@
 此时其中的#{}识别不到
 **解决办法:** 使用字符串拼接%+#{}+%
 			使用MySql提供的函数 **CONCAT**
-	![[JavaWeb/SpringBoot/Attachment/image-5.png]]
+	![[JAVA/JavaWeb/SpringBoot/Attachment/image-5.png]]
 最终修改为
 ==where e.name like **CONCAT('%',#{name},'%')**==
 (注意#{}是参数,不需要用单引号)

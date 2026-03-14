@@ -7,7 +7,7 @@ MyBatis中,既可以通过注解生成sql语句,也可以配置XML文件配置
 ## 创建
 resource文件夹下创建"目录"--**"com/接口的包名/对应接口名"**,
 注意:不要用"."连接,要用"/",这样才能和包名一个效果
-![[JavaWeb/SpringBoot/Attachment/image-1.png]]
+![[JAVA/JavaWeb/SpringBoot/Attachment/image-1.png]]
 补充:若真的没有按照要求命名,可以在application.properties中配置
 	 xml映射文件的位置
 ## 基本配置

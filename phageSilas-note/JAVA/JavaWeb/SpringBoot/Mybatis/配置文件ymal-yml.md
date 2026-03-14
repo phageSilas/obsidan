@@ -5,7 +5,7 @@
 2. **大小写敏感**
 3. **注释**：使用 `#` 开头
 4. **字符串引号**：特殊字符需要引号
-![[JavaWeb/SpringBoot/Attachment/image-2.png|491x280]]
+![[JAVA/JavaWeb/SpringBoot/Attachment/image-2.png|491x280]]
 # 常用配置
 #### 1. 开启驼峰命名映射 (`map-underscore-to-camel-case`)
 

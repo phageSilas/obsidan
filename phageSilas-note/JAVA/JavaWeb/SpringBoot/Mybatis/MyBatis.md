@@ -4,9 +4,9 @@ DAO持久层框架,可省略大量代码
 
 ## 准备工作
 1) SpringBoot工程,引入MyBatis依赖
-2) 配置文件application.properties中配置数据库连接信息: ![[image-12.png]]
+2) 配置文件application.properties中配置数据库连接信息: ![[JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-12.png]]
 配置文件的作用等同于JDBC中的[[JDBC#1.注册驱动]]和[[JDBC#2.获取数据库链接]]
-![[image-14.png]]
+![[JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-14.png]]
 
 ## 具体操作
 创建一个Mapper包(同之前的DAO),下面创建各对象的Mapper接口,如UserMapper,
@@ -69,9 +69,9 @@ public void UUUUpdate(){
     System.out.println("影响的行数为"+i);  
 }
 ```
-**若想要在括号中直接写参数,则需要将对应的5项参数全部写上**![[image-17.png|363x164]]
+**若想要在括号中直接写参数,则需要将对应的5项参数全部写上**![[JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-17.png|363x164]]
 但是,由于我们只要求根据id修改age,所以username,password,name等无关参数可以随便写, MyBatis只会从User对象中提取 id和 age 属性的值,结果和上面一样
-![[image-18.png]]
+![[JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-18.png]]
 
 
 ### 情景二:涉及多个参数
@@ -81,12 +81,12 @@ public void UUUUpdate(){
 public Integer update(User user);// 返回受影响的行数
 ```
 这里要求根据id修改同行的所有参数,若仍像之前一样只写两个,那么修改后的其他参数将更新为null
-![[image-19.png]]
+![[JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-19.png]]
 **若没有提供具体数值的列不允许为null,修改时仍不给它赋值,则会报错**
-![[image-20.png]]
+![[JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-20.png]]
 
 
-当然,正常全部修改的话就是正常修改(![[image-21.png]]
+当然,正常全部修改的话就是正常修改(![[JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-21.png]]
 
 如果使用有参修改也可以
 ![[image-22.png]]
@@ -99,15 +99,15 @@ public Integer update(User user);// 返回受影响的行数
 ### 查询测试
 在main/test/java/下的测试文件中调用[[SpringBoot测试类#]]
 将查询的对象存入集合
-![[image-13.png]]
+![[JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-13.png]]
 **注意**:若输出地址,这是lombok出问题了,需要重写toSring方法
 
 ### 删除测试
-![[image-15.png]]
+![[JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-15.png]]
 **注意**:DML方法的返回值是影响的行数
 
 ## 插入测试
-![[image-16.png|583x124]]
+![[JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-16.png|583x124]]
 注意:在括号内填写需要插入的各项数据,属性位置一一对应
 
 # 注意:注解和[[XML]]二选一

@@ -5,11 +5,11 @@
 局部变量:方法中的变量
 
 ## 就近原则
-![[JAVASE/SE基础/Attachment/image.png]]
+![[JAVA/JAVASE/SE基础/Attachment/image.png]]
 若没有限制,调用时会优先调用最近的变量
 ## this
 使用this就可以调用成员变量
-![[JAVASE/SE基础/Attachment/image-2.png]]
+![[JAVA/JAVASE/SE基础/Attachment/image-2.png]]
 注意:不能使用name=name的写法,这是指局部变量等于局部变量,和成员变量无关
 
 ```java

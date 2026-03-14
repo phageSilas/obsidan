@@ -57,7 +57,7 @@ private EmpExprMapper empExprMapper;
 private EmpMapper empMapper;   
 private EmpExprMapper empExprMapper;//empExprMapper并未被注入
 ```
-![[JavaWeb/SpringBoot/Attachment/image-7.png]]
+![[JAVA/JavaWeb/SpringBoot/Attachment/image-7.png]]
 
 
 # HTTP请求
@@ -150,7 +150,7 @@ type = web。
 ## @Value
 对于一些经常变化的参数,如网页链接,定时更新的参数,可以在配置文件中,通过@Value
 注入外部配置的属性
-![[JavaWeb/SpringBoot/Attachment/image-6.png]]
+![[JAVA/JavaWeb/SpringBoot/Attachment/image-6.png]]
 缺点:繁琐,不方便复用
 可以使用@ConfigurationProperties
 
@@ -185,14 +185,14 @@ return Result.error("出错,请联系管理员")//Result为自定义的结果类
 ### @ExceptionHandler
 1) 在本处理器的类中定义一个方法,在该方法前写上该注解,定义具体的异常信息,以及抓取到定义的异常后,进行的具体操作
 2) 异常抓取的顺序按照异常类的继承关系,从小到大,**优先匹配最小子类**
-![[JavaWeb/SpringBoot/Attachment/image-9.png|241|258]]
+![[JAVA/JavaWeb/SpringBoot/Attachment/image-9.png|241|258]]
 3) 可以通过Exception及其子类自带的message方法获取控制台输出的异常信息,并通过截取字段,将异常返回给前端
-![[JavaWeb/SpringBoot/Attachment/image-10.png|644|459x252]]
+![[JAVA/JavaWeb/SpringBoot/Attachment/image-10.png|644|459x252]]
 # 过滤器Filter
 Filter是javaweb框架自带的
 使用Filter时,先定义一个子类继承自javaweb框架自带的Filter,然后在该类中定义重写Filter自带三个方法即可,一般只使用其中的doFilter方法
 **每一次网络请求(Mapping),都会被拦截器拦截**进行判断是否放行
-![[JavaWeb/SpringBoot/Attachment/image-8.png]]
+![[JAVA/JavaWeb/SpringBoot/Attachment/image-8.png]]
 ## @WebFilter
 写在定义的Filter子类的最前面,定义拦截路径
 ``` java
@@ -231,7 +231,7 @@ public void doFilter(ServletRequest request, ServletResponse response, FilterCha
 会造成性能浪费,所以通常只建议一个doFilter中只有一个放行
 
 2) 如果有多个拦截器类,那么会按照拦截器的类名从A-Z依次执行,并按照先进后出的原则返回资源
-![[JavaWeb/SpringBoot/Attachment/image-11.png|612]]![[JavaWeb/SpringBoot/Attachment/image-12.png]]
+![[JAVA/JavaWeb/SpringBoot/Attachment/image-11.png|612]]![[JAVA/JavaWeb/SpringBoot/Attachment/image-12.png]]
 
 # 拦截器Interceptor
 Interceptor是spring框架提供的
@@ -286,4 +286,4 @@ public void addInterceptors(InterceptorRegistry registry){
 
 # 对于Filter和Interceptor 的管理范围问题
 Filter属于javaweb本身提供的,Interceptor是spring提供的,**Filter可以拦截项目里的所有资源,Interceptor只能拦截Spring框架里的内容**,所以若两个同时存在,会先让Filter拦截,再让Interceptor拦截,返回的时候先返回给Interceptor,再返回给Filter
-![[JavaWeb/SpringBoot/Attachment/image-13.png|618x215]]
+![[JAVA/JavaWeb/SpringBoot/Attachment/image-13.png|618x215]]

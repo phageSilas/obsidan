@@ -41,13 +41,13 @@ public class RecordTimeAspect {
 ### @After
 ### @AfterReturning
 ### @AfterThrowing
-![[image-4.png|625x206]]
+![[Attachment/image-4.png|625x206]]
 ## 连接点,切入点 
 省略
 
 ## 切入点表达式
 ### @PointCut
-![[image-5.png]]
+![[Attachment/image-5.png]]
 ## 通知顺序
 相同通知类型的方法先后和Filter顺序类似
 目标方法前的通知方法:A-->Z
@@ -81,7 +81,7 @@ excution(* com.itheima..DeptService.*(..))
 
 ```
 也可以通过逻辑表达符来限定切入点
-![[image-6.png]]
+![[Attachment/image-6.png]]
 
 ### @annotation 
 @Before("@annotation (com.itheima.anno.自定义名)")
@@ -89,7 +89,7 @@ excution(* com.itheima..DeptService.*(..))
 
 ## 连接点JoinPoint
 主要用于除@Around外的那几种方法,
-用于获取目标对象/目标类/目标方法/目标方法参数![[image-7.png]]
+用于获取目标对象/目标类/目标方法/目标方法参数![[Attachment/image-7.png]]
 
 # SpringBoot引入第三方Bean
 ## @Bean
@@ -120,7 +120,7 @@ excution(* com.itheima..DeptService.*(..))
 ## @import
 类似于java自身的import导入包
 可以直接导入需要的那个类
-![[image-8.png]]
+![[Attachment/image-8.png]]
 
 
 # Maven的依赖继承
@@ -214,7 +214,7 @@ excution(* com.itheima..DeptService.*(..))
 ## 聚合工程
 聚合工程是不具备具体业务的空工程,其中只有pom文件,所以一般来说,
 **聚合工程和最大的父工程是同一个工程**
-![[image-9.png|519x335]]
+![[Attachment/image-9.png|519x335]]
 
 ## 操作
 在聚合工程(父工程)中,使用<moudle>引入子工程

@@ -12,7 +12,7 @@
 </where>
 ```
 其中
-![[image-11.png|641]]
+![[JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-11.png|641]]
 
 ```
 
@@ -21,5 +21,5 @@
 ```
 
 ## foreach
-![[image-21.png|651x338]]
+![[JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-21.png|651x338]]
 使用
