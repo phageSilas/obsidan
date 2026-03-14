@@ -13,7 +13,9 @@ Spring 容器需要知道哪些类需要被管理为 Bean。除了使用 `@Bean`
 标注当前类为服务层，处理核心业务代码，主要涉及一些复杂的逻辑，需要用到 Dao 层
 ## @Controller
 标注当前类为控制层，对应 Spring MVC 控制层，主要用于接受用户请求并调用 Service 层返回数据给前端页面。
-## @RestController
+## *@RestController 
+**重要** :负责将后端处理好的数据(Result)传回给前端
+		一般写在该类的最前面
 等效于 @Controller + @ResponseBody， 用于前后端分离项目，直接返回数据（如 JSON/XML），而不是跳转页面。（其所有处理器方法（handler methods）的返回值都会被自动序列化（通常为 JSON）并写入 HTTP 响应体，而不是被解析为视图名称。）
 
 # 依赖注入
