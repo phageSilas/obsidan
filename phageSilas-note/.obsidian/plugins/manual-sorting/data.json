@@ -27,7 +27,9 @@
       "JAVA/JavaWeb",
       "JAVA/苍穹外卖"
     ],
-    "JAVA/苍穹外卖": [],
+    "JAVA/苍穹外卖": [
+      "JAVA/苍穹外卖/密码加密.md"
+    ],
     "JAVA/规范": [
       "JAVA/规范/命名规范"
     ],
