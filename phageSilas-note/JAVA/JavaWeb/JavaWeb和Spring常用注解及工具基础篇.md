@@ -62,8 +62,9 @@ private EmpExprMapper empExprMapper;//empExprMapper并未被注入
 ![[JAVA/JavaWeb/SpringBoot/Attachment/image-7.png]]
 
 
-# HTTP请求
-主要用于 Controller 层，定义 API 接口。
+# HTTP请求/接收前端访问请求
+主要用于 Controller 层，定义 网页API 接口。
+
 ## @RequestMapping
 配置 URL 映射，可以作用于类（定义基础路径）或方法上。
 
@@ -125,11 +126,11 @@ public ResponseEntity<User> updateUser(@PathVariable(value = "userId") Long user
 呢么运行时实际分会给前端的是/emp/emp,重复了
 
 
-# 参数接收/参数绑定/参数配置
+# 参数接收/参数绑定/参数配置/数据返回
 用于绑定请求参数到方法参数中
-
+前端数据通过以下三种注解,赋予他们后跟的参数
 ## @RequestBody
-
+接收前端的json格式数据
 
 ## @PathVariable
 用于从 URL 路径中提取参数。
