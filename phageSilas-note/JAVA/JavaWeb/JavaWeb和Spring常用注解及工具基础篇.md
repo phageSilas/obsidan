@@ -79,7 +79,7 @@ public ResponseEntity<List<User>> getAllUsers() {
 }
 ```
 ## @PostMapping
-用于接收 JSON 数据并映射为 Java 对象。
+用于接收 JSON 数据并映射为 Java 对象。常用于更新
 ``` java
 @PostMapping("users") 
 等价于
