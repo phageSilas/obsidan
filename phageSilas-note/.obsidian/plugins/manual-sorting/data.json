@@ -21,8 +21,8 @@
       "Blender/blender快捷键.md"
     ],
     "JAVA": [
-      "JAVA/MySQL",
       "JAVA/规范",
+      "JAVA/MySQL",
       "JAVA/JAVASE",
       "JAVA/JavaWeb",
       "JAVA/苍穹外卖"
@@ -31,7 +31,8 @@
       "JAVA/苍穹外卖/密码加密.md"
     ],
     "JAVA/规范": [
-      "JAVA/规范/命名规范"
+      "JAVA/规范/命名规范",
+      "JAVA/未命名.md"
     ],
     "JAVA/规范/命名规范": [
       "JAVA/规范/命名规范/java.md",

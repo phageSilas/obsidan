@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA/苍穹外卖/密码加密.md",
+                "file": "JAVA/规范/JavaWeb分层规范.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "密码加密"
+              "title": "JavaWeb分层规范"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA/苍穹外卖/密码加密.md",
+                "file": "JAVA/规范/JavaWeb分层规范.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "密码加密 的大纲"
+              "title": "JavaWeb分层规范 的大纲"
             }
           }
         ],
@@ -173,8 +173,11 @@
   },
   "active": "81e6579c26b1aac1",
   "lastOpenFiles": [
-    "Blender/blender快捷键.md",
+    "JAVA/规范/命名规范/java.md",
+    "JAVA/规范/JavaWeb分层规范.md",
+    "JAVA/JavaWeb/SpringBoot/三层架构与解耦.md",
     "JAVA/苍穹外卖/密码加密.md",
+    "Blender/blender快捷键.md",
     "JAVA/苍穹外卖",
     "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具进阶篇.md",
     "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具基础篇.md",
@@ -199,7 +202,6 @@
     "未命名 4.base",
     "未命名 3.base",
     "未命名 2.base",
-    "JAVA/JavaWeb/SpringBoot/三层架构与解耦.md",
     "JavaWeb/未命名",
     "Attachment/image-8.png",
     "Attachment/image-7.png",
@@ -216,8 +218,6 @@
     "JAVA/JAVASE/SE基础/集合.md",
     "JAVA/JAVASE/SE基础/数据类型规范(待补充).md",
     "JAVA/JAVASE/比较抽象的SE基础/关于集合泛型的探究.md",
-    "JAVA/JAVASE/比较抽象的SE基础/关于方法返回类型的探究.md",
-    "JAVA/JAVASE/SE基础/方法重写@Override与super.md",
-    "JAVA/JAVASE/SE基础/方法重载(形参实参).md"
+    "JAVA/JAVASE/比较抽象的SE基础/关于方法返回类型的探究.md"
   ]
 }
