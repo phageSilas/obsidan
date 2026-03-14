@@ -27,6 +27,7 @@
       "JAVA/JavaWeb",
       "JAVA/苍穹外卖"
     ],
+    "JAVA/苍穹外卖": [],
     "JAVA/规范": [
       "JAVA/规范/命名规范"
     ],
@@ -187,8 +188,7 @@
     ],
     "JAVA/MySQL/查询/比较运算符": [
       "JAVA/MySQL/查询/比较运算符/模糊查询LIKE.md"
-    ],
-    "JAVA/苍穹外卖": []
+    ]
   },
   "draggingEnabled": true,
   "selectedSortOrder": "manual-sorting"
