@@ -128,6 +128,9 @@ public ResponseEntity<User> updateUser(@PathVariable(value = "userId") Long user
 # 参数接收/参数绑定/参数配置
 用于绑定请求参数到方法参数中
 
+## @RequestBody
+
+
 ## @PathVariable
 用于从 URL 路径中提取参数。
 **用{ }标识路径参数**
@@ -148,6 +151,8 @@ public List<Teacher> getTeachersByClass(@PathVariable Long klassId, @RequestPara
 若请求 URL 为 /klasses/123/teachers?type=web，则 klassId = 123，
 type = web。
 ```
+
+
 
 ## @Value
 对于一些经常变化的参数,如网页链接,定时更新的参数,可以在配置文件中,通过@Value
