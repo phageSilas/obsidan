@@ -86,3 +86,4 @@ BeanUtils.copyProperties(employeeDTO, employee);
 ```
 
 ## 线程局部变量ThreadLocal
+前提知识:每发一次请求,那么后端所有层均算作同一个线程,并且每次请求线程均不一样具有线程隔离特性
