@@ -173,8 +173,10 @@
   },
   "active": "81e6579c26b1aac1",
   "lastOpenFiles": [
-    "JAVA/JAVASE/SE基础/有参构造和无参构造.md",
+    "JAVA/JAVASE/SE基础/User用户类详解.md",
+    "JAVA/JAVASE/SE基础/对象.md",
     "JAVA/苍穹外卖/Day02.md",
+    "JAVA/JAVASE/SE基础/有参构造和无参构造.md",
     "JAVA/苍穹外卖/密码加密.md",
     "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具基础篇.md",
     "JAVA/JavaWeb/MyBatis常用注解.md",
@@ -216,8 +218,6 @@
     "JAVA/JavaWeb/SpringBoot/Attachment/image-11.png",
     "JAVA/JavaWeb/SpringBoot/Attachment/idea64_N6ZMTBveF7.png",
     "JAVA/JavaWeb/SpringBoot/Mybatis/XML.md",
-    "JAVA/JAVASE/SE基础/自定义返回类型的方法.md",
-    "JAVA/JAVASE/SE基础/集合.md",
-    "JAVA/JAVASE/SE基础/数据类型规范(待补充).md"
+    "JAVA/JAVASE/SE基础/自定义返回类型的方法.md"
   ]
 }
