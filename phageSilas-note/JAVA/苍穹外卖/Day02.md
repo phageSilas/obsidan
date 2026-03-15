@@ -74,3 +74,13 @@ public class Employee {
 
 # 对象属性拷贝BeanUtils.copyProperties
 ## 使用场景
+承接自上一条建造者模式,若两个类有较多的相同属性,如用户属性类和它对应的DTO类,可以通过Spring提供的该工具类实现
+## 使用方法
+``` java
+// 1. 先 new 一个空的目标对象
+Employee employee = new Employee();
+
+// 2. 调用工具类进行拷贝 (源对象, 目标对象)
+BeanUtils.copyProperties(employeeDTO, employee);
+//会自动把 employeeDTO里的值全部塞进 employee 里。左➡️右
+```
