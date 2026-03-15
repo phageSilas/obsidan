@@ -190,3 +190,6 @@ return new PageResult(page.getTotal(), page.getResult());
 ```
 
 最后一步就很简单了，你从刚才那个特殊的 `Page` 对象中，抽取出“总记录数（Total）”和“当前页的数据列表（Result）”，组装成前端需要的统一格式返回给用户。
+
+# 消息转换器
+由Spring MVC框架提供,写在Configuration配置类中,格式较固定
