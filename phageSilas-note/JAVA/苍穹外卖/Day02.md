@@ -20,8 +20,8 @@ Employee newEmployee = Employee.builder() // 🟢 第一步：开启建造
 ```
 
 ## 使用前提
-
-修改原本的用户类中的构造方法
+**现在一般通过lombok插件的注解@Builder直接写在用户类前代替手搓**
+若不使用@Builder,就要修改原本的用户类中的构造方法
 ``` java
 public class Employee {
     // 1. 目标类的属性（通常是 private 的，保证封装性）
@@ -72,3 +72,5 @@ public class Employee {
 
 ```
 
+# 对象属性拷贝BeanUtils.copyProperties
+## 使用场景
