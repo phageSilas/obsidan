@@ -125,3 +125,8 @@ employee.setUpdateUser(BaseContext.getCurrentId());
 //把set获得到的empId放出来
 ```
 
+# 分页查询插件PageHelper
+``` java
+PageHelper.startPage(employeePageQueryDTO.getPage(), employeePageQueryDTO.getPageSize());
+```
+在
