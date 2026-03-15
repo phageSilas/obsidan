@@ -125,19 +125,23 @@ employee.setUpdateUser(BaseContext.getCurrentId());
 //把set获得到的empId放出来
 ```
 
+
 # 分页查询插件PageHelper
 ``` java
 PageHelper.startPage(employeePageQueryDTO.getPage(), employeePageQueryDTO.getPageSize());
 ```
 在Sevice的实现类中引入该方法,即可自动拆解字符串获取起始页和每页数据数量,并动态拼装sql语句,
-
+**注意**:employeePageQueryDTO中封装着起始页码和每页数量,以及分页查询时的条件
 若要使用该插件,其返回值要遵循其规则,是固定的返回值类型
 ``` java
 Page<Employee> page = employeeMapper.page(employeePageQueryDTO);
 //
 ```
-**过程省流**:
-pagehelper通过传进来的employeePageQueryDTO中的duixing
+## **过程省流**:
+1) PageHelper.start方法获得起始页码和每页数量,并通过ThreadLocal存储这俩参数
+2) Page<Employee'> page接收来自employeeMapper.page(employeePageQueryDTO);的返回值,使用集合是因为查询到的数据有多条
+3) employeeMapper.page(employeePageQueryDTO);zhi'xing'de'shi'hou
+4) Pagehelper通过传进来的employeePageQueryDTO中的duixing
 ## 原理
 ### 第一步：把分页参数塞进口袋
 ``` java
