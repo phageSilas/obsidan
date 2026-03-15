@@ -136,3 +136,38 @@ PageHelper.startPage(employeePageQueryDTO.getPage(), employeePageQueryDTO.getPag
 Page<Employee> page = employeeMapper.page(employeePageQueryDTO);
 //
 ```
+## 原理
+### 第一步：把分页参数塞进口袋
+``` java
+PageHelper.startPage(employeePageQueryDTO.getPage(), employeePageQueryDTO.getPageSize());
+```
+
+- **表面上**：你调用了这个方法，传了页码和每页条数。
+    
+- **暗地里**：`PageHelper` 根本没有去碰数据库，它只是非常乖巧地把这两个参数封装成一个 `Page` 对象，然后**塞进了当前线程的 `ThreadLocal` 里面**。
+    
+- **此时状态**：准备工作完成，当前线程的“口袋”里装好了 `(pageNum=1, pageSize=10)`，等待后续使用。
+    
+
+### 第二步：业务查询与“半路打劫”
+
+``` Java
+Page<Employee> page = employeeMapper.page(employeePageQueryDTO);
+```
+
+
+当这行代码执行时，流程是这样的：
+
+1. **生成原始 SQL**：MyBatis 根据你的 XML 或注解，生成了基础的 SQL，比如 `SELECT * FROM employee WHERE name = '张三'`。
+    
+2. **拦截器出场**：PageHelper 事先在 MyBatis 里安插了一个“拦截器”（你可以理解为城管）。在 SQL 真正发给 MySQL 之前，拦截器把它拦住了。
+    
+3. **摸口袋（ThreadLocal）**：拦截器去当前线程的 `ThreadLocal` 里摸了一下，发现：“哟，这哥们口袋里装了分页参数 `(pageNum=1, pageSize=10)`！”
+    
+4. **篡改 SQL（拼接 LIMIT）**：拦截器立刻把原始 SQL 进行了改造。
+    
+    - 它先偷偷帮你查了一次总数：`SELECT COUNT(*) FROM employee WHERE name = '张三'`。
+        
+    - 然后把原始 SQL 改写成分页 SQL：`SELECT * FROM employee WHERE name = '张三' LIMIT 0, 10`。
+        
+5. **执行并清理**：拦截器把改造后的 SQL 发给数据库执行，拿到结果后，它会做一件我们上一节强调过的保命操作——**调用 `ThreadLocal.remove()` 把口袋清空**，防止影响下一次请求。
