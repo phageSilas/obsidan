@@ -129,4 +129,9 @@ employee.setUpdateUser(BaseContext.getCurrentId());
 ``` java
 PageHelper.startPage(employeePageQueryDTO.getPage(), employeePageQueryDTO.getPageSize());
 ```
-在
+在Sevice的实现类中引入该方法,即可自动拆解字符串获取起始页和每页数据数量,并动态拼装sql语句,
+
+若要使用该插件,其返回值要遵循其规则,是固定的返回值类型
+``` java
+Page<Employee> page = employeeMapper.page(employeePageQueryDTO);
+```
