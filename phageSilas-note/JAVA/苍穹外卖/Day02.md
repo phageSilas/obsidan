@@ -124,3 +124,4 @@ employee.setCreateUser(BaseContext.getCurrentId());//设置创建人
 employee.setUpdateUser(BaseContext.getCurrentId());
 //把set获得到的empId放出来
 ```
+
