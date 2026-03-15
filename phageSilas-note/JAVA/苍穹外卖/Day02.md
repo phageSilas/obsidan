@@ -111,4 +111,16 @@ public class BaseContext {
   
 }
 ```
-然后通过其中的setCurrentId()来获取某一步的参数,然后在其他步骤中通过getCurrentId()把获取到的参数放出来调用(获取)
+然后通过其中的setCurrentId()来获取某一步的参数,然后在其他步骤中通过getCurrentId()把获取到的参数放出来调用
+获取:
+``` java
+Long empId = Long.valueOf(claims.get(JwtClaimsConstant.EMP_ID).toString());  
+BaseContext.setCurrentId(empId);//通过ThreadLocal获取当前登录员工id
+```
+调用:
+``` java
+  
+employee.setCreateUser(BaseContext.getCurrentId());//设置创建人  
+employee.setUpdateUser(BaseContext.getCurrentId());
+//把set获得到的empId放出来
+```
