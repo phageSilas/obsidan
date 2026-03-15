@@ -137,11 +137,12 @@ PageHelper.startPage(employeePageQueryDTO.getPage(), employeePageQueryDTO.getPag
 Page<Employee> page = employeeMapper.page(employeePageQueryDTO);
 //
 ```
+**注意:** startPage必须紧邻查询语句(调用查询的接口)
 ## **过程省流**:
 1) PageHelper.start方法获得起始页码和每页数量,并通过ThreadLocal存储这俩参数
 2) Page<Employee'> page接收来自employeeMapper.page(employeePageQueryDTO);的返回值,使用集合是因为查询到的数据有多条
-3) employeeMapper.page(employeePageQueryDTO);zhi'xing'de'shi'hou
-4) Pagehelper通过传进来的employeePageQueryDTO中的duixing
+3) employeeMapper.page(employeePageQueryDTO);执行的时候,PageHelper会对查询语句进行拦截和操作,最终将篡改后的数据一条一条封装成集合返回给Page<Employee'>
+
 ## 原理
 ### 第一步：把分页参数塞进口袋
 ``` java
