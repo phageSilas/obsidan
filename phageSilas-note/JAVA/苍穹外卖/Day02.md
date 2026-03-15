@@ -136,6 +136,8 @@ PageHelper.startPage(employeePageQueryDTO.getPage(), employeePageQueryDTO.getPag
 Page<Employee> page = employeeMapper.page(employeePageQueryDTO);
 //
 ```
+**过程省流**:
+pagehelper通过传进来的employeePageQueryDTO中的duixing
 ## 原理
 ### 第一步：把分页参数塞进口袋
 ``` java
@@ -171,3 +173,15 @@ Page<Employee> page = employeeMapper.page(employeePageQueryDTO);
     - 然后把原始 SQL 改写成分页 SQL：`SELECT * FROM employee WHERE name = '张三' LIMIT 0, 10`。
         
 5. **执行并清理**：拦截器把改造后的 SQL 发给数据库执行，拿到结果后，它会做一件我们上一节强调过的保命操作——**调用 `ThreadLocal.remove()` 把口袋清空**，防止影响下一次请求。
+
+_(注意：因为 MyBatis 拦截器返回的对象其实是被 PageHelper 包装过的一个叫 `Page` 的类，它继承了 `ArrayList`，所以你可以直接强转成 `Page<Employee>`。)_
+
+### 第三步：包装返回结果
+
+Java
+
+```
+return new PageResult(page.getTotal(), page.getResult());
+```
+
+最后一步就很简单了，你从刚才那个特殊的 `Page` 对象中，抽取出“总记录数（Total）”和“当前页的数据列表（Result）”，组装成前端需要的统一格式返回给用户。
