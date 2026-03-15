@@ -84,3 +84,5 @@ Employee employee = new Employee();
 BeanUtils.copyProperties(employeeDTO, employee);
 //会自动把 employeeDTO里的值全部塞进 employee 里。左➡️右
 ```
+
+## 线程局部变量ThreadLocal
