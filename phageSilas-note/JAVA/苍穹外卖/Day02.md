@@ -12,11 +12,13 @@ belike:
 ``` java
 // 假设前端传过来一个 employeeDTO，你想把它转换成你的 Employee 实体对象
 Employee newEmployee = Employee.builder() // 🟢 第一步：开启建造
-                .username(employeeDTO.getUsername()) // 🟡 第二步：各种赋值（顺序随你意）
+                // 🟡 第二步：各种赋值（顺序随你意）
+                .username(employeeDTO.getUsername()) 
+               // username 就是要修改的属性名,括号里就是要修改为的参数
                 .name(employeeDTO.getName())
                 .phone(employeeDTO.getPhone())
                 // 假设这里故意不给 sex 和 idNumber 赋值，也是完全合法的
-                .build();                        // 🔴 第三步：打包生成最终对象
+                .build(); // 🔴 第三步：打包生成最终对象
 ```
 
 ## 使用前提
