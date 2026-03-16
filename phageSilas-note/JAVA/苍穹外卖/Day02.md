@@ -196,3 +196,59 @@ return new PageResult(page.getTotal(), page.getResult());
 # 消息转换器
 由Spring MVC框架提供,通常用于将localDateTime之类的时间转换成Json格式,适用于全局配置(@JsonFormat适用于数量较少的属性)
 一般将其主体代码写在一个工具类中,然后调用写在Configuration配置类中,格式较固定
+
+# Mybatis 查询返回机制
+场景:
+``` java
+ServiceImply:
+@Override  
+public Dept getById1(Integer deptId) {  
+    return deptMapper.getById2(deptId);  
+}
+
+Mapper:
+@Select("select * from employee where id = #{id}")  
+Employee getById(Long id);
+
+```
+问题:为什么返回类型是Dept类的对象,但是直接return deptMapper.getById2(deptId); 一个查询接口jiu'xi
+## MyBatis 为什么能直接返回一个 Java 对象？
+
+MyBatis 的核心本质是一个 **ORM（对象关系映射）** 框架，它通过在底层封装复杂的 JDBC 操作，实现了数据库数据到 Java 对象的自动化转换。它的这种“高级魔法”主要依赖两大核心技术：**动态代理**和**反射**。
+
+### 1. 核心特性一：无实现类编程（接口绑定）
+
+- **现象**：开发者只需写一个 Mapper 接口（如 `EmployeeMapper`），不需要写 `Impl` 实现类，直接调用接口方法就能查数据库。
+    
+- **底层原理（动态代理）**：
+    
+    - 项目启动时，MyBatis 利用 **JDK 动态代理技术**，在内存中悄悄为你的接口生成了一个“代理实现类”。
+        
+    - 当你调用 `getById(id)` 时，实际上是由这个代理类接管了请求，去读取你写的 `@Select` 注解或 XML 文件中的 SQL 语句。
+        
+
+### 2. 核心特性二：自动结果集映射（ResultSet Mapping）
+
+- **现象**：写完 SQL 只要声明返回值是 `Employee`，拿到的就是一个装满数据的 `Employee` 对象。
+    
+- **底层原理（反射机制）**：
+    
+    1. **执行 SQL**：底层依然使用 JDBC 执行 SQL，拿到数据库返回的原始表格数据（`ResultSet`）。
+        
+    2. **实例化对象**：MyBatis 通过 **Java 反射**，在底层偷偷 `new` 了一个空的 `Employee` 对象。
+        
+    3. **字段匹配与赋值**：它读取数据库查询结果的列名（如 `id`, `name`），去匹配 `Employee` 类里的属性名。匹配成功后，再次利用反射调用对象的 `set` 方法（如 `setId()`, `setName()`），把数据一个个塞进去。
+        
+    4. **智能转换**：它还支持高级映射配置，比如开启 `mapUnderscoreToCamelCase` 后，能自动把数据库的 `create_time` 映射到 Java 的 `createTime` 属性上。
+        
+
+### 3. 核心特性三：彻底消除模板代码（Boilerplate Code）
+
+- 传统的 JDBC 开发需要写大量重复代码：注册驱动、获取连接、创建 Statement、遍历结果集、手动 set 数据、捕获异常、关闭连接等。
+    
+- **MyBatis 的价值**：它充当了“勤奋的底层搬运工”，把这些脏活累活全包了。开发者只需要关注核心业务：**“写什么 SQL”** 和 **“用什么对象接收”**。
+    
+
+---
+
+**💡 一句话总结：** MyBatis 就像一个智能翻译官，利用**动态代理**接管接口方法，拿着你的 SQL 去数据库打交道，然后利用**反射机制**把查到的“二维表格数据”翻译并组装成你想要的“Java 对象”交还给你。
