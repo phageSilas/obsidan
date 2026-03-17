@@ -211,7 +211,7 @@ Mapper:
 Employee getById(Long id);
 
 ```
-问题:为什么返回类型是Dept类的对象,但是直接return deptMapper.getById2(deptId); 一个查询接口jiu'xi
+**问题** : 为什么返回类型是Dept类的对象,但是直接return deptMapper.getById2(deptId); 一个查询接口就相当于返回了一个类对象
 ## MyBatis 为什么能直接返回一个 Java 对象？
 
 MyBatis 的核心本质是一个 **ORM（对象关系映射）** 框架，它通过在底层封装复杂的 JDBC 操作，实现了数据库数据到 Java 对象的自动化转换。它的这种“高级魔法”主要依赖两大核心技术：**动态代理**和**反射**。
