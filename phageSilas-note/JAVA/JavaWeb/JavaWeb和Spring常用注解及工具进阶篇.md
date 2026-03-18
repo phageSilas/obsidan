@@ -86,6 +86,11 @@ excution(* com.itheima..DeptService.*(..))
 ### @annotation 
 @Before("@annotation (com.itheima.anno.自定义名)")
 然后在目标方法上加上刚自定义的注解即可 @自定义名
+``` java
+@Pointcut("execution(* com.sky.mapper.*.*(..)) &&  @annotation(com.sky.annotation.AtuoFill)")
+
+表示: 拦截mapper包下的,同时方法头上带有注解annotation的方法
+```
 
 ## 连接点JoinPoint
 主要用于除@Around外的那几种方法,
