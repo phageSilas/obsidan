@@ -98,7 +98,9 @@ excution(* com.itheima..DeptService.*(..))
 
 # SpringBoot引入第三方Bean
 ## @Bean
-
+通常写在配置类中@Configuration
+当想使用或修改第三方只能读不能操作的类/方法时
+在方法名上写@Bean即可在本方法中实例化其他第三方
 
 
 
