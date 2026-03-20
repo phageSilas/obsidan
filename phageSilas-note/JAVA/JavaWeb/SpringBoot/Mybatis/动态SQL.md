@@ -22,5 +22,5 @@
 ```
 
 ## foreach
-![[JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-21.png|651x338]]
+![[JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-21.png|544|544x336]]
 使用
