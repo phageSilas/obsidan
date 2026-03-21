@@ -86,6 +86,7 @@ Employee employee = new Employee();
 BeanUtils.copyProperties(employeeDTO, employee);
 //会自动把 employeeDTO里的值全部塞进 employee 里。左➡️右
 ```
+若是把属性更多的类赋值给属性更少的类,代码会正常运行，多出来的属性会被直接“无视”掉（静默忽略）
 
 ## 线程局部变量ThreadLocal
 前提知识:**每发一次请求,那么后端所有层均算作同一个线程**,并且每次请求线程均不一样具有线程隔离特性

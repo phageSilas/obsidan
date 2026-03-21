@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA/JavaWeb/JavaWeb基本流程.md",
+                "file": "JAVA/苍穹外卖/Day02.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "JavaWeb基本流程"
+              "title": "Day02"
             }
           }
         ]
@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "copy",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -74,7 +74,8 @@
               "title": "书签"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -142,13 +143,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA/JavaWeb/JavaWeb基本流程.md",
+                "file": "JAVA/苍穹外卖/Day02.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "JavaWeb基本流程 的大纲"
+              "title": "Day02 的大纲"
             }
           }
         ],
@@ -173,8 +174,8 @@
   },
   "active": "81e6579c26b1aac1",
   "lastOpenFiles": [
-    "JAVA/JavaWeb/SpringBoot/日志@SL4fj.md",
     "JAVA/JavaWeb/JavaWeb基本流程.md",
+    "JAVA/JavaWeb/SpringBoot/日志@SL4fj.md",
     "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具基础篇.md",
     "JAVA/JavaWeb/Attachment/image-25.png",
     "JAVA/JavaWeb/Attachment/image-24.png",
