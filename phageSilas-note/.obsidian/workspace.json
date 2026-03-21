@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具基础篇.md",
+                "file": "JAVA/JavaWeb/未命名.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "JavaWeb和Spring常用注解及工具基础篇"
+              "title": "未命名"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具基础篇.md",
+                "file": "JAVA/JavaWeb/未命名.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "JavaWeb和Spring常用注解及工具基础篇 的大纲"
+              "title": "未命名 的大纲"
             }
           }
         ],
@@ -173,11 +173,13 @@
   },
   "active": "81e6579c26b1aac1",
   "lastOpenFiles": [
+    "JAVA/JavaWeb/SpringBoot/日志@SL4fj.md",
+    "JAVA/JavaWeb/未命名.md",
+    "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具基础篇.md",
     "JAVA/JavaWeb/Attachment/image-25.png",
     "JAVA/JavaWeb/Attachment/image-24.png",
     "JAVA/JavaWeb/SpringBoot/Mybatis/动态SQL.md",
     "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具进阶篇.md",
-    "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具基础篇.md",
     "JAVA/JavaWeb/SpringBoot/三层架构与解耦.md",
     "JAVA/苍穹外卖/Day03.md",
     "JAVA/苍穹外卖/Day02.md",
@@ -201,7 +203,6 @@
     "Attachment/image-9.png",
     "未命名.base",
     "未命名 1.base",
-    "JAVA/JavaWeb/SpringBoot/日志@SL4fj.md",
     "JAVA/JavaWeb/SpringBoot/Mybatis/配置文件ymal-yml.md",
     "JAVA/JavaWeb/SpringBoot/JDBC.md",
     "JAVA/JavaWeb/SpringBoot/SpringBoot测试类.md",
@@ -217,7 +218,6 @@
     "Attachment/image-5.png",
     "Attachment/image-4.png",
     "JAVA/JavaWeb/SpringBoot/Attachment/image-13.png",
-    "JAVA/JavaWeb/SpringBoot/Attachment/image-12.png",
-    "JAVA/JavaWeb/SpringBoot/Attachment/image-11.png"
+    "JAVA/JavaWeb/SpringBoot/Attachment/image-12.png"
   ]
 }
