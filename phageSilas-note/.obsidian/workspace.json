@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA/JavaWeb/未命名.md",
+                "file": "JAVA/JavaWeb/JavaWeb基本流程.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "未命名"
+              "title": "JavaWeb基本流程"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA/JavaWeb/未命名.md",
+                "file": "JAVA/JavaWeb/JavaWeb基本流程.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "未命名 的大纲"
+              "title": "JavaWeb基本流程 的大纲"
             }
           }
         ],
@@ -174,7 +174,7 @@
   "active": "81e6579c26b1aac1",
   "lastOpenFiles": [
     "JAVA/JavaWeb/SpringBoot/日志@SL4fj.md",
-    "JAVA/JavaWeb/未命名.md",
+    "JAVA/JavaWeb/JavaWeb基本流程.md",
     "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具基础篇.md",
     "JAVA/JavaWeb/Attachment/image-25.png",
     "JAVA/JavaWeb/Attachment/image-24.png",
