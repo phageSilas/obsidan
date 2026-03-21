@@ -129,8 +129,13 @@ public ResponseEntity<User> updateUser(@PathVariable(value = "userId") Long user
 # 参数接收/参数绑定/参数配置/数据返回
 用于绑定请求参数到方法参数中
 前端数据通过以下三种注解,赋予他们后跟的参数
-## @RequestBody
-接收前端的json格式数据
+## *@RequestBody
+接收前端的json格式数据,并将jsonn格式反序列化为一般的格式,赋值给后面的对象
+![[image-24.png]]
+![[image-25.png]]
+
+如上图所示,启动后前端吧这个页面的各种数据通过json格式返回给后端,@RequestBody将这些Json语句反序列化为普通格式,并将响应数据赋值给相应的对象属性
+
 
 ## @PathVariable
 用于从 URL 路径中提取参数。
