@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA/苍穹外卖/Day02.md",
+                "file": "JAVA/JavaWeb/其他第三方错误.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Day02"
+              "title": "其他第三方错误"
             }
           }
         ]
@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "copy",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -74,8 +74,7 @@
               "title": "书签"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -143,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA/苍穹外卖/Day02.md",
+                "file": "JAVA/JavaWeb/其他第三方错误.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Day02 的大纲"
+              "title": "其他第三方错误 的大纲"
             }
           }
         ],
@@ -174,6 +173,9 @@
   },
   "active": "81e6579c26b1aac1",
   "lastOpenFiles": [
+    "JAVA/JavaWeb/Attachment/image-27.png",
+    "JAVA/JavaWeb/Attachment/image-26.png",
+    "JAVA/苍穹外卖/Day02.md",
     "JAVA/JavaWeb/JavaWeb基本流程.md",
     "JAVA/JavaWeb/SpringBoot/日志@SL4fj.md",
     "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具基础篇.md",
@@ -183,7 +185,6 @@
     "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具进阶篇.md",
     "JAVA/JavaWeb/SpringBoot/三层架构与解耦.md",
     "JAVA/苍穹外卖/Day03.md",
-    "JAVA/苍穹外卖/Day02.md",
     "JAVA/规范/JavaWeb分层规范.md",
     "JAVA/JavaWeb/SpringBoot/预编译SQL.md",
     "JAVA/苍穹外卖/密码加密.md",
@@ -207,7 +208,6 @@
     "JAVA/JavaWeb/SpringBoot/Mybatis/配置文件ymal-yml.md",
     "JAVA/JavaWeb/SpringBoot/JDBC.md",
     "JAVA/JavaWeb/SpringBoot/SpringBoot测试类.md",
-    "JAVA/JavaWeb/SpringBoot/Mybatis/MyBatis.md",
     "未命名 5.base",
     "未命名 4.base",
     "未命名 3.base",
@@ -218,7 +218,6 @@
     "Attachment/image-6.png",
     "Attachment/image-5.png",
     "Attachment/image-4.png",
-    "JAVA/JavaWeb/SpringBoot/Attachment/image-13.png",
-    "JAVA/JavaWeb/SpringBoot/Attachment/image-12.png"
+    "JAVA/JavaWeb/SpringBoot/Attachment/image-13.png"
   ]
 }

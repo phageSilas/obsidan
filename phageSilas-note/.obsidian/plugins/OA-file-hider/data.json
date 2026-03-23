@@ -3,12 +3,12 @@
   "hiddenList": [
     "JAVA/Attachment",
     "MySQL/Attachment",
-    "Attachment",
     "JavaWeb/Attachment",
     "JavaWeb/SpringBoot/Attachment",
     "JavaWeb/SpringBoot/Mybatis/Attachment",
     "JAVA/JavaWeb/Attachment",
     "JAVA/JavaWeb/SpringBoot/Attachment",
-    "JAVA/JAVASE/Attachment"
+    "JAVA/JAVASE/Attachment",
+    "Attachment"
   ]
 }
