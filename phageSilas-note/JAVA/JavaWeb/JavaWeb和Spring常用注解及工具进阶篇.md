@@ -245,11 +245,21 @@ excution(* com.itheima..DeptService.*(..))
 ## @EnableCaching
 加在启动类上.用以启动缓存注解
 
-## @Cacheable
+## @Cacheable (动态代理)
 写在方法前,在方法执行前查询缓存中是否有数据,如果有,则直接返回缓存数据;若没有,调用方法并将方法返回值放到缓存中
 
 ``` java
-@Cacheable(cacheNames=)
+@Cacheable(cacheNames="userCache",key="#id")
+public User getById(long id){
+User user = usermapper.getById(id)
+}
+
+其中,
+1.cacheNames写要调用的redis的key,
+若redis中有,则跳过方法中的查询数据库方法(代理方法),直接调用redis中的数据
+若没有则正常执行方法,并在执行方法时,会通过反射创建出这条数据
+ 
+2.key后只写形参,不能写result
 ```
 
 ## @Cacheput
@@ -274,5 +284,16 @@ return user;
 ```
 以上输出后,redis中会显示 userCache::id(在redis中:表示分级,最终表示在userCache文件夹下的`[Empty]` 文件夹下的"userCache::id("),因为两个冒号分了两级
 
-## @CacheEvict
-将一条或者多条数据从缓存中删除
+## @CacheEvict (动态代理)
+写在方法前,将一条或者多条数据从缓存中删除
+``` java
+@CacheEvict(cacheNames="userCache",key="#id")
+public User save(@RequestBody User user)
+{
+userMapper.insert(user);
+return user;
+}
+
+@CacheEvict(cacheNames="userCache",key="#id")
+```
+方法结束后,删除对应的Redis数据
