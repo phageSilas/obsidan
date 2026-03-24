@@ -248,7 +248,25 @@ excution(* com.itheima..DeptService.*(..))
 ## @Cacheable
 写在方法前,在方法执行前查询缓存中是否有数据,如果有,则直接返回缓存数据;若没有,调用方法并将方法返回值放到缓存中
 
+``` java
+@Cache
+```
+
 ## @Cacheput
+写在方法前,将返回值放到缓存中
+
+``` java
+@Cacheput(cacheNames="userCache",key="#user.id")
+public User save(@RequestBody User user)
+{
+userMapper.insert(user);
+return user;
+}
+
+其中,cacheName随意写
+#xx是spring一种语法的固定格式,后边一般写传进来形参,然后就可以动态计算.id的值
+```
+以上输出后,redis中会显示 userCache::id
 
 ## @CacheEvict
-
+将一条或者多条数据从缓存中删除
