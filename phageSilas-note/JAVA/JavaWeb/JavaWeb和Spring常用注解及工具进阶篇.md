@@ -243,8 +243,10 @@ excution(* com.itheima..DeptService.*(..))
 # Spring Cache
 
 ## @EnableCaching
+加在启动类上.用以启动缓存注解
 
 ## @Cacheable
+写在方法前,在方法执行前查询缓存中是否有数据,如果有,则直接返回缓存数据;若没有,调用方法并将方法返回值放到缓存中
 
 ## @Cacheput
 
