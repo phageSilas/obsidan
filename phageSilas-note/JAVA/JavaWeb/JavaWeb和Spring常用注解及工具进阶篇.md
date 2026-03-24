@@ -294,6 +294,7 @@ userMapper.insert(user);
 return user;
 }
 
-@CacheEvict(cacheNames="userCache",key="#id")
+
 ```
-方法结束后,删除对应的Redis数据
+方法结束后,删除对应的Redis数据,
+@CacheEvict(cacheNames="userCache",allEntries = true)表示删除userCache文件夹下的全部数据
