@@ -228,9 +228,25 @@ excution(* com.itheima..DeptService.*(..))
 ![[Attachment/image-9.png|519x335]]
 
 ## 操作
-在聚合工程(父工程)中,使用"<moudle>/引入子工程
+在聚合工程(父工程)中,使用`<moudle>`入子工程
 
-``` java
-
+```  java
+<modules>
+    <module>../tilas-pojo</module>
+    <module>../tilas-pojo</module>
+    <module>../tilas-pojo</module>
+</modules>
 ```
-# 
+
+
+
+# Spring Cache
+
+## @EnableCaching
+
+## @Cacheable
+
+## @Cacheput
+
+## @CacheEvict
+
