@@ -249,7 +249,7 @@ excution(* com.itheima..DeptService.*(..))
 写在方法前,在方法执行前查询缓存中是否有数据,如果有,则直接返回缓存数据;若没有,调用方法并将方法返回值放到缓存中
 
 ``` java
-@Cache
+@Cacheable(cacheNames=)
 ```
 
 ## @Cacheput
@@ -272,7 +272,7 @@ return user;
 4. a0, root.args[0], 效果同3,都是第1个形参
 然后就可以动态计算.id的值
 ```
-以上输出后,redis中会显示 userCache::id
+以上输出后,redis中会显示 userCache::id(在redis中:表示分级,最终表示在userCache文件夹下的`[Empty]` 文件夹下的"userCache::id("),因为两个冒号分了两级
 
 ## @CacheEvict
 将一条或者多条数据从缓存中删除
