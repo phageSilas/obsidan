@@ -229,10 +229,17 @@ excution(* com.itheima..DeptService.*(..))
 
 ## 操作
 在聚合工程(父工程)中,使用<moudle>引入子工程
-```  java
+
+``` java
 <modules>
 	<module>../tilas-pojo</module>
 	<module>../tilas-pojo</module>
 	<module>../tilas-pojo</module>
 </modules>
+
+
 ```
+
+
+
+# 
