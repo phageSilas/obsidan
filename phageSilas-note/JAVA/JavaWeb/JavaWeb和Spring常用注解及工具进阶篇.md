@@ -298,3 +298,5 @@ return user;
 ```
 方法结束后,删除对应的Redis数据,
 @CacheEvict(cacheNames="userCache",allEntries = true)表示删除userCache文件夹下的全部数据
+
+**注意:** 一般修改,删除数据都需要清除全部缓存,因为其关联的数据太多,折腾修改不如直接全删

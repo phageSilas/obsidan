@@ -20,21 +20,8 @@
               "icon": "lucide-file",
               "title": "JavaWeb和Spring常用注解及工具进阶篇"
             }
-          },
-          {
-            "id": "fa54dc9854932375",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.12.7"
-              },
-              "icon": "lucide-book-up",
-              "title": "版本说明 1.12.7"
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -184,7 +171,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "fa54dc9854932375",
+  "active": "81e6579c26b1aac1",
   "lastOpenFiles": [
     "JAVA/JavaWeb/JavaWeb基本流程.md",
     "JAVA/苍穹外卖/Day03.md",
