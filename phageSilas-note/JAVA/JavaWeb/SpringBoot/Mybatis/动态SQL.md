@@ -22,5 +22,27 @@
 ```
 
 ## foreach
-![[JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-21.png|544|538x240]]
-使用
+![[JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-21.png|544|538]]
+``` java
+void batchInsertUsers(@Param("userList") List<User> users);
+```
+
+
+
+``` xml
+<insert id="batchInsertUsers">
+    INSERT INTO user (name, age, status) 
+    VALUES 
+    <foreach collection="userList" item="user" separator=",">
+        (#{user.name}, #{user.age}, #{user.status})
+    </foreach>
+</insert>
+
+```
+
+
+
+
+``` SQL
+INSERT INTO user (name, age, status) VALUES ('张三', 20, 1), ('李四', 25, 0), ('王五', 22, 1)
+```
