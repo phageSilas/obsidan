@@ -24,16 +24,14 @@
 ## foreach
 ![[JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-21.png|544|538]]
 ``` java
-void batchInsertUsers(@Param("userList") List<User> users);
+void batchInsertUsers( List<User> users);
 ```
-
-
 
 ``` xml
 <insert id="batchInsertUsers">
     INSERT INTO user (name, age, status) 
     VALUES 
-    <foreach collection="userList" item="user" separator=",">
+    <foreach collection="users" item="user" separator=",">
         (#{user.name}, #{user.age}, #{user.status})
     </foreach>
 </insert>
@@ -41,8 +39,17 @@ void batchInsertUsers(@Param("userList") List<User> users);
 ```
 
 
-
-
 ``` SQL
 INSERT INTO user (name, age, status) VALUES ('张三', 20, 1), ('李四', 25, 0), ('王五', 22, 1)
 ```
+
+其中,**collection在现代jdk中可以使用对象名**,一般情况的默认如下
+- 如果参数是 `List` 类型，MyBatis 会自动给它起个别名叫 **`"list"`**。
+- 如果参数是数组类型（比如 `User[]`），MyBatis 会自动给它起个别名叫 **`"array"`**。
+- 如果参数是普通的 `Collection`（比如 `Set`），别名就是 **`"collection"`**。
+
+另外,也可以通过在接口中以@Param来定义c ollection名字
+``` java
+List<User> selectByIds(@Param("idList") List<Long> ids);
+```
+这样collection就是idList了
