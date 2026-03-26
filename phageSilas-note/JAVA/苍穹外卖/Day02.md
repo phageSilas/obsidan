@@ -21,6 +21,7 @@ Employee newEmployee = Employee.builder() // 🟢 第一步：开启建造
                 .build(); // 🔴 第三步：打包生成最终对象
 ```
 
+==注意:== builder一般在构建新对象时使用,若已经有对象了,推荐使用传统的set方法赋值
 ## 使用前提
 **现在一般通过lombok插件的注解@Builder直接写在用户类前代替手搓**
 若不使用@Builder,就要修改原本的用户类中的构造方法
