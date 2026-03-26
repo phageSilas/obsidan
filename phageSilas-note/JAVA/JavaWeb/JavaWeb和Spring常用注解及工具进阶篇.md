@@ -240,6 +240,18 @@ excution(* com.itheima..DeptService.*(..))
 
 
 
+# 事务@Transactional
+## 使用类型
+- **方法**：推荐将注解使用于方法上，不过需要注意的是：**该注解只能应用到 public 方法上，否则不生效。**
+- **类**：如果这个注解使用在类上的话，表明该注解对该类中所有的 public 方法都生效。
+- **接口**：不推荐在接口上使用。
+- 
+
+---
+## 
+
+
+
 # Spring Cache
 
 ## @EnableCaching
