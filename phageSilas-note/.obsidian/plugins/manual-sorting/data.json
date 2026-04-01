@@ -90,7 +90,6 @@
       "JAVA/JavaWeb/test github.md",
       "JAVA/JavaWeb/Http.md",
       "JAVA/JavaWeb/常见错误-异常处理.md",
-      "JAVA/JavaWeb/其他第三方错误.md",
       "JAVA/JavaWeb/SpringBoot",
       "JAVA/JavaWeb/MyBatis常用注解.md",
       "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具基础篇.md",
@@ -99,8 +98,9 @@
       "JAVA/JavaWeb/Attachment"
     ],
     "JAVA/JavaWeb/Attachment": [
+      "JAVA/JavaWeb/Attachment/image-28.png",
+      "JAVA/JavaWeb/Attachment/image-29.png",
       "JAVA/JavaWeb/Attachment/image-26.png",
-      "JAVA/JavaWeb/Attachment/image-27.png",
       "JAVA/JavaWeb/Attachment/image-24.png",
       "JAVA/JavaWeb/Attachment/image-25.png",
       "JAVA/JavaWeb/Attachment/image-23.png",
