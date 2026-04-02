@@ -304,3 +304,49 @@ public class RedisConfig {
 ![[image-2.png]]
 
 ### 缺陷
+为了能在反序列化时“聪明地”知道要把 JSON 转换回哪个具体的 Java 类，强行塞入了一个 `@class` 字段。就像你看到的，对于小对象来说，包名和类名的长度甚至超过了真实数据，这会导致 Redis 内存被大量浪费。
+![[image-3.png]]
+---
+
+#### 改用 `StringRedisTemplate` + 手动序列化
+（最推荐，大厂标配）
+这是最根本、最干净的解决方式。**放弃让 Spring 帮你自动做对象到 JSON 的转换**，而是把 Redis 退化为一个纯粹的“字符串存储库”。
+
+**具体做法：**
+
+1. 在代码中注入 Spring 默认提供的 `StringRedisTemplate`，而不是你自己配置的 `RedisTemplate<String, Object>`。
+    
+2. 存数据前，用 Jackson (`ObjectMapper`) 或 Fastjson (`JSON.toJSONString`) 手动把对象转成纯净的 JSON 字符串。
+    
+3. 取数据时，拿到纯字符串，再手动转回对象。
+
+**代码示例（使用 Jackson）：**
+
+Java
+
+```
+@Autowired
+private StringRedisTemplate stringRedisTemplate;
+
+@Autowired
+private ObjectMapper objectMapper; // Spring Boot 默认已自动配置
+
+public void saveUser(User user) throws Exception {
+    // 1. 手动转为纯净的 JSON 字符串：{"name":"张三","age":18}
+    String jsonStr = objectMapper.writeValueAsString(user);
+    // 2. 存入 Redis，此时绝对没有 @class 字段
+    stringRedisTemplate.opsForValue().set("user:1001", jsonStr);
+}
+
+public User getUser(String key) throws Exception {
+    // 1. 获取纯净的 JSON 字符串
+    String jsonStr = stringRedisTemplate.opsForValue().get(key);
+    // 2. 手动反序列化，明确告诉它要转成 User 类
+    if (jsonStr != null) {
+        return objectMapper.readValue(jsonStr, User.class);
+    }
+    return null;
+}
+```
+
+**优点：** 极限压榨内存，数据极其干净。 **缺点：** 每次存取都要多写两行转换代码（通常可以自己封装一个 `RedisUtil` 工具类来简化）。
