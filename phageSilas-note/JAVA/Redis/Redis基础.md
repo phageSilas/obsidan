@@ -303,3 +303,4 @@ public class RedisConfig {
 ### 效果
 ![[image-2.png]]
 
+### 缺陷
