@@ -246,7 +246,9 @@ Spring 会将 Redis 的各种数据结构操作封装成了不同的 `Operations
 
 如果在项目中你的 Key 和 Value 都是字符串（这在绝大多数场景下是最常见的），建议直接注入并使用 **`StringRedisTemplate`**。它的内部序列化器已经默认配置为 `StringRedisSerializer`，可以避免存入 Redis 时出现类似 `\xac\xed\x00\x05t\x00\x05` 的乱码前缀问题。
 
-# 序列化
+# 序列化和反序列化
+## 序列化
+**定义:** 序列化是指将对象转化成可存储或可传输的格式，将默认的"乱码"对象转化为常见的String等
 直接使用Redis存进去的都是`xac\xed\x00\x05t\x00\x05`之类的乱码
 需要在@Configuration配置类中配置序列化器,然后才能正常的输出字符
 
