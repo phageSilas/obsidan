@@ -171,8 +171,12 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "34d6b36d87ac3e98",
+  "active": "81e6579c26b1aac1",
   "lastOpenFiles": [
+    "JAVA/Redis/Attachment/image-2.png",
+    "JAVA/Redis/Attachment/image-1.png",
+    "JAVA/Redis/Attachment/image.png",
+    "JAVA/Redis/Attachment",
     "JAVA/苍穹外卖/Day03.md",
     "JAVA/Redis/Redis基础.md",
     "JAVA/JavaWeb/常见错误-异常处理.md",
@@ -211,13 +215,9 @@
     "Attachment/image-9.png",
     "未命名.base",
     "未命名 1.base",
-    "JAVA/JavaWeb/SpringBoot/Mybatis/配置文件ymal-yml.md",
     "未命名 5.base",
     "未命名 4.base",
     "未命名 3.base",
-    "未命名 2.base",
-    "Attachment/image-8.png",
-    "Attachment/image-7.png",
-    "Attachment/image-6.png"
+    "Attachment/image-8.png"
   ]
 }

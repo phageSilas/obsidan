@@ -201,7 +201,11 @@
       "JAVA/MySQL/查询/比较运算符/模糊查询LIKE.md"
     ],
     "JAVA/Redis": [
+      "JAVA/Redis/Attachment",
       "JAVA/Redis/Redis基础.md"
+    ],
+    "JAVA/Redis/Attachment": [
+      "JAVA/Redis/Attachment/image.png"
     ]
   },
   "draggingEnabled": true,
