@@ -25,7 +25,8 @@
       "JAVA/MySQL",
       "JAVA/JAVASE",
       "JAVA/JavaWeb",
-      "JAVA/苍穹外卖"
+      "JAVA/苍穹外卖",
+      "JAVA/Redis"
     ],
     "JAVA/苍穹外卖": [
       "JAVA/苍穹外卖/Day03.md",
@@ -198,6 +199,9 @@
     ],
     "JAVA/MySQL/查询/比较运算符": [
       "JAVA/MySQL/查询/比较运算符/模糊查询LIKE.md"
+    ],
+    "JAVA/Redis": [
+      "JAVA/Redis/Redis基础.md"
     ]
   },
   "draggingEnabled": true,
