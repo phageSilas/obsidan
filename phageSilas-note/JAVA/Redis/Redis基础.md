@@ -252,3 +252,31 @@ Spring 会将 Redis 的各种数据结构操作封装成了不同的 `Operations
 直接使用Redis存进去的都是`xac\xed\x00\x05t\x00\x05`之类的乱码
 需要在@Configuration配置类中配置序列化器,然后才能正常的输出字符
 
+``` java
+@Configuration  
+public class RedisConfig {  
+    @Bean  
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {  
+        // 创建 RedisTemplate 对象  
+        RedisTemplate<String, Object> template = new RedisTemplate<>();  
+        // 设置连接工厂  
+        template.setConnectionFactory(connectionFactory);  
+  
+  // 1. 创建 String 序列化器，通常用于 Key        StringRedisSerializer stringSerializer = new StringRedisSerializer();  
+  
+ // 2. 创建 JSON 序列化器，通常用于 Value        // GenericJackson2JsonRedisSerializer 优点是通用，会自动在 JSON 中带上类信息  
+ RedisSerializer<Object> jsonSerializer = RedisSerializer.json();  
+  
+// 3. 配置 Key 的序列化方式为 String        template.setKeySerializer(stringSerializer);  
+        template.setHashKeySerializer(stringSerializer);  
+  
+ // 4. 配置 Value 的序列化方式为 JSON        template.setValueSerializer(jsonSerializer);  
+        template.setHashValueSerializer(jsonSerializer);  
+  
+        // 初始化参数和初始化工作  
+        template.afterPropertiesSet();  
+        return template;  
+    }  
+  
+}
+```
