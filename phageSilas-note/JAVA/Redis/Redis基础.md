@@ -137,36 +137,52 @@ Spring 会将 Redis 的各种数据结构操作封装成了不同的 `Operations
 
 - **头尾压入元素：**
     
-    Java
-    
-    ```
+    ``` java
     redisTemplate.opsForList().leftPush("recent:logs", "log1"); // 从左侧（头部）插入
     redisTemplate.opsForList().rightPush("recent:logs", "log2"); // 从右侧（尾部）插入
     ```
+
+	**获取元素:**
+	 1) `range`：获取指定范围的元素（最常用）
+``` java
+// 获取 myList 中的所有元素
+List<Object> allElements = redisTemplate.opsForList().range("myList", 0, -1);
+
+// 获取 myList 中的前 5 个元素（索引 0 到 4）
+List<Object> topFiveElements = redisTemplate.opsForList().range("myList", 0, 4);
+```
+-----------
+    2) `index`：根据索引获取单个元素
+	`正数索引从左到右算（`0` 是第一个元素）。`
+    `负数索引从右到左算（`-1` 是最后一个元素）。`
     
-- **获取/弹出元素：**
-    
-    Java
-    
-    ```
+
+
+``` java
+// 获取第一个元素
+Object firstElement = redisTemplate.opsForList().index("myList", 0);
+
+// 获取最后一个元素
+Object lastElement = redisTemplate.opsForList().index("myList", -1);
+```
+
+- **弹出元素：**
+
+    ``` java
     // 弹出并移除最左侧的元素
     String log = (String) redisTemplate.opsForList().leftPop("recent:logs");
     ```
     
 - **获取列表片段（分页）：**
-    
-    Java
-    
-    ```
+
+    ``` java
     // 获取列表前 10 个元素（0 是开始索引，9 是结束索引）
     List<Object> logs = redisTemplate.opsForList().range("recent:logs", 0, 9);
     ```
     
 - **获取列表长度：**
     
-    Java
-    
-    ```
+    ``` java
     Long size = redisTemplate.opsForList().size("recent:logs");
     ```
     
@@ -178,10 +194,8 @@ Spring 会将 Redis 的各种数据结构操作封装成了不同的 `Operations
 无序集合，元素不能重复。常用于标签系统、共同好友（交集/并集操作）。
 
 - **添加与查询成员：**
-    
-    Java
-    
-    ```
+
+    ``` java
     redisTemplate.opsForSet().add("tags:article:1", "java", "spring", "redis"); // 添加
     Set<Object> tags = redisTemplate.opsForSet().members("tags:article:1"); // 获取所有元素
     Boolean hasJava = redisTemplate.opsForSet().isMember("tags:article:1", "java"); // 判断是否存在
@@ -189,18 +203,14 @@ Spring 会将 Redis 的各种数据结构操作封装成了不同的 `Operations
     
 - **集合运算（交集、并集）：**
     
-    Java
-    
-    ```
+    ``` java
     // 获取两个 Set 的交集（例如共同好友）
     Set<Object> common = redisTemplate.opsForSet().intersect("user:1:friends", "user:2:friends");
     ```
     
 - **删除元素：**
     
-    Java
-    
-    ```
+    ``` java
     redisTemplate.opsForSet().remove("tags:article:1", "spring");
     ```
     
@@ -213,9 +223,8 @@ Spring 会将 Redis 的各种数据结构操作封装成了不同的 `Operations
 
 - **添加元素与分数：**
     
-    Java
     
-    ```
+    ``` java
     // 为玩家添加积分
     redisTemplate.opsForZSet().add("leaderboard", "PlayerA", 1500.5);
     redisTemplate.opsForZSet().add("leaderboard", "PlayerB", 2000.0);
@@ -223,18 +232,15 @@ Spring 会将 Redis 的各种数据结构操作封装成了不同的 `Operations
     
 - **增加分数：**
     
-    Java
-    
-    ```
+
+    ``` java
     // PlayerA 增加 100 分
     redisTemplate.opsForZSet().incrementScore("leaderboard", "PlayerA", 100);
     ```
     
 - **获取排行榜单：**
     
-    Java
-    
-    ```
+    ``` java
     // 获取积分最高的 Top 10 玩家（倒序排，从大到小）
     Set<Object> top10 = redisTemplate.opsForZSet().reverseRange("leaderboard", 0, 9);
     
@@ -242,7 +248,6 @@ Spring 会将 Redis 的各种数据结构操作封装成了不同的 `Operations
     Set<Object> range = redisTemplate.opsForZSet().rangeByScore("leaderboard", 1000, 2000);
     ```
     
-
 
 如果在项目中你的 Key 和 Value 都是字符串（这在绝大多数场景下是最常见的），建议直接注入并使用 **`StringRedisTemplate`**。它的内部序列化器已经默认配置为 `StringRedisSerializer`，可以避免存入 Redis 时出现类似 `\xac\xed\x00\x05t\x00\x05` 的乱码前缀问题。
 
