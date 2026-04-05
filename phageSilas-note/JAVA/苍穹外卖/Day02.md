@@ -129,7 +129,37 @@ employee.setUpdateUser(BaseContext.getCurrentId());
 //把set获得到的empId放出来
 ```
 
-# Bean 对象转换为 Map<String, Object> 结构
+# Bean 对象转换为 Map<String, Object> 结构BeanUtil.beanToMap
+
+BeanUtil.beanToMap 是 Hutool 工具包中的一个方法
+**主要用途**
+1) 将对象属性转为键值对：把 Bean 的所有字段名作为 key，字段值作为 value
+2) 方便数据存储：特别适合存储到 Redis Hash、MongoDB 等键值型数据库
+3) 数据传输和序列化：在不同系统间传递数据时使用
+
+``` java
+// 示例 1: 基本转换
+UserDTO user = new UserDTO();
+user.setId(1L);
+user.setPhone("13800138000");
+user.setNickName("张三");
+
+Map<String, Object> map = BeanUtil.beanToMap(user);
+// 结果: {id=1, phone="13800138000", nickName="张三"}
+
+// 示例 2: 驼峰转下划线 + 忽略 null 值
+Map<String, Object> map2 = BeanUtil.beanToMap(user, true, true);
+// 结果: {id=1, phone="13800138000", nick_name="张三"}
+
+
+```
+
+**注意事项**
+1) 只会转换有 getter 方法的属性
+2) 默认保留 null 值（除非指定 ignoreNullValue=true）
+3) 默认保持原字段命名（除非指定 isToUnderlineCase=true 转为下划线）
+4) 静态方法可以直接调用，无需创建实例
+
 # 分页查询插件PageHelper
 ``` java
 PageHelper.startPage(employeePageQueryDTO.getPage(), employeePageQueryDTO.getPageSize());
