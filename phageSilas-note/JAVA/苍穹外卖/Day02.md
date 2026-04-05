@@ -129,7 +129,7 @@ employee.setUpdateUser(BaseContext.getCurrentId());
 //把set获得到的empId放出来
 ```
 
-
+# Bean 对象转换为 Map<String, Object> 结构
 # 分页查询插件PageHelper
 ``` java
 PageHelper.startPage(employeePageQueryDTO.getPage(), employeePageQueryDTO.getPageSize());
