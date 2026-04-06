@@ -209,7 +209,8 @@
     ],
     "JAVA/Redis": [
       "JAVA/Redis/Attachment",
-      "JAVA/Redis/Redis基础.md"
+      "JAVA/Redis/Redis基础命令.md",
+      "JAVA/Redis/缓存穿透.md"
     ],
     "JAVA/Redis/Attachment": [
       "JAVA/Redis/Attachment/image-1.png",
