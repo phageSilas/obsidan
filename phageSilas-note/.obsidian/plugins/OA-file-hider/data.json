@@ -9,6 +9,7 @@
     "JAVA/JavaWeb/Attachment",
     "JAVA/JavaWeb/SpringBoot/Attachment",
     "JAVA/JAVASE/Attachment",
-    "Attachment"
+    "Attachment",
+    "JAVA/Redis/Attachment"
   ]
 }
