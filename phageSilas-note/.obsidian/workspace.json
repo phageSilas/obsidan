@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA/Redis/Redis基础命令.md",
+                "file": "JAVA/Redis/锁/可重入锁.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Redis基础命令"
+              "title": "可重入锁"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA/Redis/Redis基础命令.md",
+                "file": "JAVA/Redis/锁/可重入锁.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Redis基础命令 的大纲"
+              "title": "可重入锁 的大纲"
             }
           }
         ],
@@ -173,15 +173,19 @@
   },
   "active": "24fcd89d054c2eaa",
   "lastOpenFiles": [
+    "JAVA/Redis/锁/Attachment/image.png",
+    "JAVA/Redis/锁/Attachment",
+    "JAVA/Redis/锁/悲观锁和乐观锁.md",
+    "JAVA/Redis/锁/可重入锁.md",
+    "JAVA/Redis/锁",
+    "JAVA/Redis/Redis基础命令.md",
     "JAVA/JavaWeb/常见错误-异常处理.md",
     "JAVA/JAVASE/SE基础/包装类与装箱拆箱.md",
     "JAVA/JavaWeb/SpringBoot/Hutool常用工具方法.md",
     "JAVA/苍穹外卖/Day02.md",
     "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具进阶篇.md",
     "JAVA/Redis/缓存穿透.md",
-    "JAVA/Redis/Redis基础命令.md",
     "JAVA/Redis/缓存击穿.md",
-    "JAVA/Redis/悲观锁和乐观锁.md",
     "算法/二分查找.md",
     "算法/数据结构与算法.md",
     "JAVA/Redis/Attachment/image-11.png",
@@ -211,13 +215,9 @@
     "JAVA/JavaWeb/SpringBoot/日志@SL4fj.md",
     "JAVA/JavaWeb/SpringBoot/三层架构与解耦.md",
     "JAVA/规范/JavaWeb分层规范.md",
-    "JAVA/JavaWeb/SpringBoot/预编译SQL.md",
-    "JAVA/苍穹外卖/密码加密.md",
     "JAVA/苍穹外卖",
     "Blender",
     "JAVA",
-    "未命名.base",
-    "未命名 1.base",
-    "未命名 5.base"
+    "未命名.base"
   ]
 }

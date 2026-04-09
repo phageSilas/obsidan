@@ -215,7 +215,15 @@
       "JAVA/Redis/缓存穿透.md",
       "JAVA/Redis/缓存雪崩.md",
       "JAVA/Redis/缓存击穿.md",
-      "JAVA/Redis/悲观锁和乐观锁.md"
+      "JAVA/Redis/锁"
+    ],
+    "JAVA/Redis/锁": [
+      "JAVA/Redis/锁/Attachment",
+      "JAVA/Redis/锁/悲观锁和乐观锁.md",
+      "JAVA/Redis/锁/可重入锁.md"
+    ],
+    "JAVA/Redis/锁/Attachment": [
+      "JAVA/Redis/锁/Attachment/image.png"
     ],
     "JAVA/Redis/Attachment": [
       "JAVA/Redis/Attachment/image-11.png",
