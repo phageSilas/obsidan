@@ -95,7 +95,6 @@
       "JAVA/JAVASE/SE基础/Attachment/Pasted image 20250718210356.png"
     ],
     "JAVA/JavaWeb": [
-      "JAVA/JavaWeb/Hutool常用.md",
       "JAVA/JavaWeb/test github.md",
       "JAVA/JavaWeb/Http.md",
       "JAVA/JavaWeb/常见错误-异常处理.md",
@@ -143,6 +142,7 @@
       "JAVA/JavaWeb/SpringBoot/三层架构与解耦.md",
       "JAVA/JavaWeb/SpringBoot/预编译SQL.md",
       "JAVA/JavaWeb/SpringBoot/SpringBoot测试类.md",
+      "JAVA/JavaWeb/SpringBoot/Hutool常用工具方法.md",
       "JAVA/JavaWeb/SpringBoot/Mybatis",
       "JAVA/JavaWeb/SpringBoot/日志@SL4fj.md",
       "JAVA/JavaWeb/SpringBoot/Attachment"
