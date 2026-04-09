@@ -251,6 +251,9 @@ Object lastElement = redisTemplate.opsForList().index("myList", -1);
 
 如果在项目中你的 Key 和 Value 都是字符串（这在绝大多数场景下是最常见的），建议直接注入并使用 **`StringRedisTemplate`**。它的内部序列化器已经默认配置为 `StringRedisSerializer`，可以避免存入 Redis 时出现类似 `\xac\xed\x00\x05t\x00\x05` 的乱码前缀问题。
 
+# 调用函数redis.call
+
+
 # 序列化和反序列化
 
 ### 一、 什么是 JSON 序列化？（存数据）
