@@ -44,7 +44,7 @@ Map<String, Object> map2 = BeanUtil.beanToMap(user, true, true);
 3) 默认保持原字段命名（除非指定 isToUnderlineCase=true 转为下划线）
 4) 静态方法可以直接调用，无需创建实例
 
-#  将Map 中的数据填充到 Java Bean 对象中BeanUtil.fillBeanWithMap
+#  3. 将Map 中的数据填充到 Java Bean 对象中BeanUtil.fillBeanWithMap
 也是 Hutool 工具包中的方法，它的作用与 beanToMap 正好相反
 
 **主要用途**
@@ -87,7 +87,7 @@ UserDTO newUser = BeanUtil.toBean(map, UserDTO.class);
 
 ```
 
-# BooleanUtil.isTrue(isLock) 
+# 4. BooleanUtil.isTrue(isLock) 
 等效于**Boolean.TRUE.equals(isLock)**
 **作用:** 
 ``` java
@@ -102,4 +102,18 @@ bool – 被检查的Boolean值
 当值为true且非null时返回true
 ```
 防止拆箱时拆到null抛出 `NullPointerException` (空指针异常)(原因见[[常见错误-异常处理#2. 自动拆箱的致命陷阱：空指针异常 (NPE)]])
+**例子**
+``` java
+@Override  
+public boolean tryLock(Long timeoutSec) {  
+    // 1.获取线程标识  
+    Long threadId = Thread.currentThread().getId();//获取当前线程的ID  
+  
+    //2.尝试获取锁  
+    Boolean isLock = stringRedisTemplate.opsForValue()  
+            .setIfAbsent(KEY_PREFIX + name, threadId+"", timeoutSec, TimeUnit.SECONDS);  
+  
+    return BooleanUtil.isTrue(isLock);//判断是否获取锁成功,如果是1，则返回true,0或者null都是返回false  
+}
+```
 
