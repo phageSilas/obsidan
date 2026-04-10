@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA/Redis/锁/分布式锁/可重入锁.md",
+                "file": "JAVA/Redis/锁/分布式锁/Redisson的multiLock.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "可重入锁"
+              "title": "Redisson的multiLock"
             }
           }
         ],
@@ -171,13 +171,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA/Redis/锁/分布式锁/可重入锁.md",
+                "file": "JAVA/Redis/锁/分布式锁/Redisson的multiLock.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "可重入锁 的大纲"
+              "title": "Redisson的multiLock 的大纲"
             }
           }
         ],
@@ -203,6 +203,7 @@
   "active": "2cf9fcc468f737f4",
   "lastOpenFiles": [
     "JAVA/Redis/锁/分布式锁/Lua脚本(各种锁的基础).md",
+    "JAVA/Redis/锁/分布式锁/Redisson的multiLock.md",
     "JAVA/Redis/锁/分布式锁/可重入锁.md",
     "JAVA/Redis/锁/分布式锁",
     "JAVA/Redis/锁/未命名.md",
