@@ -220,8 +220,11 @@
     "JAVA/Redis/锁": [
       "JAVA/Redis/锁/Attachment",
       "JAVA/Redis/锁/悲观锁和乐观锁.md",
-      "JAVA/Redis/锁/分布式锁",
-      "JAVA/Redis/锁/分布式锁/可重入锁.md"
+      "JAVA/Redis/锁/分布式锁"
+    ],
+    "JAVA/Redis/锁/分布式锁": [
+      "JAVA/Redis/锁/分布式锁/可重入锁.md",
+      "JAVA/Redis/锁/分布式锁/Lua脚本(各种锁的基础).md"
     ],
     "JAVA/Redis/锁/Attachment": [
       "JAVA/Redis/锁/Attachment/image-1.png",
@@ -240,9 +243,6 @@
       "JAVA/Redis/Attachment/image-2.png",
       "JAVA/Redis/Attachment/image-3.png",
       "JAVA/Redis/Attachment/image.png"
-    ],
-    "JAVA/Redis/锁/分布式锁": [
-      "JAVA/Redis/锁/分布式锁/Lua脚本(各种锁的基础).md"
     ]
   },
   "draggingEnabled": true,
