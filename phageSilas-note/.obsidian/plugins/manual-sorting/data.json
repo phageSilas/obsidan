@@ -1,6 +1,7 @@
 {
   "customFileOrder": {
     "/": [
+      "未命名.base",
       "JAVA",
       "Blender",
       "算法",
@@ -58,7 +59,8 @@
       "JAVA/JAVASE/比较抽象的SE基础/匿名内部类.md",
       "JAVA/JAVASE/比较抽象的SE基础/lambda表达式与匿名内部类.md",
       "JAVA/JAVASE/比较抽象的SE基础/关于方法返回类型的探究.md",
-      "JAVA/JAVASE/比较抽象的SE基础/关于集合泛型的探究.md"
+      "JAVA/JAVASE/比较抽象的SE基础/关于集合泛型的探究.md",
+      "JAVA/JAVASE/比较抽象的SE基础/动态代理.md"
     ],
     "JAVA/JAVASE/Attachment": [
       "JAVA/JAVASE/Attachment/Pasted image 20250718205744.png",
