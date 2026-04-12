@@ -202,6 +202,7 @@
   },
   "active": "2cf9fcc468f737f4",
   "lastOpenFiles": [
+    "JAVA/Redis/锁/分布式锁/未命名",
     "JAVA/JAVASE/比较抽象的SE基础/动态代理.md",
     "JAVA/Redis/锁/分布式锁/对于异步秒杀优惠券的初步实现.md",
     "未命名.base",
@@ -245,7 +246,6 @@
     "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具基础篇.md",
     "JAVA/JavaWeb/SpringBoot/Mybatis/动态SQL.md",
     "JAVA/JavaWeb/MyBatis常用注解.md",
-    "JAVA/JavaWeb/JavaWeb基本流程.md",
     "JAVA/苍穹外卖",
     "Blender"
   ]
