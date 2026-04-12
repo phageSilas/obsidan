@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA/Redis/锁/分布式锁/对于异步秒杀优惠券的初步实现.md",
+                "file": "JAVA/Redis/锁/分布式锁/Redis的Stream消息队列.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "对于异步秒杀优惠券的初步实现"
+              "title": "Redis的Stream消息队列"
             }
           }
         ],
@@ -171,13 +171,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA/Redis/锁/分布式锁/对于异步秒杀优惠券的初步实现.md",
+                "file": "JAVA/Redis/锁/分布式锁/Redis的Stream消息队列.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "对于异步秒杀优惠券的初步实现 的大纲"
+              "title": "Redis的Stream消息队列 的大纲"
             }
           }
         ],
@@ -200,11 +200,12 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "2cf9fcc468f737f4",
+  "active": "34d6b36d87ac3e98",
   "lastOpenFiles": [
+    "JAVA/Redis/锁/分布式锁/对于异步秒杀优惠券的初步实现.md",
+    "JAVA/Redis/锁/分布式锁/Redis的Stream消息队列.md",
     "JAVA/Redis/锁/分布式锁/未命名",
     "JAVA/JAVASE/比较抽象的SE基础/动态代理.md",
-    "JAVA/Redis/锁/分布式锁/对于异步秒杀优惠券的初步实现.md",
     "未命名.base",
     "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具进阶篇.md",
     "JAVA/苍穹外卖/Day02.md",
@@ -246,7 +247,6 @@
     "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具基础篇.md",
     "JAVA/JavaWeb/SpringBoot/Mybatis/动态SQL.md",
     "JAVA/JavaWeb/MyBatis常用注解.md",
-    "JAVA/苍穹外卖",
-    "Blender"
+    "JAVA/苍穹外卖"
   ]
 }
