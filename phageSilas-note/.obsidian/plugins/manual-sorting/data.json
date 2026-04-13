@@ -230,7 +230,7 @@
       "JAVA/Redis/锁/分布式锁/可重入锁.md",
       "JAVA/Redis/锁/分布式锁/对于异步秒杀优惠券的初步实现.md",
       "JAVA/Redis/锁/分布式锁/Redis的Stream消息队列.md",
-      "JAVA/Redis/锁/分布式锁/未命名.md"
+      "JAVA/Redis/锁/分布式锁/Feed流推送消息.md"
     ],
     "JAVA/Redis/锁/Attachment": [
       "JAVA/Redis/锁/Attachment/image-1.png",
