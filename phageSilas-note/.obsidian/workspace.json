@@ -41,7 +41,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA/Redis/锁/分布式锁/Feed流推送消息.md",
+                "file": "JAVA/Redis/Feed流推送消息.md",
                 "mode": "source",
                 "source": false
               },
@@ -171,7 +171,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA/Redis/锁/分布式锁/Feed流推送消息.md",
+                "file": "JAVA/Redis/Feed流推送消息.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -200,10 +200,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "34d6b36d87ac3e98",
+  "active": "2cf9fcc468f737f4",
   "lastOpenFiles": [
-    "JAVA/Redis/锁/分布式锁/Redis的Stream消息队列.md",
-    "JAVA/Redis/锁/分布式锁/Feed流推送消息.md",
+    "JAVA/Redis/Redis的Stream消息队列.md",
+    "JAVA/Redis/Feed流推送消息.md",
+    "JAVA/Redis/BitMap及签到功能.md",
     "JAVA/Redis/锁/分布式锁/对于异步秒杀优惠券的初步实现.md",
     "JAVA/Redis/锁/分布式锁/未命名",
     "JAVA/JAVASE/比较抽象的SE基础/动态代理.md",
@@ -246,7 +247,6 @@
     "JAVA/JavaWeb/Http.md",
     "JAVA/JavaWeb/其他第三方错误.md",
     "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具基础篇.md",
-    "JAVA/JavaWeb/SpringBoot/Mybatis/动态SQL.md",
     "JAVA/苍穹外卖"
   ]
 }

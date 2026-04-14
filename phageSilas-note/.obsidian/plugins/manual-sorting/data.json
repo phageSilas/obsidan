@@ -217,7 +217,10 @@
       "JAVA/Redis/缓存穿透.md",
       "JAVA/Redis/缓存雪崩.md",
       "JAVA/Redis/缓存击穿.md",
-      "JAVA/Redis/锁"
+      "JAVA/Redis/锁",
+      "JAVA/Redis/Feed流推送消息.md",
+      "JAVA/Redis/Redis的Stream消息队列.md",
+      "JAVA/Redis/BitMap及签到功能.md"
     ],
     "JAVA/Redis/锁": [
       "JAVA/Redis/锁/Attachment",
@@ -228,9 +231,7 @@
       "JAVA/Redis/锁/分布式锁/Redisson的multiLock.md",
       "JAVA/Redis/锁/分布式锁/Lua脚本(各种锁的基础).md",
       "JAVA/Redis/锁/分布式锁/可重入锁.md",
-      "JAVA/Redis/锁/分布式锁/对于异步秒杀优惠券的初步实现.md",
-      "JAVA/Redis/锁/分布式锁/Redis的Stream消息队列.md",
-      "JAVA/Redis/锁/分布式锁/Feed流推送消息.md"
+      "JAVA/Redis/锁/分布式锁/对于异步秒杀优惠券的初步实现.md"
     ],
     "JAVA/Redis/锁/Attachment": [
       "JAVA/Redis/锁/Attachment/image-1.png",
