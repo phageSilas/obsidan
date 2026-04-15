@@ -65,90 +65,61 @@ Redis 的 String 类型最大可以存储 512MB 的数据，转换成 bit 就是
 
 ## 4. Java 代码实战：实现签到与连续签到统计
 
-我们来看看在 Spring Boot 中如何实现最复杂的**“获取本月连续签到天数”**逻辑。
-
-假设我们要计算用户从本月 1 号到**今天**为止，连续签到了多少天。
-
-``` Java
-public Result signCount() {
-    // 1. 获取当前登录用户和时间信息
-    Long userId = UserHolder.getUser().getId();
-    LocalDateTime now = LocalDateTime.now();
-    
-    // 2. 拼接 key 和计算当前的 offset
-    String keySuffix = now.format(DateTimeFormatter.ofPattern(":yyyyMM"));
-    String key = "sign:" + userId + keySuffix;
-    int dayOfMonth = now.getDayOfMonth(); // 今天是本月的第几天（比如 14）
-```
-
-**📝 解释：**
-
-这里准备基础数据。获取当前时间（假设今天是 2026 年 4 月 14 日），那么 `dayOfMonth` 就是 14。我们要查的是从本月 1 号到 14 号这 **14 个 bit 位**的数据。
-
-``` Java
-    // 3. 获取本月截至今天为止的所有的签到记录 (利用 BITFIELD 命令)
-    List<Long> result = stringRedisTemplate.opsForValue().bitField(
-            key,
-            BitFieldSubCommands.create()
-                    .get(BitFieldSubCommands.BitFieldType.unsigned(dayOfMonth)).valueAt(0)
-    );
-```
-
-**📝 解释：**
-
-这是最核心的一句查询代码！它底层使用了 Redis 的 `BITFIELD` 命令。
-
-因为我们不能一次只查一个 bit（那样要发 14 次网络请求），我们要一次性把前 14 天的 bit 全拿出来。
-
-- `.unsigned(dayOfMonth)`: 意思是我们要取一个无符号的整数，这个整数的长度是 `dayOfMonth`（即 14 位）。
-    
-- `.valueAt(0)`: 从第 0 个位（本月第一天）开始取。
-    
-- **返回结果**：Redis 会把这 14 个 bit 拼成一个十进制的 `Long` 类型数字返回给我们。假设前 14 天每天都签到了，返回的就是二进制 `11111111111111` 对应的十进制数字。
-    
-``` Java
-    if (result == null || result.isEmpty()) {
-        return Result.ok(0);
-    }
-    Long num = result.get(0);
-    if (num == null || num == 0) {
-        return Result.ok(0);
-    }
-```
-
-**📝 解释：**
-
-标准的防空判定。如果返回的数据为空，或者转换出的十进制数字是 `0`（说明这 14 天一次都没签过，全是 0），那就直接返回连续签到 0 天。
-
-``` Java
-    // 4. 循环位移计算连续签到天数
-    int count = 0;
-    while (true) {
-        // 让这个数字与 1 做按位与运算 (num & 1)
-        if ((num & 1) == 0) {
-            // 如果为 0，说明这个 bit 位是未签到，连续签到中断，直接结束循环
-            break;
-        } else {
-            // 如果不为 0，说明这个 bit 位是 1（已签到），计数器 +1
-            count++;
-        }
-        // 把数字向右位移一位 (num >>> 1)，抛弃掉刚刚检查过的那一天，继续检查上一天
-        num >>>= 1;
-    }
-    
-    return Result.ok(count);
+### 签到的实现
+``` java
+/**  
+ * 签到功能  
+ * @return  
+ */  
+@Override  
+public Result sign() {  
+    // 1.获取当前登录用户  
+    Long userId = UserHolder.getUser().getId();  
+  
+    // 2.创建一个签到时间  
+    LocalDateTime now = LocalDateTime.now();  
+  
+    // 3.拼接key  
+    String keySuffixx = now.format(DateTimeFormatter.ofPattern(":yyyyMM"));//20220101  
+    String key = USER_SIGN_KEY + userId + keySuffixx;  
+    int day = now.getDayOfMonth();//本月的第几天  
+  
+    stringRedisTemplate.opsForValue().setBit(key, day - 1, true); // 0表示本月1号，1表示本月2号，依此类推，day - 1表示当前日期，true表示已签到  
+    return Result.ok();  
+  
+  
 }
+
 ```
 
-**📝 解释：**
+### 代码分析：
 
-这是极具极客精神的位运算逻辑！我们拿到了一个代表签到记录的十进制数字 `num`（比如二进制是 `1011`，代表 4 号没签，3、2、1 号签了）。我们需要从后往前（也就是从今天往前）数，有几个连续的 1。
+1. **Key 的设计非常规范：**
+    ``` Java
+    String keySuffixx = now.format(DateTimeFormatter.ofPattern(":yyyyMM"));
+    String key = USER_SIGN_KEY + userId + keySuffixx;
+    ```
+    
+    把时间和用户 ID 结合，并且按照“月”来分 Key（例如生成类似 `sign:1001:202604` 的 Key）。这保证了 Redis 中单个 Key 的体积不会过大，管理起来非常清晰，到期了如果不需要甚至可以按月清理。
+    
+    _(小提示：代码里后面的注释写着 `//20220101`，但实际上 `yyyyMM` 格式化出来的结果是 `202604` 这样的年月格式，没有日，这对于按月签到的逻辑来说是**正确**的，只是注释稍微有点小笔误而已~)_
+    
+1. **偏移量（Offset）计算极其准确：**
+    ``` Java
+    int day = now.getDayOfMonth();
+    stringRedisTemplate.opsForValue().setBit(key, day - 1, true); 
+    ```
+    
+    这是这段代码最核心、最容易出错的地方，但你处理得完全正确！
+    
+    因为 `getDayOfMonth()` 返回的今天是 1 到 31 的数字，而 Redis 的 BitMap 偏移量是从 `0` 开始算的。所以 `day - 1` 完美地把 1 号映射到了第 0 位，把今天（假设 14 号）映射到了第 13 位。
+    
+2. **API 使用正确：**
+    
+    传入 `true`，`StringRedisTemplate` 底层会自动帮你把对应的 bit 位设置为 `1`。
+    
+### 总结
 
-- **`num & 1`**：无论 `num` 多大，它跟 `1` 做“按位与”操作，**结果只取决于 `num` 二进制的最后一位**。如果最后一位是 `1`，结果就是 `1`；如果是 `0`，结果就是 `0`。这就相当于把“今天”的签到状态取出来了。
-    
-- 如果取出的是 `0`：说明今天没签，那所谓的“连续签到”就直接断了（或者昨天没签，往前算断了），立刻 `break` 跳出循环。
-    
-- **`num >>>= 1`**：无符号右移运算符。这就相当于把检查过的“今天”扔掉，把“昨天”的位移到了最后一位。然后继续下一轮 `while` 循环，去检查“昨天”是否签到。
-    
+这段代码就是一个标准的、可以直接上生产环境的 BitMap 签到接口核心代码。只要 `USER_SIGN_KEY` 常量（比如定义为 `"sign:"`）没问题，前端一调用这个接口，该用户今天的打卡记录就以大概 0.1 字节的极小代价，稳稳地存在 Redis 里了！非常棒！
 
-通过巧妙结合 Redis 的 `BITFIELD` 批量提取和 Java 底层的**位运算**，我们在极低的内存消耗和接近零的网络延迟下，完美计算出了复杂的“连续签到天数”。这就是底层数据结构的魅力所在！
+### 连续签到统计的实现
