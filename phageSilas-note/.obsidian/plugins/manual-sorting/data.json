@@ -141,6 +141,7 @@
       "JAVA/JavaWeb/Attachment/image.png"
     ],
     "JAVA/JavaWeb/SpringBoot": [
+      "JAVA/JavaWeb/SpringBoot/Resource.md",
       "JAVA/JavaWeb/SpringBoot/JDBC.md",
       "JAVA/JavaWeb/SpringBoot/三层架构与解耦.md",
       "JAVA/JavaWeb/SpringBoot/预编译SQL.md",
