@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA/JAVASE/比较抽象的SE基础/lambda表达式与匿名内部类.md",
+                "file": "JAVA/JavaWeb/SpringBoot/Resource.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "lambda表达式与匿名内部类"
+              "title": "Resource"
             }
           },
           {
@@ -167,13 +167,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA/JAVASE/比较抽象的SE基础/lambda表达式与匿名内部类.md",
+                "file": "JAVA/JavaWeb/SpringBoot/Resource.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "lambda表达式与匿名内部类 的大纲"
+              "title": "Resource 的大纲"
             }
           }
         ],
@@ -198,9 +198,9 @@
   },
   "active": "305dfcf5168db0a5",
   "lastOpenFiles": [
+    "JAVA/JAVASE/比较抽象的SE基础/lambda表达式与匿名内部类.md",
     "JAVA/Redis/锁/分布式锁/可重入锁.md",
     "JAVA/JAVASE/比较抽象的SE基础/匿名内部类.md",
-    "JAVA/JAVASE/比较抽象的SE基础/lambda表达式与匿名内部类.md",
     "JAVA/JavaWeb/SpringBoot/Resource.md",
     "JAVA/JAVASE/比较抽象的SE基础/抽象类,抽象方法.md",
     "JAVA/JAVASE/比较抽象的SE基础/接口.md",
