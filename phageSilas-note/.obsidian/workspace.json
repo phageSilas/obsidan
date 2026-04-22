@@ -36,17 +36,17 @@
             }
           },
           {
-            "id": "9f9bd2b31c596402",
+            "id": "9c04188b22e0d75e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "未命名.md",
+                "file": "未命名 1.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "未命名"
+              "title": "未命名 1"
             }
           }
         ],
@@ -171,13 +171,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "未命名.md",
+                "file": "未命名 1.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "未命名 的大纲"
+              "title": "未命名 1 的大纲"
             }
           }
         ],
@@ -200,10 +200,13 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "9f9bd2b31c596402",
+  "active": "9c04188b22e0d75e",
   "lastOpenFiles": [
-    "未命名.md",
+    "未命名 1 1.md",
+    "未命名 1.md",
+    "未命名 1.base",
     "JAVA/JavaWeb/SpringBoot/Resource.md",
+    "未命名.md",
     "JAVA/JAVASE/比较抽象的SE基础/lambda表达式与匿名内部类.md",
     "JAVA/Redis/锁/分布式锁/可重入锁.md",
     "JAVA/JAVASE/比较抽象的SE基础/匿名内部类.md",
@@ -228,8 +231,6 @@
     "未命名.base",
     "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具进阶篇.md",
     "JAVA/苍穹外卖/Day02.md",
-    "JAVA/JavaWeb/SpringBoot/Hutool常用工具方法.md",
-    "JAVA/JAVASE/SE基础/包装类与装箱拆箱.md",
     "JAVA/Redis/锁/分布式锁",
     "JAVA/Redis/锁/Attachment/image-1.png",
     "JAVA/Redis/锁/Attachment/image.png",
@@ -246,7 +247,6 @@
     "算法/Attachment",
     "算法",
     "JAVA/Redis/Attachment",
-    "JAVA/Redis",
-    "JAVA/苍穹外卖"
+    "JAVA/Redis"
   ]
 }

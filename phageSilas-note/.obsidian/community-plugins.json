@@ -4,5 +4,7 @@
   "image-converter",
   "OA-file-hider",
   "obsidian-git",
-  "codeblock-customizer"
+  "codeblock-customizer",
+  "obsidian-enhancing-export",
+  "obsidian-pandoc"
 ]
