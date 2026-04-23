@@ -24,6 +24,27 @@ Employee newEmployee = Employee.builder() // 🟢 第一步：开启建造
 ==注意:== builder一般在构建新对象时使用,若已经有对象了,推荐使用传统的set方法赋值
 ## 使用前提
 **现在一般通过lombok插件的注解@Builder直接写在用户类前代替手搓**
+``` java
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class User {
+    private Long id;
+    private String username;
+    private String email;
+    private Integer age;
+    private String address;
+}
+```
+**注意:** 单独使用 `@Builder` 会导致类失去无参构造函数（NoArgsConstructor）。在 Spring Boot 中，很多框架（如 Jackson JSON 反序列化、JPA/MyBatis 实体映射）都需要无参构造函数。因此，**强烈建议将 `@Builder` 与 `@NoArgsConstructor` 和 `@AllArgsConstructor` 组合使用**。
+
+
 若不使用@Builder,就要修改原本的用户类中的构造方法
 ``` java
 public class Employee {
