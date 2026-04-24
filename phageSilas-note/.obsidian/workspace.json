@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA/JAVASE/比较抽象的SE基础/lambda表达式与匿名内部类.md",
+                "file": "JAVA/JavaWeb/SpringBoot/配置生效顺序.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "lambda表达式与匿名内部类"
+              "title": "配置生效顺序"
             }
           }
         ],
@@ -157,13 +157,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA/JAVASE/比较抽象的SE基础/lambda表达式与匿名内部类.md",
+                "file": "JAVA/JavaWeb/SpringBoot/配置生效顺序.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "lambda表达式与匿名内部类 的大纲"
+              "title": "配置生效顺序 的大纲"
             }
           }
         ],
@@ -188,8 +188,10 @@
   },
   "active": "305dfcf5168db0a5",
   "lastOpenFiles": [
-    "JAVA/JAVASE/比较抽象的SE基础/抽象类,抽象方法.md",
+    "JAVA/JavaWeb/SpringBoot/Attachment/image-14.png",
     "JAVA/JAVASE/比较抽象的SE基础/lambda表达式与匿名内部类.md",
+    "JAVA/JavaWeb/SpringBoot/配置生效顺序.md",
+    "JAVA/JAVASE/比较抽象的SE基础/抽象类,抽象方法.md",
     "JAVA/苍穹外卖/Day02.md",
     "JAVA/JavaWeb/SpringBoot/Resource.md",
     "未命名.base",
@@ -214,9 +216,7 @@
     "JAVA/Redis/BitMap及签到功能.md",
     "JAVA/Redis/Feed流推送消息.md",
     "JAVA/Redis/Redis的Stream消息队列.md",
-    "JAVA/Redis/锁/分布式锁/对于异步秒杀优惠券的初步实现.md",
     "JAVA/Redis/锁/分布式锁/未命名",
-    "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具进阶篇.md",
     "JAVA/Redis/锁/分布式锁",
     "JAVA/Redis/锁/Attachment/image-1.png",
     "JAVA/Redis/锁/Attachment/image.png",
