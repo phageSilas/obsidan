@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA/JavaWeb/SpringBoot/配置生效顺序.md",
+                "file": "JAVA/JavaWeb/SpringCloud微服务/Openfeign.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "配置生效顺序"
+              "title": "Openfeign"
             }
           }
         ],
@@ -157,13 +157,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA/JavaWeb/SpringBoot/配置生效顺序.md",
+                "file": "JAVA/JavaWeb/SpringCloud微服务/Openfeign.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "配置生效顺序 的大纲"
+              "title": "Openfeign 的大纲"
             }
           }
         ],
@@ -188,9 +188,14 @@
   },
   "active": "305dfcf5168db0a5",
   "lastOpenFiles": [
+    "JAVA/JavaWeb/SpringCloud微服务/Attachment/image.png",
+    "JAVA/JavaWeb/SpringCloud微服务/Attachment",
+    "JAVA/JavaWeb/SpringCloud微服务/Nacos.md",
+    "JAVA/JavaWeb/SpringCloud微服务/Openfeign.md",
+    "JAVA/JavaWeb/SpringBoot/配置生效顺序.md",
+    "JAVA/JavaWeb/SpringCloud微服务",
     "JAVA/JavaWeb/SpringBoot/Attachment/image-14.png",
     "JAVA/JAVASE/比较抽象的SE基础/lambda表达式与匿名内部类.md",
-    "JAVA/JavaWeb/SpringBoot/配置生效顺序.md",
     "JAVA/JAVASE/比较抽象的SE基础/抽象类,抽象方法.md",
     "JAVA/苍穹外卖/Day02.md",
     "JAVA/JavaWeb/SpringBoot/Resource.md",
@@ -214,8 +219,6 @@
     "JAVA/JAVASE/比较抽象的SE基础/关于集合泛型的探究.md",
     "JAVA/JAVASE/比较抽象的SE基础/关于方法返回类型的探究.md",
     "JAVA/Redis/BitMap及签到功能.md",
-    "JAVA/Redis/Feed流推送消息.md",
-    "JAVA/Redis/Redis的Stream消息队列.md",
     "JAVA/Redis/锁/分布式锁/未命名",
     "JAVA/Redis/锁/分布式锁",
     "JAVA/Redis/锁/Attachment/image-1.png",
@@ -229,10 +232,7 @@
     "JAVA/Redis/Attachment/image-7.png",
     "JAVA/Redis/Attachment/image-6.png",
     "JAVA/Redis/Attachment/image-5.png",
-    "JAVA/Redis/Attachment/image-4.png",
     "算法/Attachment",
-    "算法",
-    "JAVA/Redis/Attachment",
-    "JAVA/Redis"
+    "算法"
   ]
 }

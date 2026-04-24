@@ -97,6 +97,7 @@
       "JAVA/JAVASE/SE基础/Attachment/Pasted image 20250718210356.png"
     ],
     "JAVA/JavaWeb": [
+      "JAVA/JavaWeb/SpringCloud微服务",
       "JAVA/JavaWeb/test github.md",
       "JAVA/JavaWeb/Http.md",
       "JAVA/JavaWeb/常见错误-异常处理.md",
@@ -152,6 +153,7 @@
       "JAVA/JavaWeb/SpringBoot/Attachment"
     ],
     "JAVA/JavaWeb/SpringBoot/Attachment": [
+      "JAVA/JavaWeb/SpringBoot/Attachment/image-14.png",
       "JAVA/JavaWeb/SpringBoot/Attachment/image-13.png",
       "JAVA/JavaWeb/SpringBoot/Attachment/idea64_N6ZMTBveF7.png",
       "JAVA/JavaWeb/SpringBoot/Attachment/image-11.png",
@@ -199,6 +201,14 @@
       "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-17.png",
       "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-18.png",
       "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image.png"
+    ],
+    "JAVA/JavaWeb/SpringCloud微服务": [
+      "JAVA/JavaWeb/SpringCloud微服务/Attachment",
+      "JAVA/JavaWeb/SpringCloud微服务/Openfeign.md",
+      "JAVA/JavaWeb/SpringCloud微服务/Nacos.md"
+    ],
+    "JAVA/JavaWeb/SpringCloud微服务/Attachment": [
+      "JAVA/JavaWeb/SpringCloud微服务/Attachment/image.png"
     ],
     "JAVA/MySQL": [
       "JAVA/MySQL/多表.md",
