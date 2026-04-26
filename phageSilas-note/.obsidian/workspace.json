@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA/SpringCloud微服务/Sentinel.md",
+                "file": "JAVA/SpringCloud微服务/Gateway.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Sentinel"
+              "title": "Gateway"
             }
           }
         ],
@@ -157,13 +157,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA/SpringCloud微服务/Sentinel.md",
+                "file": "JAVA/SpringCloud微服务/Gateway.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Sentinel 的大纲"
+              "title": "Gateway 的大纲"
             }
           }
         ],
@@ -188,9 +188,10 @@
   },
   "active": "305dfcf5168db0a5",
   "lastOpenFiles": [
+    "JAVA/SpringCloud微服务/Sentinel.md",
+    "JAVA/SpringCloud微服务/Gateway.md",
     "JAVA/SpringCloud微服务/Attachment/MyBlockExceptionHandler.java",
     "JAVA/SpringCloud微服务/Nacos.md",
-    "JAVA/SpringCloud微服务/Sentinel.md",
     "JAVA/JavaWeb/test github.md",
     "JAVA/SpringCloud微服务/Openfeign.md",
     "JAVA/SpringCloud微服务/Attachment/image-1.png",
@@ -232,7 +233,6 @@
     "JAVA/Redis/Attachment/image-9.png",
     "JAVA/Redis/Attachment/image-8.png",
     "JAVA/Redis/Attachment/image-7.png",
-    "算法/Attachment",
-    "算法"
+    "算法/Attachment"
   ]
 }
