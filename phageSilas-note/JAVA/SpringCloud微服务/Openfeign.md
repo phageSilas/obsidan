@@ -1,4 +1,4 @@
-![[image.png]]
+![[JAVA/SpringCloud微服务/Attachment/image.png]]
 
 Spring Cloud OpenFeign 是一个**声明式的 REST 客户端**，它的主要作用是让微服务之间的 HTTP 远程调用变得像调用本地方法一样极其简单和优雅。
 

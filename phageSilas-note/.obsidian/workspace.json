@@ -27,7 +27,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA/JavaWeb/SpringCloud微服务/Sentinel.md",
+                "file": "JAVA/SpringCloud微服务/Sentinel.md",
                 "mode": "source",
                 "source": false
               },
@@ -157,7 +157,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA/JavaWeb/SpringCloud微服务/Sentinel.md",
+                "file": "JAVA/SpringCloud微服务/Sentinel.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -186,16 +186,17 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "305dfcf5168db0a5",
+  "active": "34d6b36d87ac3e98",
   "lastOpenFiles": [
-    "JAVA/JavaWeb/SpringCloud微服务/Attachment/image-1.png",
-    "JAVA/JavaWeb/SpringCloud微服务/Openfeign.md",
-    "JAVA/JavaWeb/SpringCloud微服务/Sentinel.md",
-    "JAVA/JavaWeb/SpringCloud微服务/Nacos.md",
-    "JAVA/JavaWeb/SpringCloud微服务/Attachment/image.png",
-    "JAVA/JavaWeb/SpringCloud微服务/Attachment",
+    "JAVA/JavaWeb/test github.md",
+    "JAVA/SpringCloud微服务/Sentinel.md",
+    "JAVA/SpringCloud微服务/Openfeign.md",
+    "JAVA/SpringCloud微服务/Attachment/image-1.png",
+    "JAVA/SpringCloud微服务/Nacos.md",
+    "JAVA/SpringCloud微服务/Attachment/image.png",
+    "JAVA/SpringCloud微服务/Attachment",
     "JAVA/JavaWeb/SpringBoot/配置生效顺序.md",
-    "JAVA/JavaWeb/SpringCloud微服务",
+    "JAVA/SpringCloud微服务",
     "JAVA/JavaWeb/SpringBoot/Attachment/image-14.png",
     "JAVA/JAVASE/比较抽象的SE基础/lambda表达式与匿名内部类.md",
     "JAVA/JAVASE/比较抽象的SE基础/抽象类,抽象方法.md",
@@ -214,7 +215,6 @@
     "JAVA/JAVASE/SE基础/构造方法.md",
     "JAVA/JAVASE/SE基础/有参构造和无参构造.md",
     "JAVA/JAVASE/SE基础/集合遍历.md",
-    "JAVA/JavaWeb/test github.md",
     "JAVA/JavaWeb/Http.md",
     "JAVA/JavaWeb/常见错误-异常处理.md",
     "JAVA/JAVASE/比较抽象的SE基础/动态代理.md",
@@ -231,7 +231,6 @@
     "JAVA/Redis/Attachment/image-9.png",
     "JAVA/Redis/Attachment/image-8.png",
     "JAVA/Redis/Attachment/image-7.png",
-    "JAVA/Redis/Attachment/image-6.png",
     "算法/Attachment",
     "算法"
   ]

@@ -33,7 +33,8 @@
       "JAVA/JAVASE",
       "JAVA/JavaWeb",
       "JAVA/苍穹外卖",
-      "JAVA/Redis"
+      "JAVA/Redis",
+      "JAVA/SpringCloud微服务"
     ],
     "JAVA/苍穹外卖": [
       "JAVA/苍穹外卖/Day03.md",
@@ -97,8 +98,6 @@
       "JAVA/JAVASE/SE基础/Attachment/Pasted image 20250718210356.png"
     ],
     "JAVA/JavaWeb": [
-      "JAVA/JavaWeb/SpringCloud微服务",
-      "JAVA/JavaWeb/test github.md",
       "JAVA/JavaWeb/Http.md",
       "JAVA/JavaWeb/常见错误-异常处理.md",
       "JAVA/JavaWeb/SpringBoot",
@@ -202,15 +201,6 @@
       "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-18.png",
       "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image.png"
     ],
-    "JAVA/JavaWeb/SpringCloud微服务": [
-      "JAVA/JavaWeb/SpringCloud微服务/Nacos.md",
-      "JAVA/JavaWeb/SpringCloud微服务/Attachment",
-      "JAVA/JavaWeb/SpringCloud微服务/Openfeign.md",
-      "JAVA/JavaWeb/SpringCloud微服务/Sentinel.md"
-    ],
-    "JAVA/JavaWeb/SpringCloud微服务/Attachment": [
-      "JAVA/JavaWeb/SpringCloud微服务/Attachment/image.png"
-    ],
     "JAVA/MySQL": [
       "JAVA/MySQL/多表.md",
       "JAVA/MySQL/查询"
@@ -262,6 +252,16 @@
       "JAVA/Redis/Attachment/image-2.png",
       "JAVA/Redis/Attachment/image-3.png",
       "JAVA/Redis/Attachment/image.png"
+    ],
+    "JAVA/SpringCloud微服务": [
+      "JAVA/SpringCloud微服务/Nacos.md",
+      "JAVA/SpringCloud微服务/Attachment",
+      "JAVA/SpringCloud微服务/Openfeign.md",
+      "JAVA/SpringCloud微服务/Sentinel.md"
+    ],
+    "JAVA/SpringCloud微服务/Attachment": [
+      "JAVA/SpringCloud微服务/Attachment/image-1.png",
+      "JAVA/SpringCloud微服务/Attachment/image.png"
     ]
   },
   "draggingEnabled": true,
