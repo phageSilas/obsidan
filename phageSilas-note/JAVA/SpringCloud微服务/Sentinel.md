@@ -117,3 +117,109 @@ public String doSomething(int id) {
     
 
 **注意一个历史版本的细节：** 在 Sentinel 1.6.0 之前的版本，`fallback` 只能处理业务异常。从 Sentinel 1.6.0 开始，如果你的请求被限流了（抛出 `BlockException`），但是你**只配置了 `fallback` 而没有配置 `blockHandler`**，那么 `fallback` 也会作为最终的“接盘侠”去处理这个 `BlockException`。但最佳实践依然是**将两者分开配置，各司其职**。
+
+# SentinelWenInterceptor下的BlockExceptionHandler和@SentinelResource的blockHandler有什么区别
+简单来说：
+
+- **`BlockExceptionHandler`** 是**全局 Web 级别**的“大门保安”。
+    
+- **`@SentinelResource` 的 `blockHandler`** 是**局部方法级别**的“私人保镖”。
+    
+
+以下是它们的详细对比和核心区别：
+
+## 1. 作用范围与拦截维度的区别
+
+- **`BlockExceptionHandler`（全局 Web 拦截）：**
+    
+    - **作用域：** 全局生效。它是由 `SentinelWebInterceptor`（Sentinel 提供的 Spring MVC 拦截器）触发的。
+        
+    - **拦截维度：** 针对 **HTTP URL 请求**。在 Sentinel 控制台中，你通常是给某一个接口路径（比如 `/api/getUser`）配置了流控规则。当请求这个 URL 被限流时，就会触发它。
+        
+    - **定位：** 它是统一处理 Web 接口限流降级的统管枢纽。
+        
+- **`@SentinelResource` 的 `blockHandler`（局部方法拦截）：**
+    
+    - **作用域：** 局部生效。只对加了 `@SentinelResource` 注解的那个**具体 Java 方法**生效。
+        
+    - **拦截维度：** 针对 **Java 方法调用**（资源名为注解中 `value` 属性定义的值）。无论这个方法是被 HTTP 请求调用的，还是被内部定时任务、RPC 远程调用的，只要触发了该资源的限流规则，就会被拦截。
+        
+    - **定位：** 它是针对某一个核心方法提供精细化、个性化的兜底逻辑。
+![[MyBlockExceptionHandler.java]]
+
+## 2. 代码实现与处理方式的区别
+
+这是两者在日常开发中体感差异最大的一点，主要是**返回值类型**的限制不同。
+
+**A. `BlockExceptionHandler` (处理 HTTP 响应)**
+
+因为它拦截的是 Web 请求，所以它的工作是**直接操作原生的 HTTP 响应流**，返回友好的 JSON 给前端。
+``` Java
+@Component
+public class MyGlobalBlockExceptionHandler implements BlockExceptionHandler {
+    @Override
+    public void handle(HttpServletRequest request, HttpServletResponse response, BlockException e) throws Exception {
+        // 1. 设置响应头
+        response.setStatus(429); // Too Many Requests
+        response.setContentType("application/json;charset=utf-8");
+        
+        // 2. 根据不同的 BlockException 子类（限流、降级等）返回不同的 JSON 信息
+        String jsonMsg = "{\"code\":-1, \"msg\":\"系统繁忙，请稍后再试 (全局Web限流)\"}";
+        
+        // 3. 直接写回给前端
+        response.getWriter().write(jsonMsg);
+    }
+}
+```
+
+**B. `@SentinelResource` 的 `blockHandler` (处理业务对象)**
+
+因为它拦截的是具体的 Java 方法，所以它的**返回值必须和原方法完全保持一致**，以保证调用方拿到符合预期的业务对象类型。
+``` Java
+@Service
+public class OrderService {
+
+    // 资源名为 "createOrder"
+    @SentinelResource(value = "createOrder", blockHandler = "handleCreateOrderBlock")
+    public OrderDTO createOrder(Long userId, String productId) {
+        // 核心下单逻辑...
+        return new OrderDTO(123L, "下单成功");
+    }
+
+    // blockHandler 方法：返回值必须是 OrderDTO，参数必须和原方法一致，加上 BlockException
+    public OrderDTO handleCreateOrderBlock(Long userId, String productId, BlockException ex) {
+        System.out.println("触发方法级别限流");
+        // 返回一个默认的/兜底的业务对象
+        return new OrderDTO(null, "系统繁忙，下单失败 (方法级限流)");
+    }
+}
+```
+
+## 3. 当两者冲突时，谁会生效？（执行顺序）
+
+在 Spring Web 环境中，一个 HTTP 请求进来，会**先经过 Spring MVC 的 Interceptor（拦截器），然后再执行到 Controller，最后调用 Service 里的方法**。
+
+因此：
+
+1. 如果限流规则是配置在 **URL 路径**上（比如 `/create`），请求在 Web 层就被 `SentinelWebInterceptor` 拦住了，此时会执行 **`BlockExceptionHandler`**。请求根本走不到后面的 Controller 和 Service 方法里。
+    
+2. 如果 URL 路径没有被限流，请求顺利进入了方法内部，而在执行到带有 `@SentinelResource("createOrder")` 的方法时，触发了配置在 **资源名 `createOrder`** 上的规则，此时会执行 **`blockHandler`**。
+    
+
+### 总结与最佳实践
+
+|**维度**|**BlockExceptionHandler**|**@SentinelResource 的 blockHandler**|
+|---|---|---|
+|**层级**|Web 接入层 (Controller 之前)|业务逻辑层 (Controller / Service 内部)|
+|**拦截对象**|HTTP URL (如 `/api/login`)|Java 方法 (如 `doLogin()`)|
+|**通用性**|**高**。只需写一次，全局所有 API 限流时都会返回统一的 JSON 格式。|**低**。需要为每个重要方法单独写兜底逻辑，定制化程度高。|
+|**返回值**|`void` (通过 `HttpServletResponse` 写出 JSON)|与原拦截方法完全一致的返回值类型|
+
+**日常开发怎么选？**
+
+- **绝大多数情况：** 推荐实现 `BlockExceptionHandler`。因为对于大部分 Web 接口限流，前端只需要一个统一的 JSON 错误提示（例如：“当前访问人数过多，请稍后再试”）即可，没必要每个接口都去写一遍兜底代码。
+    
+- **核心链路场景：** 对于极少数核心的方法（比如获取用户资产详情），如果被限流了不能简单地报错，而是需要返回一些默认值或者走备用缓存，这时候再在该方法上使用 `@SentinelResource` 和 `blockHandler` 进行精细化兜底。
+
+也就是说
+
