@@ -221,5 +221,7 @@ public class OrderService {
     
 - **核心链路场景：** 对于极少数核心的方法（比如获取用户资产详情），如果被限流了不能简单地报错，而是需要返回一些默认值或者走备用缓存，这时候再在该方法上使用 `@SentinelResource` 和 `blockHandler` 进行精细化兜底。
 
-也就是说
+也就是说 SentinelWenInterceptor下的BlockExceptionHandle 是给全局用的(各种Mapping请求)
+@SentinelResource的blockHandler是具体到某一个方法
+
 
