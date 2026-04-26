@@ -53,12 +53,14 @@ public User getUserInfo(String userId) {
 }
 
 // Fallback 方法：参数必须和原方法完全一致，最后可以多加一个 Throwable 类型的参数用于接收异常
+
 public User fallbackHandler(String userId, Throwable e) {
     System.out.println("发生业务异常：" + e.getMessage());
     return new User(userId, "默认降级用户"); // 兜底返回
 }
 ```
-
+ fallback 方法参数一般会额外加一个Throwable
+ blockhandler方法参数一般添加额外一个BlockException
 ---
 
 ## 2. `fallback` 与 `blockHandler` 的核心区别
@@ -77,6 +79,7 @@ public User fallbackHandler(String userId, Throwable e) {
 ---
 
 ## 3. 当它们同时存在时，优先级是怎样的？
+优先blockhandler
 
 在实际开发中，我们通常会同时配置这两个属性，以保证系统“固若金汤”：
 ``` Java
@@ -93,15 +96,12 @@ public String doSomething(int id) {
 **执行与流转逻辑如下：**
 
 1. **请求进来，先过 Sentinel 的规则检查（限流、系统保护等）。**
-    
     - 如果触发了限流等规则，抛出 `BlockException`，此时**直接进入 `blockHandler`**。
         
 2. **规则检查通过，开始执行业务代码。**
-    
     - 如果业务代码执行正常，返回正常结果。
-        
     - 如果业务代码抛出了普通异常（如 `IllegalArgumentException`），此时会**进入 `fallback`**。
-        
+     
 3. **特殊情况（熔断降级）：**
     
     - 如果 Sentinel 配置了**异常比例/异常数熔断降级规则**。当业务异常的次数达到阈值后，Sentinel 会将该资源熔断（断路器打开）。
