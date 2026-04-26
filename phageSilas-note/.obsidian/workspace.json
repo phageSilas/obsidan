@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA/JavaWeb/SpringCloud微服务/Openfeign.md",
+                "file": "JAVA/JavaWeb/SpringCloud微服务/Sentinel.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Openfeign"
+              "title": "Sentinel"
             }
           }
         ],
@@ -157,13 +157,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA/JavaWeb/SpringCloud微服务/Openfeign.md",
+                "file": "JAVA/JavaWeb/SpringCloud微服务/Sentinel.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Openfeign 的大纲"
+              "title": "Sentinel 的大纲"
             }
           }
         ],
@@ -188,8 +188,10 @@
   },
   "active": "305dfcf5168db0a5",
   "lastOpenFiles": [
-    "JAVA/JavaWeb/SpringCloud微服务/Nacos.md",
+    "JAVA/JavaWeb/SpringCloud微服务/Attachment/image-1.png",
     "JAVA/JavaWeb/SpringCloud微服务/Openfeign.md",
+    "JAVA/JavaWeb/SpringCloud微服务/Sentinel.md",
+    "JAVA/JavaWeb/SpringCloud微服务/Nacos.md",
     "JAVA/JavaWeb/SpringCloud微服务/Attachment/image.png",
     "JAVA/JavaWeb/SpringCloud微服务/Attachment",
     "JAVA/JavaWeb/SpringBoot/配置生效顺序.md",
@@ -218,7 +220,6 @@
     "JAVA/JAVASE/比较抽象的SE基础/动态代理.md",
     "JAVA/JAVASE/比较抽象的SE基础/关于集合泛型的探究.md",
     "JAVA/JAVASE/比较抽象的SE基础/关于方法返回类型的探究.md",
-    "JAVA/Redis/BitMap及签到功能.md",
     "JAVA/Redis/锁/分布式锁/未命名",
     "JAVA/Redis/锁/分布式锁",
     "JAVA/Redis/锁/Attachment/image-1.png",

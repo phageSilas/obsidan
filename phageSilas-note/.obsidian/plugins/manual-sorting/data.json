@@ -203,9 +203,10 @@
       "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image.png"
     ],
     "JAVA/JavaWeb/SpringCloud微服务": [
+      "JAVA/JavaWeb/SpringCloud微服务/Nacos.md",
       "JAVA/JavaWeb/SpringCloud微服务/Attachment",
       "JAVA/JavaWeb/SpringCloud微服务/Openfeign.md",
-      "JAVA/JavaWeb/SpringCloud微服务/Nacos.md"
+      "JAVA/JavaWeb/SpringCloud微服务/Sentinel.md"
     ],
     "JAVA/JavaWeb/SpringCloud微服务/Attachment": [
       "JAVA/JavaWeb/SpringCloud微服务/Attachment/image.png"
