@@ -10,6 +10,7 @@
     "JAVA/JavaWeb/SpringBoot/Attachment",
     "JAVA/JAVASE/Attachment",
     "Attachment",
-    "JAVA/Redis/Attachment"
+    "JAVA/Redis/Attachment",
+    "JAVA/JavaWeb/SpringCloud微服务/Attachment"
   ]
 }
