@@ -1,0 +1,33 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+
+      # 若不手动安排order顺序,则默认路径匹配从上到下依次执行,若匹配成功则停止向下匹配
+        - id: order-route
+          uri: lb://service-order #lb表示使用负载均衡
+          predicates: #断言,匹配规则
+              - Path=/api/order/** #当路径为/api/order/**时
+         # order: 0 #设置匹配优先级,数字越小优先级越高
+          filters:
+              - RewritePath=/api/order/?(?<segment>.*), /$\{segment}
+          # 将/api/order/?(?<segment>.*), /$\{segment} 转换为 /$\{segment},即传入/api/order/order/create?xx时,实际调用/order/create?xx
+          # 以适应controller的Mapping请求参数
+
+        - id: product-route
+          uri: lb://service-product
+          predicates:
+              - Path=/api/product/**
+          filters:
+              - RewritePath=/api/product/?(?<segment>.*), /$\{segment}
+              # 将/api/product/?(?<segment>.*), /$\{segment} 转换为 /$\{segment},即传入/api/product/product/50时,实际调用/product/50
+              # 以适应controller的Mapping请求参数
+
+
+        - id: baobaobus
+          uri: https://cn.babybus.com/
+          predicates:
+            - Path=/**
+
+      default-filters: #默认过滤器,所有路由都会执行
+        - AddResponseHeader=X-Response-Default-Foo, Default-Bar #添加响应头X-Response-Default-Foo,值为Default-Bar
