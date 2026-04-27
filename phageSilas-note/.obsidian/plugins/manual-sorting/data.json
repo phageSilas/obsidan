@@ -254,11 +254,12 @@
       "JAVA/Redis/Attachment/image.png"
     ],
     "JAVA/SpringCloud微服务": [
-      "JAVA/SpringCloud微服务/Nacos.md",
       "JAVA/SpringCloud微服务/Attachment",
+      "JAVA/SpringCloud微服务/Nacos.md",
       "JAVA/SpringCloud微服务/Openfeign.md",
       "JAVA/SpringCloud微服务/Sentinel.md",
-      "JAVA/SpringCloud微服务/Gateway.md"
+      "JAVA/SpringCloud微服务/Gateway.md",
+      "JAVA/SpringCloud微服务/seata.md"
     ],
     "JAVA/SpringCloud微服务/Attachment": [
       "JAVA/SpringCloud微服务/Attachment/application-route.yml",

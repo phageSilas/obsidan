@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA/SpringCloud微服务/Gateway.md",
+                "file": "JAVA/SpringCloud微服务/seata.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Gateway"
+              "title": "seata"
             }
           }
         ],
@@ -157,13 +157,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA/SpringCloud微服务/Gateway.md",
+                "file": "JAVA/SpringCloud微服务/seata.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Gateway 的大纲"
+              "title": "seata 的大纲"
             }
           }
         ],
@@ -188,10 +188,11 @@
   },
   "active": "305dfcf5168db0a5",
   "lastOpenFiles": [
+    "JAVA/SpringCloud微服务/Gateway.md",
+    "JAVA/SpringCloud微服务/seata.md",
     "JAVA/SpringCloud微服务/Attachment/application-route.yml",
     "JAVA/SpringCloud微服务/Attachment/image-2.png",
     "JAVA/SpringCloud微服务/Sentinel.md",
-    "JAVA/SpringCloud微服务/Gateway.md",
     "JAVA/SpringCloud微服务/Attachment/MyBlockExceptionHandler.java",
     "JAVA/SpringCloud微服务/Nacos.md",
     "JAVA/JavaWeb/test github.md",
@@ -232,7 +233,6 @@
     "JAVA/Redis/Attachment/image-11.png",
     "JAVA/Redis/Attachment/image-10.png",
     "JAVA/Redis/Attachment/image-9.png",
-    "JAVA/Redis/Attachment/image-8.png",
-    "算法/Attachment"
+    "JAVA/Redis/Attachment/image-8.png"
   ]
 }
