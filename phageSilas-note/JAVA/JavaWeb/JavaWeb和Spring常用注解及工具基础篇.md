@@ -16,7 +16,7 @@ Spring 容器需要知道哪些类需要被管理为 Bean。除了使用 `@Bean`
 ## *@RestController 
 **重要** :负责将后端处理好的数据(Result)传回给前端
 		一般写在该类的最前面
-等效于 @Controller + @ResponseBody， 用于前后端分离项目，直接返回数据（如 JSON/XML），而不是跳转页面。（其所有处理器方法（handler methods）的返回值都会被自动序列化（通常为 JSON）并写入 HTTP 响应体，而不是被解析为视图名称。）
+等效于 @Controller + @ResponseBody， 用于前后端分离项目，直接返回数据（如 JSON/XML），而不是跳转页面。（其所有处理器方法（handler methods）的返回值都会被**自动序列化（通常为 JSON）并写入 HTTP 响应体(也就是在前端看到的是Json格式)**，而不是被解析为视图名称。）
 
 # 依赖注入
 用于将 Spring 容器中的 Bean 类注入到其他类中
