@@ -41,6 +41,7 @@
       "JAVA/苍穹外卖/Day02.md"
     ],
     "JAVA/规范": [
+      "JAVA/规范/通过枚举定义常量与静态定义常量.md",
       "JAVA/规范/JavaWeb分层规范.md",
       "JAVA/规范/命名规范"
     ],
