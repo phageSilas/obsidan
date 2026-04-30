@@ -1,4 +1,4 @@
-BeanUtil来源自HuTool,BeanUtil
+BeanUtil来源自HuTool,BeanUtils来源自Spring
 # 1. 对象属性拷贝BeanUtils.copyProperties
 ## 使用场景
 承接自上一条建造者模式,若两个类有较多的相同属性,如用户属性类和它对应的DTO类,可以通过Spring提供的该工具类实现
@@ -82,6 +82,34 @@ UserDTO userDTO = BeanUtil.toBean(user, UserDTO.class,
 ```
 
 总结来说，`BeanUtil.toBean` 是一个极其方便的“内存对象复制机”。但正因为它只负责老老实实地把内存里的数据从 A 搬运到 B，所以它不会理会任何像 `@JsonSerialize` 这种属于“JSON 序列化表现层”的注解。
+
+### 使用场景一: 获取未脱敏的真实信息
+``` java
+return  Results.success(BeanUtil.toBean(userService.getUserInfo(username), UserActualRespDTO.class));
+```
+#### `@JsonSerialize` 仅仅是在“离开后端”时才生效
+
+`@JsonSerialize`（通常来自 Jackson 库）是一个**序列化层**的注解。它**不会改变 Java 对象在内存中的真实值**。
+
+- 当你调用 `userService.getUserInfo(username)` 时，从数据库查出来的是什么，这个对象在 JVM 内存里存的就是什么（也就是**未脱敏的明文**）。
+    
+- 只有当这个对象被 Controller 层返回给前端，SpringBoot 调用 Jackson 库将 Java 对象**转换成 JSON 字符串**的那一瞬间，`@JsonSerialize` 指定的脱敏逻辑才会执行。
+    
+
+#### `BeanUtil.toBean` 是基于内存的物理拷贝
+
+Hutool 的 `BeanUtil.toBean(source, targetClass)` 是一个**内存级别**的属性拷贝工具。
+
+- 它的底层原理是通过 Java 的**反射机制**（Reflection），调用原对象的 `getter` 方法获取值，然后调用目标对象的 `setter` 方法赋值。
+    
+- 在拷贝的过程中，`BeanUtil` 根本不知道也不关心 `@JsonSerialize` 注解的存在。它拿到的直接是内存里未经任何处理的原始明文数据。
+    
+
+**流程对比图：**
+
+- **正常返回：** 原始对象(明文) -> Controller -> Jackson触发 `@JsonSerialize` -> 脱敏后的JSON字符串 -> 前端
+    
+- **使用 BeanUtil：** 原始对象(明文) -> `BeanUtil.toBean` -> **新对象(明文)** -> Controller -> (如果新类没有注解)转为JSON -> 未脱敏JSON -> 前端
 
 # 3. Bean 对象转换为 Map<String, Object> 结构BeanUtil.beanToMap
 
