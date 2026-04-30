@@ -229,6 +229,7 @@
     ],
     "JAVA/Redis/锁": [
       "JAVA/Redis/锁/Attachment",
+      "JAVA/Redis/锁/Redisson.md",
       "JAVA/Redis/锁/悲观锁和乐观锁.md",
       "JAVA/Redis/锁/分布式锁"
     ],
