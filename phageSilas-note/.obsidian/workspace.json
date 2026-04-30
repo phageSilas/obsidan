@@ -13,30 +13,15 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA/JAVASE/比较抽象的SE基础/匿名内部类.md",
+                "file": "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具基础篇.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "匿名内部类"
-            }
-          },
-          {
-            "id": "305dfcf5168db0a5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "JAVA/规范/通过枚举定义常量与静态定义常量.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "通过枚举定义常量与静态定义常量"
+              "title": "JavaWeb和Spring常用注解及工具基础篇"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -68,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "异常",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -157,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA/规范/通过枚举定义常量与静态定义常量.md",
+                "file": "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具基础篇.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "通过枚举定义常量与静态定义常量 的大纲"
+              "title": "JavaWeb和Spring常用注解及工具基础篇 的大纲"
             }
           }
         ],
@@ -186,10 +171,12 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "305dfcf5168db0a5",
+  "active": "34d6b36d87ac3e98",
   "lastOpenFiles": [
-    "JAVA/SpringCloud微服务/seata.md",
+    "JAVA/JAVASE/比较抽象的SE基础/匿名内部类.md",
+    "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具基础篇.md",
     "JAVA/规范/通过枚举定义常量与静态定义常量.md",
+    "JAVA/SpringCloud微服务/seata.md",
     "JAVA/SpringCloud微服务/Gateway.md",
     "JAVA/SpringCloud微服务/Attachment/application-route.yml",
     "JAVA/SpringCloud微服务/Attachment/image-2.png",
@@ -214,7 +201,6 @@
     "未命名 1 1.md",
     "未命名 1.base",
     "JAVA/Redis/锁/分布式锁/可重入锁.md",
-    "JAVA/JAVASE/比较抽象的SE基础/匿名内部类.md",
     "JAVA/JAVASE/比较抽象的SE基础/接口.md",
     "JAVA/Redis/锁/分布式锁/Lua脚本(各种锁的基础).md",
     "JAVA/JAVASE/SE基础/User用户类详解.md",
@@ -223,7 +209,6 @@
     "JAVA/JAVASE/SE基础/集合遍历.md",
     "JAVA/JavaWeb/Http.md",
     "JAVA/JavaWeb/常见错误-异常处理.md",
-    "JAVA/JAVASE/比较抽象的SE基础/动态代理.md",
     "JAVA/Redis/锁/分布式锁/未命名",
     "JAVA/Redis/锁/分布式锁",
     "JAVA/Redis/锁/Attachment/image-1.png",
