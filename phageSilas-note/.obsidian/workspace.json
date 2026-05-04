@@ -11,14 +11,13 @@
             "id": "24fcd89d054c2eaa",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "bases",
               "state": {
-                "file": "JAVA/JavaWeb/布隆过滤器.md",
-                "mode": "source",
-                "source": false
+                "file": "未命名.base",
+                "viewName": "表格"
               },
-              "icon": "lucide-file",
-              "title": "布隆过滤器"
+              "icon": "lucide-table",
+              "title": "未命名"
             }
           }
         ]
@@ -142,13 +141,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA/JavaWeb/布隆过滤器.md",
+                "file": "未命名.base",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "布隆过滤器 的大纲"
+              "title": "未命名 的大纲"
             }
           }
         ],
@@ -173,10 +172,10 @@
   },
   "active": "24fcd89d054c2eaa",
   "lastOpenFiles": [
+    "JAVA/JavaWeb/布隆过滤器.md",
     "JAVA/Redis/锁/Redisson.md",
     "JAVA/Redis/锁/分布式锁/Redisson的multiLock.md",
     "JAVA/Redis/锁/分布式锁/对于异步秒杀优惠券的初步实现.md",
-    "JAVA/JavaWeb/布隆过滤器.md",
     "JAVA/Redis/缓存穿透.md",
     "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具进阶篇.md",
     "JAVA/JavaWeb/MyBatis常用注解.md",
