@@ -141,7 +141,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "未命名.base",
+                "file": "未命名.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -170,8 +170,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "24fcd89d054c2eaa",
+  "active": "34d6b36d87ac3e98",
   "lastOpenFiles": [
+    "未命名.base",
+    "未命名.md",
     "JAVA/JavaWeb/布隆过滤器.md",
     "JAVA/Redis/锁/Redisson.md",
     "JAVA/Redis/锁/分布式锁/Redisson的multiLock.md",
@@ -187,7 +189,6 @@
     "JAVA/JAVASE/比较抽象的SE基础/关于方法返回类型的探究.md",
     "JAVA/JAVASE/比较抽象的SE基础/关于集合泛型的探究.md",
     "JAVA/JavaWeb/常见错误-异常处理.md",
-    "未命名.base",
     "JAVA/JavaWeb/SpringBoot/常用的BeanUtil(s)工具方法.md",
     "JAVA/JAVASE/比较抽象的SE基础/匿名内部类.md",
     "JAVA/规范/通过枚举定义常量与静态定义常量.md",
@@ -205,8 +206,6 @@
     "JAVA/JavaWeb/SpringBoot/配置生效顺序.md",
     "JAVA/SpringCloud微服务",
     "JAVA/JavaWeb/SpringBoot/Attachment/image-14.png",
-    "JAVA/苍穹外卖/Day02.md",
-    "JAVA/JavaWeb/SpringBoot/Resource.md",
     "未命名 1.base",
     "JAVA/Redis/锁/分布式锁/未命名",
     "JAVA/Redis/锁/分布式锁",
