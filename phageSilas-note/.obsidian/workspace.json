@@ -188,9 +188,9 @@
   },
   "active": "4973f07c028ab66e",
   "lastOpenFiles": [
-    "JAVA/Redis/缓存雪崩.md",
     "JAVA/Redis/缓存穿透.md",
     "JAVA/Redis/缓存击穿.md",
+    "JAVA/Redis/缓存雪崩.md",
     "JAVA/JAVASE/SE基础/get与set方法用法解释.md",
     "JAVA/JAVASE/SE基础/包装类与装箱拆箱.md",
     "JAVA/JAVASE/比较抽象的SE基础/通过lambda或双冒号进行方法引用.md",
