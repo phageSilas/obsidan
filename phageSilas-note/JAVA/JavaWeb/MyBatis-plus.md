@@ -228,7 +228,7 @@ baseMapper.update(shortLinkDO, updateWrapper);
     
 - `updateWrapper` 提供了要更新哪些行（`WHERE` 语句）。
     
-
+shortLinkDO将
 #### 💡 这段代码翻译成底层的 SQL 语句相当于：
 ``` SQL
 UPDATE t_short_link 
@@ -284,72 +284,3 @@ wrapper.eq(User::getUserName, "张三"); // 传入的是 Java 8 的方法引用
 
 ---
 
-### 三、 MyBatis-Plus 常用的持久层操作 (CRUD)
-
-在 MyBatis-Plus 中，通常只要你的 Mapper 接口继承了 `BaseMapper<T>`，你就自动获得了以下这些超级常用的方法（无需写任何 SQL）：
-
-#### 1. 插入 (Create)
-
-- **`insert(T entity)`**：插入一条记录。实体类中非 null 的字段才会被拼接。
-    ``` Java
-    User user = new User();
-    user.setName("李四");
-    userMapper.insert(user); // 返回影响的行数
-    // 插入后，MyBatis-Plus 会自动将数据库生成的主键回写到 user.getId() 中
-    ```
-    
-
-#### 2. 删除 (Delete)
-
-- **`deleteById(Serializable id)`**：根据主键 ID 删除。
-    
-    
-    
-    ``` java
-    userMapper.deleteById(1L);
-    ```
-    
-- **`delete(Wrapper<T> queryWrapper)`**：根据条件删除。
-
-    LambdaQueryWrapper<User> wrapper = Wrappers.lambdaQuery();
-    wrapper.eq(User::getAge, 18);
-    userMapper.delete(wrapper); // 删除所有18岁的用户
-    ```
-
-#### 3. 更新 (Update)
-*   **`updateById(T entity)`**：根据主键 ID 修改数据（只更新实体对象中非 null 的字段）。
-    
-```java
-    User user = new User();
-    user.setId(1L); // 必须指定 ID
-    user.setEmail("test@test.com"); // 只更新邮箱，其他字段不变
-    userMapper.updateById(user); 
-    ```
-*   **`update(T entity, Wrapper<T> updateWrapper)`**：根据条件修改（就像你提供的那段代码）。
-
-#### 4. 查询 (Read)
-*   **`selectById(Serializable id)`**：根据主键查询一条记录。
-    ```java
-    User user = userMapper.selectById(1L);
-    ```
-*   **`selectList(Wrapper<T> queryWrapper)`**：根据条件查询多条记录。
-    
-```java
-    LambdaQueryWrapper<User> wrapper = Wrappers.lambdaQuery();
-    wrapper.like(User::getName, "张")
-           .orderByDesc(User::getAge);
-    List<User> users = userMapper.selectList(wrapper); // 查询名字带"张"并按年龄倒序
-    ```
-*   **`selectOne(Wrapper<T> queryWrapper)`**：根据条件查询单条记录（如果查出多条会报错）。
-*   **`selectPage(IPage<T> page, Wrapper<T> queryWrapper)`**：分页查询。
-    
-```java
-    // 查询第1页，每页10条
-    Page<User> page = new Page<>(1, 10); 
-    Page<User> resultPage = userMapper.selectPage(page, wrapper);
-    long total = resultPage.getTotal(); // 获取总记录数
-    List<User> records = resultPage.getRecords(); // 获取当前页的数据
-    ```
-
-总结来说，你提供的那段代码是非常优雅的数据库更新操作，它不仅避免了手写繁琐的 SQL，还利用 Lambda 保证了字段名引用的绝对安全。这就是 MyBatis-Plus 在企业级开发中大受欢迎的核心原因之一。
-```</User></User></User></User></User></User></T>
