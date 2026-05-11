@@ -228,7 +228,7 @@ baseMapper.update(shortLinkDO, updateWrapper);
     
 - `updateWrapper` 提供了要更新哪些行（`WHERE` 语句）。
     
-shortLinkDO将
+
 #### 💡 这段代码翻译成底层的 SQL 语句相当于：
 ``` SQL
 UPDATE t_short_link 
@@ -240,6 +240,9 @@ WHERE full_short_url = 'xxx'
 ```
 
 _(附带一提：除了新建实体类去传值，`LambdaUpdateWrapper` 还有另一种写法，直接使用 `.set()`，例如：`updateWrapper.set(ShortLinkDO::getEnableStatus, 0); baseMapper.update(null, updateWrapper);`，这两种效果是一样的。)_
+
+
+
 
 ---
 
@@ -284,3 +287,115 @@ wrapper.eq(User::getUserName, "张三"); // 传入的是 Java 8 的方法引用
 
 ---
 
+## 详细解释update
+
+我们可以把 `baseMapper.update(实体对象, Wrapper条件)` 这个操作形象地比喻为一次**精确打击**：
+
+- **第二个参数 `updateWrapper`**：是“雷达瞄准系统”**，负责生成 `WHERE` 语句，告诉你**“去打谁”。
+    
+- **第一个参数 `shortLinkDO`**：是“弹头/载荷”**，负责生成 `SET` 语句，告诉你**“改成什么样”。
+    
+
+下面为你详细拆解 `shortLinkDO` 的原理，以及 MP 是如何知道该更新哪张表的。
+
+---
+
+### 一、 第一个参数 `shortLinkDO` 的作用与底层原理
+
+#### 1. 它的核心作用：生成 SQL 的 `SET` 部分
+
+在关系型数据库中，更新语句的格式是 `UPDATE 表名 SET 列名=新值 WHERE 条件`。
+
+`shortLinkDO` 这个实体对象的作用，就是全权负责提供 `SET 列名=新值` 这部分内容。
+
+#### 2. 底层运行原理：反射与“非空判断”
+
+当你把 `shortLinkDO` 传给 `update()` 方法时，MyBatis-Plus 底层会执行以下一套极其聪明的逻辑：
+
+- **第一步：反射解析对象**
+    
+    MP 底层通过 Java 的反射机制，扫描传入的这个 `shortLinkDO` 对象内部的所有属性（字段）。
+    
+- **第二步：非空过滤（核心规则）**
+    
+    这是 MP 最重要的特性之一：**默认情况下，MP 只会把“值不为 null”的字段拼接到 `SET` 语句中**。
+    
+    结合你之前的代码：
+    ``` Java
+    ShortLinkDO shortLinkDO = ShortLinkDO.builder()
+            .enableStatus(0) // 只有这个字段被显式赋值了
+            .build();        // 其他没赋值的字段，默认全都是 null
+    ```
+    
+    MP 扫描后发现，这个对象里除了 `enableStatus` 是 `0`，其他的 `id`, `fullShortUrl`, `createTime` 等等全都是 `null`。因此，它**直接忽略**所有为 `null` 的字段。
+    
+- **第三步：字段名到列名的映射**
+    
+    MP 提取出非空的 `enableStatus` 字段后，会根据实体类上的 `@TableField` 注解，或者默认的“驼峰转下划线”规则，将其转换为数据库中的列名 `enable_status`。
+    
+- **第四步：拼接 SQL**
+    
+    最终，MP 带着这个转换结果去拼装 SQL：`SET enable_status = 0`。
+    
+
+**💡 为什么要这么设计？**
+
+如果 MP 不做非空判断，而是把对象的所有字段都拼到 `SET` 里，那就会变成 `SET enable_status = 0, full_short_url = null, gid = null...`，这会把你数据库里原本好好的数据全部清空成 NULL！所以“忽略 null 值”是极其安全的防御性设计。
+
+---
+
+### 二、 这个 `update` 是怎么知道要修改哪张表的？
+
+我们在调用 `baseMapper.update()` 的时候，既没有传表名，也没有写 SQL，那它是怎么知道要修改 `t_short_link`（假设表名是这个）这张表的呢？
+
+这得益于 Spring Boot 启动时的“预加载与泛型推断机制”。它发生在代码运行之前（项目启动阶段）。
+
+#### 第一步：通过泛型“顺藤摸瓜”
+
+你的 Mapper 接口一定是这么定义的：
+``` Java
+public interface ShortLinkMapper extends BaseMapper<ShortLinkDO> {
+}
+```
+
+当项目启动时，MyBatis-Plus 会去扫描所有的 Mapper 接口。当扫描到 `ShortLinkMapper` 时，它看到了你继承了 `BaseMapper`，并且**泛型参数指定了 `<ShortLinkDO>`**。
+
+这就建立了一个死绑定的关系：**这个 Mapper 专属于 `ShortLinkDO` 这个实体类**。
+
+#### 第二步：解析实体类上的注解（寻找表名）
+
+既然知道了实体类是 `ShortLinkDO`，MP 紧接着就会用反射去读取 `ShortLinkDO` 类的源码。
+
+它会寻找类头部的 `@TableName` 注解：
+``` Java
+@TableName("t_short_link")  // <-- MP 找到了这个！
+public class ShortLinkDO { ... }
+```
+
+- **如果写了 `@TableName("t_short_link")`**：MP 就直接把 `t_short_link` 作为这张表的表名。
+    
+- **如果没写 `@TableName` 注解**：MP 会启动默认策略，将类名 `ShortLinkDO` 做驼峰转下划线的处理，可能会推断表名为 `short_link_d_o`。
+    
+
+#### 第三步：将生成的 SQL 模板缓存起来
+
+在项目启动的瞬间，MP 已经通过上面的步骤知道了：
+
+1. 表名是 `t_short_link`。
+    
+2. 所有的列名是什么（通过扫描实体类的字段）。
+    
+3. 主键是哪个字段（通过寻找 `@TableId` 注解）。
+    
+
+有了这些信息，MP 就会在内存中为这个 Mapper 动态生成一套完整的 CRUD SQL 模板，并缓存到 MyBatis 的 `MappedStatement` 注册表中。
+
+#### 第四步：运行时直接调用
+
+当你真正在业务代码里执行 `baseMapper.update(shortLinkDO, updateWrapper)` 时，MP 根本不需要再去猜表名。它直接从启动时缓存好的元数据中提取出表名 `t_short_link`，然后把 `shortLinkDO` 解析出的 `SET` 语句，以及 `updateWrapper` 解析出的 `WHERE` 语句组装在一起，发给 MySQL 数据库。
+
+### 总结
+
+- **`shortLinkDO` 的作用**：充当数据载体，MP 通过反射获取其中非 null 的字段，动态生成 `SET` 语句。
+    
+- **如何知道表名**：基于泛型 `<ShortLinkDO>` 找到实体类 -> 读取实体类上的 `@TableName` 注解获取表名。这一切在 Spring 容器启动时就已经解析并缓存完毕了，运行时直接调用，效率极高。
