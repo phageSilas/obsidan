@@ -219,12 +219,12 @@
       "JAVA/MySQL/查询/比较运算符/模糊查询LIKE.md"
     ],
     "JAVA/Redis": [
-      "JAVA/Redis/消息队列",
       "JAVA/Redis/Attachment",
       "JAVA/Redis/Redis基础命令.md",
       "JAVA/Redis/缓存穿透.md",
       "JAVA/Redis/缓存雪崩.md",
       "JAVA/Redis/缓存击穿.md",
+      "JAVA/Redis/消息队列",
       "JAVA/Redis/锁",
       "JAVA/Redis/Feed流推送消息.md",
       "JAVA/Redis/Redis的Stream消息队列.md",
@@ -245,6 +245,11 @@
     "JAVA/Redis/锁/Attachment": [
       "JAVA/Redis/锁/Attachment/image-1.png",
       "JAVA/Redis/锁/Attachment/image.png"
+    ],
+    "JAVA/Redis/消息队列": [
+      "JAVA/Redis/消息队列/基于Redis的消息队列.md",
+      "JAVA/Redis/消息队列/削峰.md",
+      "JAVA/Redis/消息队列/幂等.md"
     ],
     "JAVA/Redis/Attachment": [
       "JAVA/Redis/Attachment/image-11.png",
@@ -274,9 +279,6 @@
       "JAVA/SpringCloud微服务/Attachment/MyBlockExceptionHandler.java",
       "JAVA/SpringCloud微服务/Attachment/image-1.png",
       "JAVA/SpringCloud微服务/Attachment/image.png"
-    ],
-    "JAVA/Redis/消息队列": [
-      "JAVA/Redis/消息队列/基于Redis的消息队列.md"
     ]
   },
   "draggingEnabled": true,
