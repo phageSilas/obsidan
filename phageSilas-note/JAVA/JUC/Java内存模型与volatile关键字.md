@@ -66,7 +66,7 @@ JMM 并没有真实存在的物理组件，它是一组**规则和规范**。它
 
 ![[image.png]]
 
-
+https://www.bilibili.com/video/BV16J411h7Rd(05.014-volatile-原理-保证有序性)
 ## 2. 致命的误区：volatile 保证原子性吗？
 
 **绝不保证！** 这是并发编程中最容易踩坑的地方。
