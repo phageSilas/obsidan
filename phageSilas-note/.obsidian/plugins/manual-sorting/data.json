@@ -220,11 +220,11 @@
     "JAVA/JUC": [
       "JAVA/JUC/Attachment",
       "JAVA/JUC/线程安全.md",
+      "JAVA/JUC/五种等待.md",
+      "JAVA/JUC/控制线程交替执行的方法.md",
       "JAVA/JUC/synchronized与ReentrantLock.md",
       "JAVA/JUC/锁升级.md",
       "JAVA/JUC/CAS.md",
-      "JAVA/JUC/五种等待.md",
-      "JAVA/JUC/控制线程交替执行的方法.md",
       "JAVA/JUC/Java内存模型与volatile关键字.md"
     ],
     "JAVA/JUC/Attachment": [
