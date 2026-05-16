@@ -218,6 +218,7 @@
       "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image.png"
     ],
     "JAVA/JUC": [
+      "JAVA/JUC/synchronized.md",
       "JAVA/JUC/五种等待.md",
       "JAVA/JUC/控制线程交替执行的方法.md"
     ],
