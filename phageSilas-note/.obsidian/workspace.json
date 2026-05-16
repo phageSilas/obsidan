@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA/JUC/synchronized与ReentrantLock.md",
+                "file": "JAVA/JUC/Java内存模型与volatile关键字.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "synchronized与ReentrantLock"
+              "title": "Java内存模型与volatile关键字"
             }
           },
           {
@@ -171,13 +171,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA/JUC/synchronized与ReentrantLock.md",
+                "file": "JAVA/JUC/Java内存模型与volatile关键字.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "synchronized与ReentrantLock 的大纲"
+              "title": "Java内存模型与volatile关键字 的大纲"
             }
           }
         ],
@@ -202,8 +202,8 @@
   },
   "active": "4973f07c028ab66e",
   "lastOpenFiles": [
-    "JAVA/JUC/Java内存模型与volatile关键字.md",
     "JAVA/JUC/synchronized与ReentrantLock.md",
+    "JAVA/JUC/Java内存模型与volatile关键字.md",
     "JAVA/JUC/五种等待.md",
     "JAVA/JUC/控制线程交替执行的方法.md",
     "面试/短链接/AI提问.md",
