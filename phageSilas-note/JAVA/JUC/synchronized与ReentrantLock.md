@@ -130,7 +130,95 @@ synchronized (lock) {
 | 性能    | 无竞争时偏向锁极快         | 在高竞争下通常更稳定                                 |
 
 ---
+## 自带synchronized的方法
+在 Java 的庞大生态中，除了 `System.out.println()` 这种“潜伏”在日常代码中的同步锁之外，确实还有很多方法、类甚至底层的 JVM 机制自带了 `synchronized` 锁或者类似的内存屏障。
 
+当你无意中调用它们时，它们也会像 `println` 一样，**产生“清空工作内存，强制刷新主内存”的副作用（可见性）**。[[]]
+
+我们可以将这些隐藏的“锁”分为以下几大类：
+
+### 1. “上古时代”的 JDK 遗留类 (全家桶锁)
+
+在 JDK 1.0 和 1.1 时代，Java 官方为了保证绝对的线程安全，对一些基础类采取了最简单粗暴的策略：**给几乎所有的方法都加上 `synchronized`**。
+
+如果你在死循环中调用了以下这些类的方法，不仅自带锁，而且同样会意外打破死循环：
+
+- **`StringBuffer`：** 它的 `append()`, `delete()`, `toString()` 等方法全部由 `synchronized` 修饰。（这就是为什么单线程下推荐使用无锁的 `StringBuilder`）。
+    
+- **`Vector` 和 `Stack`：** 它们是 `ArrayList` 的老前辈，里面的 `add()`, `get()`, `size()` 等方法也全是被 `synchronized` 包裹的。
+    
+- **`Hashtable`：** `HashMap` 的老前辈，它的 `put()`, `get()` 方法同样自带 `synchronized`。
+    
+- **`java.util.Properties`：** 经常用来读取配置文件的类，因为它继承自 `Hashtable`，所以它的读写操作也是自带锁的。
+    
+
+### 2. JDK 隐藏的常见 API 锁
+
+有些我们非常常用的 API，为了保证全局状态的正确性，其内部实现悄悄使用了 `synchronized`：
+
+- **`ClassLoader.loadClass()`：**
+    
+    类的加载过程是极其严谨的，不能让两个线程同时把一个类加载两遍。因此，`ClassLoader` 在加载类时，内部会有 `synchronized(getClassLoadingLock(name))` 的操作。
+    
+- **`Collections.synchronizedXXX()` 包装类：**
+    
+    当你调用 `Collections.synchronizedList(new ArrayList<>())` 时，返回的列表内部包装了一个 `mutex`（互斥锁）对象。你调用的每一个 `add` 或 `get`，都会在内部执行 `synchronized (mutex)`。
+    
+
+### 3. 最神秘的语言级关键字锁：JVM 的类初始化锁
+
+这是 Java 语言层面上非常隐蔽、但又极其强大的一个“隐藏锁”。
+
+当你第一次访问一个类的静态变量，或者调用它的静态方法时，JVM 会去初始化这个类（执行 `<clinit>` 静态代码块）。为了防止多个线程同时去初始化同一个类，**JVM 在底层会自动获取一把隐式的锁（Initialization Lock）**。
+
+- **它的威力：** 这种锁对开发者是完全透明的，但它保证了类的静态变量初始化绝对是线程安全的，并且对所有线程立即可见。
+    
+- **经典应用（优雅的单例模式）：**
+    
+    著名的“静态内部类单例模式”就是巧妙利用了这个隐藏锁：
+    ``` Java
+    public class Singleton {
+        private Singleton() {}
+    
+        // 这个内部类只有在 getInstance() 被调用时才会被加载
+        private static class InstanceHolder {
+            // 这里的 new 操作，由 JVM 的类初始化锁保证了绝对的线程安全和可见性！
+            private static final Singleton INSTANCE = new Singleton();
+        }
+    
+        public static Singleton getInstance() {
+            return InstanceHolder.INSTANCE;
+        }
+    }
+    ```
+    
+    这里你连一个 `synchronized` 或 `volatile` 都没写，但 JVM 自动帮你加上了最安全的锁！
+    
+
+### 4. 现代 Java 的“隐形屏障”：CAS (Compare-And-Swap)
+
+随着 Java 并发包（JUC）的发展，很多地方不再使用笨重的 `synchronized`，而是改用了底层的 CAS 机制（配合 `volatile`）。虽然它们没有“锁”，但它们**同样自带了强制刷新缓存的内存屏障**。
+
+- **`Math.random()`：**
+    
+    很多人不知道，`Math.random()` 底层使用的是一个全局的 `java.util.Random` 实例。而 `Random` 类为了保证多线程下生成的随机数种子不重复，它的 `next()` 方法底层使用了 `AtomicLong` 的 CAS 操作。这个操作不仅不会阻塞，还会强制刷新内存。
+    
+- **`ConcurrentHashMap` (JDK 8+)：**
+    
+    在 JDK 8 之后，`ConcurrentHashMap` 抛弃了分段锁，大量采用了 CAS 操作。但在对某个具体的 Hash 槽位（Node 节点）进行首个元素插入时，它依然会非常克制地使用 `synchronized (Node)` 来锁住那一个小小的头节点。
+    
+
+### 5. `final` 关键字的特殊可见性
+
+最后补充一个很多人容易忽略的关键字：`final`。
+
+它虽然不是锁，但在 JMM（Java 内存模型）中，`final` 具有特殊的“初始化安全性（Initialization Safety）”语义。
+
+当你在构造函数中给一个 `final` 字段赋值完毕后，JMM 会在这个构造函数结束之前，插入一个 `StoreStore` 屏障。
+
+**这意味着什么？**
+
+只要对象构造完成，哪怕你没有使用 `synchronized` 也没有使用 `volatile`，其他任何线程只要拿到了这个对象的引用，就**必定能看到 `final` 字段初始化后的正确值**，绝对不会读到系统的默认值（比如 0 或 null）。这是 Java 语言为了保证不可变对象（Immutable Object）的绝对安全而设置的底层屏障。
 # 可重入
 ## 什么是可重入
 
