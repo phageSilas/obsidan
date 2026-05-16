@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA/JUC/Java内存模型与volatile关键字.md",
+                "file": "JAVA/JUC/synchronized与ReentrantLock.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Java内存模型与volatile关键字"
+              "title": "synchronized与ReentrantLock"
             }
           },
           {
@@ -171,13 +171,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA/JUC/Java内存模型与volatile关键字.md",
+                "file": "JAVA/JUC/synchronized与ReentrantLock.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Java内存模型与volatile关键字 的大纲"
+              "title": "synchronized与ReentrantLock 的大纲"
             }
           }
         ],
@@ -202,11 +202,11 @@
   },
   "active": "4973f07c028ab66e",
   "lastOpenFiles": [
+    "JAVA/JUC/五种等待.md",
+    "JAVA/JUC/Java内存模型与volatile关键字.md",
     "JAVA/JUC/Attachment/image.png",
     "JAVA/JUC/Attachment",
     "JAVA/JUC/synchronized与ReentrantLock.md",
-    "JAVA/JUC/Java内存模型与volatile关键字.md",
-    "JAVA/JUC/五种等待.md",
     "JAVA/JUC/控制线程交替执行的方法.md",
     "面试/短链接/AI提问.md",
     "JAVA/JUC",
@@ -246,7 +246,6 @@
     "JAVA/Redis/锁/Attachment/image.png",
     "JAVA/Redis/Attachment/image-11.png",
     "JAVA/Redis/Attachment/image-10.png",
-    "JAVA/Redis/Attachment/image-9.png",
-    "JAVA/Redis/Attachment/image-8.png"
+    "JAVA/Redis/Attachment/image-9.png"
   ]
 }
