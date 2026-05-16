@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA/JUC/线程安全.md",
+                "file": "JAVA/JUC/五种等待.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "线程安全"
+              "title": "五种等待"
             }
           },
           {
@@ -171,13 +171,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA/JUC/线程安全.md",
+                "file": "JAVA/JUC/五种等待.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "线程安全 的大纲"
+              "title": "五种等待 的大纲"
             }
           }
         ],
@@ -202,8 +202,8 @@
   },
   "active": "4973f07c028ab66e",
   "lastOpenFiles": [
-    "JAVA/JUC/CAS.md",
     "JAVA/JUC/线程安全.md",
+    "JAVA/JUC/CAS.md",
     "JAVA/JUC/锁升级.md",
     "JAVA/JUC/synchronized与ReentrantLock.md",
     "JAVA/JUC/五种等待.md",
