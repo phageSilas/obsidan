@@ -201,4 +201,92 @@ public class AtomicBoolean implements java.io.Serializable {
 - **致命弱点：** 如果并发量**极其巨大**（比如几千个线程同时狂轰滥炸一个 `AtomicInteger`），就会导致只有一个线程 CAS 成功，剩下的 999 个线程都在疯狂自旋（死循环），会让 CPU 的使用率瞬间飙升到 100%。
     
 
-这就引出了一个非常前沿的问题：你知道在极高并发的工业级场景下，为了解决 `AtomicInteger` 疯狂自旋导致 CPU 飙升的问题，JDK 8 专门引入了一个什么“神器”来替代它吗？
+## 常见的原子方法
+JUC 包下的原子类（如 `AtomicInteger`、`AtomicLong`、`AtomicReference` 等）虽然种类繁多，但它们的 API 设计风格高度统一。掌握了其中一个类的常用方法，其他的基本就能触类旁通。
+
+我们可以将这些常用方法分为 **四大阵营**，从基础的比较替换，到日常的数学运算，再到现代 Java 的函数式编程玩法，层层递进。
+
+### 1. 核心基石：比较与交换 (CAS 操作)
+
+这是所有原子类的灵魂方法，也就是我们上一节深入探讨过的底层机制。
+
+- **`boolean compareAndSet(expectedValue, newValue)`**
+    
+    - **作用：** 如果当前内存里的值等于 `expectedValue`，就把值更新为 `newValue`，并返回 `true`；如果已经被别人改了，就不做任何操作，并返回 `false`。
+        
+    - **使用场景：** 严格的状态流转控制。比如在后端业务中，控制某个任务只能被执行一次。
+        
+
+### 2. 数学运算：自增、自减与加法
+
+这是日常开发中最常用的阵营，主要用来替代 `i++`、`++i` 或 `i += n` 这种非原子的操作。以 `AtomicInteger` 为例：
+
+|**方法名**|**等价于普通代码**|**返回值含义**|
+|---|---|---|
+|**`getAndIncrement()`**|`i++`|返回**旧值**（加 1 之前的值）|
+|**`incrementAndGet()`**|`++i`|返回**新值**（加 1 之后的值）|
+|**`getAndDecrement()`**|`i--`|返回**旧值**（减 1 之前的值）|
+|**`decrementAndGet()`**|`--i`|返回**新值**（减 1 之后的值）|
+|**`getAndAdd(int delta)`**|`i += delta`|返回**旧值**|
+|**`addAndGet(int delta)`**|`i = i + delta`|返回**新值**|
+
+**底层逻辑：** 这些方法底层都在跑一个 `do-while` 的自旋循环。如果同时有 100 个线程调用 `incrementAndGet()`，它们会在底层不断尝试 CAS 加 1，直到成功为止，绝对不会丢失任何一次累加。
+
+### 3. 强制替换：无脑更新
+
+有时候我们不需要比较预期值，就是想把当前值强行改成一个新值，同时还想知道原来的值是多少。
+
+- **`getAndSet(newValue)`**
+    
+    - **作用：** 将当前值强行设置为 `newValue`，并返回替换前的**旧值**。
+        
+    - **底层逻辑：** 依然是自旋 + CAS。它会在一个死循环里不断读取当前值，然后尝试把它换成 `newValue`，直到替换成功，最后把当初读到的旧值返回给你。
+        
+
+### 4. 高阶玩法：JDK 8 引入的函数式更新
+
+在早期的 JDK 中，如果你的运算逻辑很复杂（比如：如果当前值是偶数就乘以 2，是奇数就减 1），你必须自己手写 `do-while` 循环去执行 CAS。
+
+JDK 8 引入了极其优雅的函数式接口方法，允许你直接传入一个 Lambda 表达式，底层自动帮你搞定复杂的自旋逻辑：
+
+- **`updateAndGet(IntUnaryOperator updateFunction)`**
+    
+    - **作用：** 传入一个一元运算逻辑，更新并返回新值。
+        
+    - **示例：**
+
+        ``` Java
+        AtomicInteger current = new AtomicInteger(10);
+        // 让当前值乘以 5。底层自动处理 CAS 冲突和自旋重试
+        int result = current.updateAndGet(x -> x * 5); 
+        // result 现在是 50
+        ```
+        
+- **`accumulateAndGet(int x, IntBinaryOperator accumulatorFunction)`**
+    
+    - **作用：** 传入一个外部变量 `x` 和一个二元运算逻辑，结合当前值进行计算。
+        
+    - **示例：** 比较当前值和外部传进来的值，保留较大的那个。
+        
+``` Java
+        AtomicInteger maxScore = new AtomicInteger(80);
+        // 如果别人传入的 95 更大，就更新为 95
+        maxScore.accumulateAndGet(95, Math::max); 
+        ```
+
+---
+```
+
+### 💡 填坑：极高并发下的“终极神器”
+
+顺便填一下上一个回答结尾留下的坑：如果并发量极大（比如电商大促的 Redis 访问量统计），几千个线程同时对一个 `AtomicInteger` 执行 `incrementAndGet()`，会导致只有一个线程 CAS 成功，剩下的几千个线程全部在原地空转（自旋），CPU 瞬间拉满。
+
+为了解决这个瓶颈，JDK 8 在 JUC 包下引入了一个专门应对极高并发计数的类：**`LongAdder`**（以及它的兄弟 `LongAccumulator`）。
+
+**`LongAdder` 的破局思路（空间换时间）：**
+它不再让所有线程去死磕同一个共享变量。而是在内部维护了一个名叫 `Cell[]` 的数组。
+1. 当竞争不激烈时，它就和普通的 `AtomicLong` 一样，直接在一个基础变量（base）上做 CAS 操作。
+2. 当发生严重冲突时，它会把产生冲突的线程分配到不同的 `Cell` 里去。比如线程 A 在 `Cell[0]` 里自增，线程 B 在 `Cell[1]` 里自增。大家各加各的，互不干扰，彻底消灭了 CAS 自旋的锁竞争。
+3. 当你最后调用 `sum()` 方法获取总数时，它才会把基础变量和所有 `Cell` 里的值加起来汇总返回。
+
+在现代的架构开发中，如果是高并发的单纯累加计数场景，**优先使用 `LongAdder` 替代 `AtomicLong`** 已经成为了业界的标准最佳实践。
