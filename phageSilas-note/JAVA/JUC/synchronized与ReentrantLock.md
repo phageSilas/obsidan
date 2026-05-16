@@ -1,5 +1,5 @@
 
-# synchronized
+# synchronized 非公平锁
 ## 一、底层原理：对象头、Monitor 与锁升级
 
 每个 Java 对象在堆中都有**对象头**，其中的 **Mark Word** 记录了锁状态。`synchronized` 依赖操作系统底层的 **Monitor（管程）** 来实现，但 JVM 会通过锁升级优化性能：
@@ -437,7 +437,7 @@ inner
 - 它解决了子类方法调用父类同步方法、一个同步方法调用另一个同步方法等场景的死锁问题。
 - JVM 通过 Monitor 的持有者和重入计数器实现；`ReentrantLock` 则通过 `AbstractQueuedSynchronizer` 的 `state` 和 `exclusiveOwnerThread` 实现。
 
-# ReentrantLock
+# ReentrantLock 公平锁
 
 ## 一、ReentrantLock 的原理（AQS 基础）
 
