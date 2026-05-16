@@ -218,10 +218,14 @@
       "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image.png"
     ],
     "JAVA/JUC": [
+      "JAVA/JUC/Attachment",
       "JAVA/JUC/synchronized与ReentrantLock.md",
       "JAVA/JUC/五种等待.md",
       "JAVA/JUC/控制线程交替执行的方法.md",
       "JAVA/JUC/Java内存模型与volatile关键字.md"
+    ],
+    "JAVA/JUC/Attachment": [
+      "JAVA/JUC/Attachment/image.png"
     ],
     "JAVA/MySQL": [
       "JAVA/MySQL/多表.md",
