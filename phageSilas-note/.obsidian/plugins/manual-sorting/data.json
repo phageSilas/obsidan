@@ -39,6 +39,7 @@
       "Blender/blender快捷键.md"
     ],
     "JAVA": [
+      "JAVA/JUC",
       "JAVA/规范",
       "JAVA/MySQL",
       "JAVA/JAVASE",
@@ -215,6 +216,10 @@
       "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-17.png",
       "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-18.png",
       "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image.png"
+    ],
+    "JAVA/JUC": [
+      "JAVA/JUC/五种等待.md",
+      "JAVA/JUC/控制线程交替执行的方法.md"
     ],
     "JAVA/MySQL": [
       "JAVA/MySQL/多表.md",
