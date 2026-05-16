@@ -219,6 +219,7 @@
     ],
     "JAVA/JUC": [
       "JAVA/JUC/Attachment",
+      "JAVA/JUC/线程安全.md",
       "JAVA/JUC/synchronized与ReentrantLock.md",
       "JAVA/JUC/锁升级.md",
       "JAVA/JUC/五种等待.md",
