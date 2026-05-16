@@ -133,7 +133,7 @@ synchronized (lock) {
 ## 自带synchronized的方法
 在 Java 的庞大生态中，除了 `System.out.println()` 这种“潜伏”在日常代码中的同步锁之外，确实还有很多方法、类甚至底层的 JVM 机制自带了 `synchronized` 锁或者类似的内存屏障。
 
-当你无意中调用它们时，它们也会像 `println` 一样，**产生“清空工作内存，强制刷新主内存”的副作用（可见性）**。[[]]
+当你无意中调用它们时，它们也会像 `println` 一样，**产生“清空工作内存，强制刷新主内存”的副作用（可见性）**。[[Java内存模型与volatile关键字#可见性]]
 
 我们可以将这些隐藏的“锁”分为以下几大类：
 
@@ -510,4 +510,110 @@ Condition notEmpty = lock.newCondition();
 - 如果需要**可中断的锁获取、超时等待、公平锁、多条件协作**，使用 `ReentrantLock`。
 - 在 **JDK 6 之后**，两者在一般场景下性能差距很小，优先选写法简单的，需要高级特性时再用 `Lock`。
 
-如果你还想看 `Condition` 的生产者-消费者完整示例，或者 AQS 的实现细节，我可以继续展开。
+## 自带ReentrantLock的,那很少见了
+
+既然 `synchronized` 被广泛“隐藏”在早期的 JDK 基础类中，那么作为 JUC（Java 并发包）的主力军，`ReentrantLock` 当然也被大量隐藏在底层的源码中。
+
+不过，与 `synchronized` 散落在各个角落（比如 `System.out`、`Vector`）不同，**`ReentrantLock` 极其克制，它几乎只“潜伏”在 `java.util.concurrent` (JUC) 包下的高级并发组件中。**
+
+被“自带”了 `ReentrantLock` 的经典类主要有以下四大阵营：
+
+### 1. 阻塞队列阵营 (BlockingQueue) —— 最大客户
+
+可以说，整个 JUC 的阻塞队列体系，底层全靠 `ReentrantLock` 撑着。这里完美呼应了我们之前聊过的 `Condition.await()` 精准唤醒机制。
+
+- **`ArrayBlockingQueue`：一把锁包打天下**
+    
+    它的底层是一个数组。为了保证并发安全，它内部自带了一个全局的 `ReentrantLock` 和两个 `Condition`（`notEmpty` 和 `notFull`）。
+    ``` Java
+    // ArrayBlockingQueue 源码片段
+    final ReentrantLock lock;
+    private final Condition notEmpty;
+    private final Condition notFull;
+    ```
+    
+    当你调用 `put()` 或 `take()` 时，底层全都在这同一把锁上排队。
+    
+- **`LinkedBlockingQueue`：双锁分离（读写分离的雏形）**
+    
+    这是个非常经典的面试题。因为它是链表结构，插入和弹出分别在队列的头和尾，互不干扰。所以 Doug Lea（JUC 的作者）给它配了**两把** `ReentrantLock`：
+``` java
+    // LinkedBlockingQueue 源码片段
+    private final ReentrantLock takeLock = new ReentrantLock();
+    private final ReentrantLock putLock = new ReentrantLock();
+```
+    存数据用 `putLock`，取数据用 `takeLock`，大大提高了并发吞吐量。
+
+*   **`DelayQueue` / `PriorityBlockingQueue`：**
+    同样自带了一把 `ReentrantLock` 来保证元素进出堆结构（Heap）时的线程安全。
+
+### 2. 并发集合阵营 (Concurrent Collections)
+
+*   **`CopyOnWriteArrayList`（写操作自带锁）**
+    这是 JUC 下最常用的并发 List。它的核心思想是“读写分离，读多写少”。
+    当你在多线程下调用 `add()`, `set()`, `remove()` 时，它内部会悄悄获取一把 `ReentrantLock`：
+    
+```java
+    // CopyOnWriteArrayList 的 add 方法 (JDK 8)
+    public boolean add(E e) {
+        final ReentrantLock lock = this.lock;
+        lock.lock(); // 隐式加锁
+        try {
+            // ... 复制原数组，添加新元素 ...
+        } finally {
+            lock.unlock();
+        }
+    }
+```
+    注：它的读操作 get()是完全不加锁的。
+
+*   **老版本的 `ConcurrentHashMap`（JDK 7 及以前）**
+    在 JDK 7 中，`ConcurrentHashMap` 使用了经典的**“分段锁（Segment）”**机制。这个 `Segment` 类的源码定义是直接继承了 `ReentrantLock` 的：
+    
+```java
+    // JDK 7 ConcurrentHashMap 内部类
+    static final class Segment<K,V> extends ReentrantLock implements Serializable { ... }
+```
+
+ （虽然 JDK 8 之后为了追求极致性能，把 ReentrantLock 换成了 CAS + synchronized，但这依然是 `ReentrantLock` 最辉煌的履历之一）。
+
+### 3. 线程池的心脏 (ThreadPoolExecutor)
+
+你天天都在用的线程池，里面也藏着 `ReentrantLock`。
+
+在 `ThreadPoolExecutor` 源码中，有一把名为 `mainLock` 的 `ReentrantLock`。
+
+```java
+// ThreadPoolExecutor 源码片段
+private final ReentrantLock mainLock = new ReentrantLock();
+private final HashSet<Worker> workers = new HashSet<Worker>();
+``` 
+这把锁是干什么用的？
+
+线程池里有很多工作线程（Worker），它们被存放在一个 `HashSet` 里。因为原生的 `HashSet` 不是线程安全的，所以在**增加工作线程、销毁工作线程、或者统计线程池完成任务总数**时，线程池底层都会默默获取这把 `mainLock`。
+
+### 4. 并发屏障工具 (CyclicBarrier)
+我们在使用 `CyclicBarrier` 让多个线程互相等待（比如 5 个线程都准备好了才一起起跑）时，底层也是它。
+
+当你调用 `barrier.await()` 时，底层发生了什么？
+
+它内部维护了一个拦截数量（count），为了保证多个线程同时去扣减这个 count 时不发生错乱，内部必定要加锁：
+``` Java
+// CyclicBarrier 源码片段
+private final ReentrantLock lock = new ReentrantLock();
+private final Condition trip = lock.newCondition();
+```
+
+线程进去后先获取 `ReentrantLock` 锁，把 count 减 1，如果没到 0，就调用 `trip.await()` 交出锁并去条件队列里休息；如果减到 0 了，就调用 `trip.signalAll()` 把前面休息的兄弟全叫醒。
+
+---
+
+### 总结：为什么 JUC 大量使用 `ReentrantLock` 而不用 `synchronized`？
+
+仔细观察上面这些类，你会发现 Doug Lea 之所以把 `ReentrantLock` 藏在这些高级组件里，主要是贪图它的三个极其强大的能力（这正是 `synchronized` 无法提供的）：
+
+1. **多条件队列 (`Condition`)：** 像 `ArrayBlockingQueue` 需要把“等待装入”和“等待取出”的线程分开管理，只有 `ReentrantLock` 能创建多个 `Condition` 休息室。
+    
+2. **非阻塞尝试 (`tryLock`)：** 很多高级并发控制需要“拿不到锁就撤，不准死等”的能力。
+    
+3. **可响应中断 (`lockInterruptibly`)：** 像线程池在关闭（`shutdown`）时，需要中断那些正在等锁的空闲线程，`ReentrantLock` 完美支持这一特性。
