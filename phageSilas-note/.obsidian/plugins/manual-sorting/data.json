@@ -13,15 +13,11 @@
       "面试/JVM"
     ],
     "面试/项目": [
-      "面试/项目/未命名 2",
-      "面试/项目/未命名 1",
       "面试/项目/短链接"
     ],
     "面试/项目/短链接": [
       "面试/项目/短链接/AI提问.md"
     ],
-    "面试/项目/未命名 1": [],
-    "面试/项目/未命名 2": [],
     "面试/JUC": [
       "面试/JUC/Attachment",
       "面试/JUC/线程安全.md",
@@ -42,14 +38,14 @@
       "面试/JVM/类生命周期.md"
     ],
     "面试/JVM/Attachment": [
+      "面试/JVM/Attachment/image-1.png",
+      "面试/JVM/Attachment/image-2.png",
       "面试/JVM/Attachment/image.png"
     ],
     "算法": [
-      "算法/Attachment",
       "算法/二分查找.md",
       "算法/数据结构与算法.md"
     ],
-    "算法/Attachment": [],
     "Attachment": [
       "Attachment/image-9.png",
       "Attachment/image-8.png",
