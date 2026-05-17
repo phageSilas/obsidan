@@ -8,15 +8,38 @@
       "Attachment"
     ],
     "面试": [
-      "面试/短链接",
-      "面试/未命名 1",
-      "面试/未命名 2"
+      "面试/项目",
+      "面试/JUC",
+      "面试/JVM"
     ],
-    "面试/短链接": [
-      "面试/短链接/AI提问.md"
+    "面试/项目": [
+      "面试/项目/未命名 2",
+      "面试/项目/未命名 1",
+      "面试/项目/短链接"
     ],
-    "面试/未命名 1": [],
-    "面试/未命名 2": [],
+    "面试/项目/短链接": [
+      "面试/项目/短链接/AI提问.md"
+    ],
+    "面试/项目/未命名 1": [],
+    "面试/项目/未命名 2": [],
+    "面试/JUC": [
+      "面试/JUC/Attachment",
+      "面试/JUC/线程安全.md",
+      "面试/JUC/五种等待.md",
+      "面试/JUC/控制线程交替执行的方法.md",
+      "面试/JUC/synchronized与ReentrantLock.md",
+      "面试/JUC/锁升级.md",
+      "面试/JUC/CAS.md",
+      "面试/JUC/Java内存模型与volatile关键字.md"
+    ],
+    "面试/JUC/Attachment": [
+      "面试/JUC/Attachment/image-1.png",
+      "面试/JUC/Attachment/image-2.png",
+      "面试/JUC/Attachment/image.png"
+    ],
+    "面试/JVM": [
+      "面试/JVM/类生命周期.md"
+    ],
     "算法": [
       "算法/Attachment",
       "算法/二分查找.md",
@@ -39,7 +62,6 @@
       "Blender/blender快捷键.md"
     ],
     "JAVA": [
-      "JAVA/JUC",
       "JAVA/规范",
       "JAVA/MySQL",
       "JAVA/JAVASE",
@@ -216,19 +238,6 @@
       "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-17.png",
       "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-18.png",
       "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image.png"
-    ],
-    "JAVA/JUC": [
-      "JAVA/JUC/Attachment",
-      "JAVA/JUC/线程安全.md",
-      "JAVA/JUC/五种等待.md",
-      "JAVA/JUC/控制线程交替执行的方法.md",
-      "JAVA/JUC/synchronized与ReentrantLock.md",
-      "JAVA/JUC/锁升级.md",
-      "JAVA/JUC/CAS.md",
-      "JAVA/JUC/Java内存模型与volatile关键字.md"
-    ],
-    "JAVA/JUC/Attachment": [
-      "JAVA/JUC/Attachment/image.png"
     ],
     "JAVA/MySQL": [
       "JAVA/MySQL/多表.md",

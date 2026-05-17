@@ -1,4 +1,4 @@
-![[image-2.png]]
+![[JAVA/SpringCloud微服务/Attachment/image-2.png]]
 
 # 配置
 ![[application-route.yml]]

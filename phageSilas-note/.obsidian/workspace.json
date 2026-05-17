@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA/JUC/线程安全.md",
+                "file": "面试/JVM/类生命周期.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "线程安全"
+              "title": "类生命周期"
             }
           },
           {
@@ -171,13 +171,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA/JUC/线程安全.md",
+                "file": "面试/JVM/类生命周期.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "线程安全 的大纲"
+              "title": "类生命周期 的大纲"
             }
           }
         ],
@@ -202,25 +202,28 @@
   },
   "active": "4973f07c028ab66e",
   "lastOpenFiles": [
-    "JAVA/JUC/Attachment/image-2.png",
-    "JAVA/JUC/五种等待.md",
-    "JAVA/JUC/控制线程交替执行的方法.md",
-    "JAVA/JUC/synchronized与ReentrantLock.md",
-    "JAVA/JUC/锁升级.md",
-    "JAVA/JUC/线程安全.md",
-    "JAVA/JUC/Attachment/image-1.png",
-    "JAVA/JUC/CAS.md",
-    "JAVA/JUC/Java内存模型与volatile关键字.md",
-    "JAVA/JUC/Attachment/image.png",
-    "JAVA/JUC/Attachment",
-    "面试/短链接/AI提问.md",
-    "JAVA/JUC",
+    "面试/JUC/线程安全.md",
+    "面试/JVM/类生命周期.md",
+    "面试/JVM",
+    "面试/项目",
+    "面试/JUC/Attachment/image-2.png",
+    "面试/JUC/五种等待.md",
+    "面试/JUC/控制线程交替执行的方法.md",
+    "面试/JUC/synchronized与ReentrantLock.md",
+    "面试/JUC/锁升级.md",
+    "面试/JUC/Attachment/image-1.png",
+    "面试/JUC/CAS.md",
+    "面试/JUC/Java内存模型与volatile关键字.md",
+    "面试/JUC/Attachment/image.png",
+    "面试/JUC/Attachment",
+    "面试/项目/短链接/AI提问.md",
+    "面试/JUC",
     "JAVA/Redis/缓存穿透.md",
     "JAVA/JAVASE/比较抽象的SE基础/动态代理.md",
     "JAVA/SpringCloud微服务/seata.md",
-    "面试/未命名 2",
-    "面试/未命名 1",
-    "面试/短链接",
+    "面试/项目/未命名 2",
+    "面试/项目/未命名 1",
+    "面试/项目/短链接",
     "面试/未命名.md",
     "未命名.base",
     "面试",
@@ -238,15 +241,12 @@
     "JAVA/Redis/缓存雪崩.md",
     "JAVA/JAVASE/SE基础/get与set方法用法解释.md",
     "JAVA/JAVASE/SE基础/包装类与装箱拆箱.md",
-    "JAVA/SpringCloud微服务/Attachment/application-route.yml",
     "JAVA/SpringCloud微服务/Attachment/image-2.png",
-    "JAVA/SpringCloud微服务/Attachment/MyBlockExceptionHandler.java",
     "JAVA/SpringCloud微服务/Attachment/image-1.png",
     "JAVA/SpringCloud微服务/Attachment/image.png",
     "JAVA/JavaWeb/SpringBoot/Attachment/image-14.png",
     "JAVA/Redis/锁/Attachment/image-1.png",
     "JAVA/Redis/锁/Attachment/image.png",
-    "JAVA/Redis/Attachment/image-11.png",
-    "JAVA/Redis/Attachment/image-10.png"
+    "JAVA/Redis/Attachment/image-11.png"
   ]
 }
