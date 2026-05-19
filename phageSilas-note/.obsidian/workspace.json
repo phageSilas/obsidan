@@ -202,6 +202,11 @@
   },
   "active": "4973f07c028ab66e",
   "lastOpenFiles": [
+    "面试/JVM/Attachment/image-8.png",
+    "面试/JVM/Attachment/image-7.png",
+    "面试/JVM/Attachment/image-6.png",
+    "面试/JVM/Attachment/dc7e9d94-36d0-465e-9738-6283634dfb46.png",
+    "面试/JVM/Attachment/image-5.png",
     "面试/JVM/Attachment/image-4.png",
     "面试/JVM/堆.md",
     "面试/JVM/垃圾回收器GC.md",
@@ -220,10 +225,8 @@
     "面试/JUC/控制线程交替执行的方法.md",
     "面试/JUC/synchronized与ReentrantLock.md",
     "面试/JUC/锁升级.md",
-    "面试/JUC/Attachment/image-1.png",
     "面试/JUC/CAS.md",
     "面试/JUC/Java内存模型与volatile关键字.md",
-    "面试/JUC/Attachment/image.png",
     "面试/JUC/Attachment",
     "面试/项目/短链接/AI提问.md",
     "面试/JUC",
@@ -244,9 +247,6 @@
     "JAVA/Redis/消息队列/削峰.md",
     "JAVA/Redis/消息队列/基于Redis的消息队列.md",
     "JAVA/JavaWeb/MyBatis-plus.md",
-    "JAVA/JAVASE/比较抽象的SE基础/lambda表达式与匿名内部类.md",
-    "JAVA/SpringCloud微服务/Attachment/image-2.png",
-    "JAVA/SpringCloud微服务/Attachment/image-1.png",
-    "JAVA/SpringCloud微服务/Attachment/image.png"
+    "JAVA/JAVASE/比较抽象的SE基础/lambda表达式与匿名内部类.md"
   ]
 }
