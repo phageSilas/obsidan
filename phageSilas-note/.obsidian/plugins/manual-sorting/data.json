@@ -35,6 +35,7 @@
     ],
     "面试/JVM": [
       "面试/JVM/类生命周期.md",
+      "面试/JVM/类加载器与双亲委派.md",
       "面试/JVM/运行数据区.md",
       "面试/JVM/栈.md",
       "面试/JVM/堆.md",
@@ -43,6 +44,9 @@
       "面试/JVM/Attachment"
     ],
     "面试/JVM/Attachment": [
+      "面试/JVM/Attachment/image-16.png",
+      "面试/JVM/Attachment/image-17.png",
+      "面试/JVM/Attachment/image-18.png",
       "面试/JVM/Attachment/image-15.png",
       "面试/JVM/Attachment/01.png",
       "面试/JVM/Attachment/6f03db4b39351325d4640abec124ef6d_720.jpg",
