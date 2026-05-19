@@ -39,7 +39,7 @@
       "面试/JVM/运行数据区.md",
       "面试/JVM/栈.md",
       "面试/JVM/堆.md",
-      "面试/JVM/内存溢出.md",
+      "面试/JVM/内存溢出与内存泄漏.md",
       "面试/JVM/垃圾回收GC.md",
       "面试/JVM/Attachment"
     ],
