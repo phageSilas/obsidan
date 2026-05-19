@@ -34,9 +34,11 @@
       "面试/JUC/Attachment/image.png"
     ],
     "面试/JVM": [
+      "面试/JVM/类生命周期.md",
       "面试/JVM/栈.md",
-      "面试/JVM/Attachment",
-      "面试/JVM/类生命周期.md"
+      "面试/JVM/堆.md",
+      "面试/JVM/垃圾回收器GC.md",
+      "面试/JVM/Attachment"
     ],
     "面试/JVM/Attachment": [
       "面试/JVM/Attachment/image-3.png",
