@@ -202,6 +202,7 @@
   },
   "active": "4973f07c028ab66e",
   "lastOpenFiles": [
+    "面试/JVM/Attachment/image-19.png",
     "面试/JVM/垃圾回收GC.md",
     "面试/JVM/类加载器与双亲委派.md",
     "面试/JVM/运行数据区.md",
@@ -246,7 +247,6 @@
     "JAVA/SpringCloud微服务/Openfeign.md",
     "JAVA/SpringCloud微服务/Nacos.md",
     "JAVA/Redis/消息队列/幂等.md",
-    "JAVA/Redis/消息队列/削峰.md",
-    "JAVA/Redis/消息队列/基于Redis的消息队列.md"
+    "JAVA/Redis/消息队列/削峰.md"
   ]
 }
