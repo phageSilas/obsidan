@@ -202,6 +202,7 @@
   },
   "active": "4973f07c028ab66e",
   "lastOpenFiles": [
+    "面试/JVM/Attachment/image-4.png",
     "面试/JVM/堆.md",
     "面试/JVM/垃圾回收器GC.md",
     "面试/JVM/栈.md",
@@ -244,7 +245,6 @@
     "JAVA/Redis/消息队列/基于Redis的消息队列.md",
     "JAVA/JavaWeb/MyBatis-plus.md",
     "JAVA/JAVASE/比较抽象的SE基础/lambda表达式与匿名内部类.md",
-    "JAVA/Redis/缓存击穿.md",
     "JAVA/SpringCloud微服务/Attachment/image-2.png",
     "JAVA/SpringCloud微服务/Attachment/image-1.png",
     "JAVA/SpringCloud微服务/Attachment/image.png"
