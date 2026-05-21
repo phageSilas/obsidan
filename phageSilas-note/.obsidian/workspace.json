@@ -200,8 +200,9 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "4973f07c028ab66e",
+  "active": "34d6b36d87ac3e98",
   "lastOpenFiles": [
+    "面试/项目/未命名",
     "面试/JVM/Attachment/image-23.png",
     "面试/JVM/Attachment/image-22.png",
     "面试/JVM/垃圾回收GC.md",
@@ -219,7 +220,6 @@
     "面试/JVM/堆.md",
     "面试/JVM/Attachment/6f03db4b39351325d4640abec124ef6d_720.jpg",
     "面试/JVM/栈.md",
-    "面试/JVM/Attachment/image-14.png",
     "面试/JVM/Attachment",
     "面试/JUC/线程安全.md",
     "面试/JVM",
