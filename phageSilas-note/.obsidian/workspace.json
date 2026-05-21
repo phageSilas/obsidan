@@ -41,16 +41,16 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA/JUC/Java内存模型与volatile关键字.md",
+                "file": "AI-agent/名词索引.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Java内存模型与volatile关键字"
+              "title": "名词索引"
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -171,13 +171,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "面试/agent/题目.md",
+                "file": "AI-agent/名词索引.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "题目 的大纲"
+              "title": "名词索引 的大纲"
             }
           }
         ],
@@ -200,10 +200,13 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "4973f07c028ab66e",
+  "active": "ec9bb8aae7cb40e9",
   "lastOpenFiles": [
-    "面试/JVM/内存溢出与内存泄漏.md",
+    "未命名.md",
+    "AI-agent/名词索引.md",
+    "AI-agent",
     "面试/agent/题目.md",
+    "面试/JVM/内存溢出与内存泄漏.md",
     "面试/agent",
     "面试/项目/Ragent",
     "面试/JVM/Attachment/image-23.png",
@@ -240,13 +243,10 @@
     "JAVA/SpringCloud微服务/seata.md",
     "面试/项目/未命名 2",
     "面试/项目/未命名 1",
-    "面试/项目/短链接",
     "面试/未命名.md",
     "JAVA/SpringCloud微服务/Gateway.md",
     "JAVA/SpringCloud微服务/Sentinel.md",
     "JAVA/SpringCloud微服务/Openfeign.md",
-    "JAVA/SpringCloud微服务/Nacos.md",
-    "JAVA/Redis/消息队列/幂等.md",
-    "JAVA/Redis/消息队列/削峰.md"
+    "JAVA/SpringCloud微服务/Nacos.md"
   ]
 }
