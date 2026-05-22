@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA基础笔试/Spring.md",
+                "file": "JAVA基础笔试/基础/集合.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Spring"
+              "title": "集合"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA基础笔试/Spring.md",
+                "file": "JAVA基础笔试/基础/集合.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Spring 的大纲"
+              "title": "集合 的大纲"
             }
           }
         ],
@@ -173,9 +173,10 @@
   },
   "active": "86dec970c3e102ad",
   "lastOpenFiles": [
+    "JAVA基础笔试/基础/Attachment/image-4.png",
     "JAVA基础笔试/基础/JavaSE.md",
-    "JAVA基础笔试/Spring.md",
     "JAVA基础笔试/基础/集合.md",
+    "JAVA基础笔试/Spring.md",
     "JAVA基础笔试/基础/Attachment/image-3.png",
     "JAVA基础笔试/基础/Attachment/image-2.png",
     "JAVA基础笔试/基础/Attachment/image-1.png",
@@ -217,7 +218,6 @@
     "面试/JUC/CAS.md",
     "面试/JUC/Java内存模型与volatile关键字.md",
     "面试/项目/短链接/AI提问.md",
-    "JAVA/Redis/缓存穿透.md",
-    "JAVA/JAVASE/比较抽象的SE基础/动态代理.md"
+    "JAVA/Redis/缓存穿透.md"
   ]
 }
