@@ -173,6 +173,8 @@
   },
   "active": "86dec970c3e102ad",
   "lastOpenFiles": [
+    "AI-agent/Attachment/image.png",
+    "AI-agent/Attachment",
     "面试/JUC/线程安全.md",
     "AI-agent/名词索引.md",
     "JAVA基础笔试/基础/JavaSE.md",
@@ -203,7 +205,6 @@
     "未命名.md",
     "AI-agent",
     "面试/JVM/内存溢出与内存泄漏.md",
-    "面试/agent",
     "面试/JVM/垃圾回收GC.md",
     "面试/JVM/类加载器与双亲委派.md",
     "面试/JVM/运行数据区.md",
