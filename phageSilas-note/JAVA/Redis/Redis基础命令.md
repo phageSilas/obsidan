@@ -313,7 +313,7 @@ public class RedisConfig {
 
 ### 缺陷
 为了能在反序列化时“聪明地”知道要把 JSON 转换回哪个具体的 Java 类，强行塞入了一个 `@class` 字段。就像你看到的，对于小对象来说，包名和类名的长度甚至超过了真实数据，这会导致 Redis 内存被大量浪费。
-![[image-3.png]]
+![[JAVA/Redis/Attachment/image-3.png]]
 ---
 
 #### 改用 `StringRedisTemplate` + 手动序列化
