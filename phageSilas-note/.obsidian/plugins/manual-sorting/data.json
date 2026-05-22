@@ -369,7 +369,11 @@
     ],
     "JAVA基础笔试/基础/集合": [],
     "JAVA基础笔试/基础/JavaSE": [
+      "JAVA基础笔试/基础/JavaSE/Attachment",
       "JAVA基础笔试/基础/JavaSE/继承.md"
+    ],
+    "JAVA基础笔试/基础/JavaSE/Attachment": [
+      "JAVA基础笔试/基础/JavaSE/Attachment/image.png"
     ],
     "JAVA基础笔试/JUC": [],
     "JAVA基础笔试/JVM": []

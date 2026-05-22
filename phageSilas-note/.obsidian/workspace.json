@@ -173,6 +173,10 @@
   },
   "active": "86dec970c3e102ad",
   "lastOpenFiles": [
+    "JAVA基础笔试/基础/JavaSE/Attachment/image-2.png",
+    "JAVA基础笔试/基础/JavaSE/Attachment/image-1.png",
+    "JAVA基础笔试/基础/JavaSE/Attachment/image.png",
+    "JAVA基础笔试/基础/JavaSE/Attachment",
     "JAVA/JAVASE/比较抽象的SE基础/lambda表达式与匿名内部类.md",
     "JAVA基础笔试/基础/JavaSE/继承.md",
     "JAVA基础笔试/基础/集合",
@@ -191,7 +195,6 @@
     "AI-agent",
     "面试/JVM/内存溢出与内存泄漏.md",
     "面试/agent",
-    "面试/项目/Ragent",
     "面试/JVM/Attachment/image-23.png",
     "面试/JVM/Attachment/image-22.png",
     "面试/JVM/垃圾回收GC.md",
@@ -204,9 +207,7 @@
     "面试/JVM/Attachment/image-18.png",
     "面试/JVM/Attachment/image-17.png",
     "面试/JVM/Attachment/image-16.png",
-    "面试/JVM/Attachment/image-15.png",
     "面试/JVM/堆.md",
-    "面试/JVM/Attachment/6f03db4b39351325d4640abec124ef6d_720.jpg",
     "面试/JVM/栈.md",
     "面试/JUC/线程安全.md",
     "面试/JUC/五种等待.md",
@@ -217,7 +218,6 @@
     "面试/JUC/Java内存模型与volatile关键字.md",
     "面试/项目/短链接/AI提问.md",
     "JAVA/Redis/缓存穿透.md",
-    "JAVA/JAVASE/比较抽象的SE基础/动态代理.md",
-    "JAVA/SpringCloud微服务/seata.md"
+    "JAVA/JAVASE/比较抽象的SE基础/动态代理.md"
   ]
 }
