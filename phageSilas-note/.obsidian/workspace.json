@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "面试/JUC/线程安全.md",
+                "file": "AI-agent/名词索引.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "线程安全"
+              "title": "名词索引"
             }
           }
         ]
@@ -74,8 +74,7 @@
               "title": "书签"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -143,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "面试/JUC/线程安全.md",
+                "file": "AI-agent/名词索引.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "线程安全 的大纲"
+              "title": "名词索引 的大纲"
             }
           }
         ],
@@ -174,6 +173,7 @@
   },
   "active": "86dec970c3e102ad",
   "lastOpenFiles": [
+    "面试/JUC/线程安全.md",
     "AI-agent/名词索引.md",
     "JAVA基础笔试/基础/JavaSE.md",
     "JAVA基础笔试/基础/Attachment/image-9.png",
@@ -210,7 +210,6 @@
     "面试/JVM/类生命周期.md",
     "面试/JVM/堆.md",
     "面试/JVM/栈.md",
-    "面试/JUC/线程安全.md",
     "面试/JUC/五种等待.md",
     "面试/JUC/控制线程交替执行的方法.md",
     "面试/JUC/synchronized与ReentrantLock.md",
