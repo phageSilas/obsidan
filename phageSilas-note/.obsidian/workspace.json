@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA基础笔试/基础/JavaSE.md",
+                "file": "AI-agent/名词索引.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "JavaSE"
+              "title": "名词索引"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA基础笔试/基础/JavaSE.md",
+                "file": "AI-agent/名词索引.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "JavaSE 的大纲"
+              "title": "名词索引 的大纲"
             }
           }
         ],
@@ -173,11 +173,11 @@
   },
   "active": "86dec970c3e102ad",
   "lastOpenFiles": [
+    "JAVA基础笔试/基础/JavaSE.md",
     "JAVA基础笔试/基础/Attachment/image-9.png",
     "JAVA基础笔试/基础/Attachment/image-8.png",
     "JAVA基础笔试/基础/Attachment/image-7.png",
     "JAVA基础笔试/基础/集合.md",
-    "JAVA基础笔试/基础/JavaSE.md",
     "JAVA基础笔试/基础/Attachment/image-6.png",
     "JAVA基础笔试/基础/Attachment/image-5.png",
     "JAVA基础笔试/基础/Attachment/image-4.png",
@@ -203,7 +203,6 @@
     "AI-agent",
     "面试/JVM/内存溢出与内存泄漏.md",
     "面试/agent",
-    "面试/JVM/Attachment/image-23.png",
     "面试/JVM/垃圾回收GC.md",
     "面试/JVM/类加载器与双亲委派.md",
     "面试/JVM/运行数据区.md",
