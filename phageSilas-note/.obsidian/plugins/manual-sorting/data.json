@@ -1,9 +1,9 @@
 {
   "customFileOrder": {
     "/": [
-      "未命名",
       "AI-agent",
       "面试",
+      "JAVA基础笔试",
       "JAVA",
       "Blender",
       "算法",
@@ -88,7 +88,6 @@
       "算法/二分查找.md",
       "算法/数据结构与算法.md"
     ],
-    "未命名": [],
     "AI-agent": [
       "AI-agent/名词索引.md"
     ],
@@ -358,7 +357,22 @@
       "JAVA/SpringCloud微服务/Attachment/MyBlockExceptionHandler.java",
       "JAVA/SpringCloud微服务/Attachment/image-1.png",
       "JAVA/SpringCloud微服务/Attachment/image.png"
-    ]
+    ],
+    "JAVA基础笔试": [
+      "JAVA基础笔试/JVM",
+      "JAVA基础笔试/JUC",
+      "JAVA基础笔试/基础"
+    ],
+    "JAVA基础笔试/基础": [
+      "JAVA基础笔试/基础/JavaSE",
+      "JAVA基础笔试/基础/集合"
+    ],
+    "JAVA基础笔试/基础/集合": [],
+    "JAVA基础笔试/基础/JavaSE": [
+      "JAVA基础笔试/基础/JavaSE/继承.md"
+    ],
+    "JAVA基础笔试/JUC": [],
+    "JAVA基础笔试/JVM": []
   },
   "draggingEnabled": true,
   "selectedSortOrder": "manual-sorting"
