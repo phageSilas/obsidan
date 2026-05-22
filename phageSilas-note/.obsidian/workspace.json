@@ -200,8 +200,9 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "ec9bb8aae7cb40e9",
+  "active": "34d6b36d87ac3e98",
   "lastOpenFiles": [
+    "未命名",
     "AI-agent/名词索引.md",
     "面试/项目/黑马点评/AI.md",
     "面试/项目/黑马点评",
@@ -246,7 +247,6 @@
     "JAVA/SpringCloud微服务/seata.md",
     "面试/项目/未命名 2",
     "面试/未命名.md",
-    "JAVA/SpringCloud微服务/Gateway.md",
-    "JAVA/SpringCloud微服务/Sentinel.md"
+    "JAVA/SpringCloud微服务/Gateway.md"
   ]
 }
