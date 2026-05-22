@@ -34,7 +34,18 @@ F：**Object类是所有类的父类**。**子类其实是一种特殊的父类�
 ![[image-6.png|586x530]]
 Java只支持单继承，实现多重继承三种方式：（1）直接实现多个接口 （2）扩展(extends)一个类然后实现一个或多个接口  （3）通过内部类去继承其他类
 
+![[image-8.png]]
+
+在Java中，向下转型（将父类引用指向的子类对象，显式转换为子类类型）可能失败并抛出 ClassCastException ，主要场景如下：
+- 父类引用指向的实际对象类型，并非目标子类类型： 例如，父类 Animal 引用指向 Dog 对象（ Animal animal = new Dog(); ），若强行将其向下转型为 Cat 类型（ Cat cat = (Cat) animal; ），会因实际对象是 Dog 而非 Cat 而失败。 
+- 父类引用指向的是父类自身的对象： 若父类引用直接指向父类实例（ Animal animal = new Animal(); ），此时无论试图将其转型为任何子类（如 Dog dog = (Dog) animal; ），都会失败，因为父类对象无法被当作子类对象处理。 简单说，向下转型成功的前提是：父类引用实际指向的对象，必须是目标子类的实例。否则就会转型失败，这也是为什么向下转型前通常建议用 instanceof 判断（如 if (animal instanceof Dog) { Dog dog = (Dog) animal; } ），以避免异常。
+  
+作者：QQDDBB  
+链接：[https://www.nowcoder.com/exam/test/97009744/submission?pid=67353701](https://www.nowcoder.com/exam/test/97009744/submission?pid=67353701)  
+来源：牛客网
+
 ## 值传递
+![[image-7.png|539x751]]
 
 1. 对于参数str:  
 - str是String类型,在Java中String是不可变的  
@@ -45,3 +56,6 @@ Java只支持单继承，实现多重继承三种方式：（1）直接实现多
 - ch是字符数组,数组是引用类型  
 - 方法中的ch[0]='d'改变了数组实际内容  
 - 由于方法参数ch和test1.ch指向同一个数组对象,所以原数组的第一个字符被改为'd'
+
+new出来的对象都放在堆中，而没有new的都放在栈中。
+
