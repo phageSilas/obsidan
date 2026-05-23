@@ -56,4 +56,26 @@ a6e43522ef0f   redis     "docker-entrypoint.s…"   3 days ago   Up 9 minutes   
 ``` bash
 docker inspect -f '{{.HostConfig.RestartPolicy.Name}}' redis
 ```
- 输出：always
+ 输出：always 表明设置成功
+
+## 启动PostgreSql
+给 PostgreSQL 容器设置自启动，和 Redis 完全一样，也是通过**重启策略**来实现。
+
+先用 `docker ps -a` 找到 PostgreSQL 的容器名
+```bash
+docker ps -a
+```
+在输出中找到 `IMAGE` 列包含 `postgres` 的行，记下postgres的 `NAMES`
+
+
+设置重启策略为 `always`
+```bash
+docker update --restart=always postgres
+```
+
+ 验证是否设置成功
+```bash
+docker inspect -f '{{.HostConfig.RestartPolicy.Name}}' postgres
+```
+输出 `always` 即表示成功。
+
