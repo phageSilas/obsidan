@@ -238,3 +238,105 @@ Controller ──▶ Service ──▶ Engine ──▶ Node (6种)
 ### 总结
 
 简单来说：**IntentTreeService 放在 ingestion 包中是一个"就近放置"的选择**——它虽然管理的是意图树（属于 RAG 查询阶段的配置），但创建 KB 类型节点时必须关联摄入产出的知识库，因此被放在了摄入模块中。从严格的领域划分来看，它更适合放在 `rag` 或一个独立的 `intent` 包中，属于项目演进过程中模块边界不够清晰的地方。
+
+## 这6个IngestionNode实现类是怎么运行的,为什么只有注入了IngestionNode,但是没有地方说明要在什么时候切换到不同的实现类
+
+切换不在代码里写死，而是**由数据库中存储的流水线配置数据驱动**的。整个机制是一个典型的 **策略模式 + 数据驱动** 设计。
+
+---
+
+### 完整执行链路
+
+![[image-5.png|579x345]]
+
+---
+
+### 第一步：Spring 注入全部实现，按类型建 Map
+
+[IngestionEngine](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/ingestion/engine/IngestionEngine.java#L47-L55) 通过构造器接收 Spring 自动注入的**所有 6 个实现类**，然后按 `getNodeType()` 的返回值构建 Map：
+
+```java
+// 每个实现类的 getNodeType() 返回值就是 key：
+// FetcherNode  → "fetcher"
+// ParserNode   → "parser"
+// EnhancerNode → "enhancer"
+// ChunkerNode  → "chunker"
+// EnricherNode → "enricher"
+// IndexerNode  → "indexer"
+
+public IngestionEngine(List<IngestionNode> nodes, ...) {
+    this.nodeMap = nodes.stream()
+            .collect(Collectors.toMap(IngestionNode::getNodeType, n -> n));
+}
+```
+
+
+---
+
+### 第二步：用户创建流水线时指定 nodeType
+
+[IngestionPipelineNodeRequest](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/ingestion/controller/request/IngestionPipelineNodeRequest.java#L28-L58) 中有一个 `nodeType` 字段，用户在创建流水线时显式指定每个节点是什么类型：
+
+```json
+{
+  "name": "文档入库流水线",
+  "nodes": [
+    {"nodeId": "n1", "nodeType": "fetcher", "nextNodeId": "n2", "settings": {...}},
+    {"nodeId": "n2", "nodeType": "parser",  "nextNodeId": "n3", "settings": {...}},
+    {"nodeId": "n3", "nodeType": "chunker", "nextNodeId": "n4", "settings": {...}},
+    {"nodeId": "n4", "nodeType": "indexer", "nextNodeId": null, "settings": {...}}
+  ]
+}
+```
+
+
+这些配置存入数据库后，每次执行任务时从数据库读出还原为 `PipelineDefinition`。
+
+---
+
+### 第三步：执行时按 nodeType 字符串查表路由
+
+[IngestionEngine.executeNode()](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/ingestion/engine/IngestionEngine.java#L205-L212) 中，根据当前节点的 `nodeType` 去 `nodeMap` 查对应的实现：
+
+```java
+private NodeResult executeNode(IngestionContext context, NodeConfig nodeConfig) {
+    String nodeType = nodeConfig.getNodeType();  // 从数据库配置中读到的字符串
+    IngestionNode node = nodeMap.get(nodeType);  // 按字符串查 Map，找到具体实现
+    // ...
+    NodeResult result = node.execute(context, nodeConfig); // 多态调用
+}
+```
+
+
+而链式调度则通过 `config.getNextNodeId()` 推动：
+
+```java
+private void executeChain(String nodeId, Map<String, NodeConfig> nodeConfigMap, ...) {
+    String currentNodeId = nodeId;  // 从起始节点开始
+    while (currentNodeId != null) {
+        NodeConfig config = nodeConfigMap.get(currentNodeId);
+        executeNode(context, config);              // ← 按 nodeType 路由实现
+        currentNodeId = config.getNextNodeId();     // ← 按 nextNodeId 驱动下一个节点
+    }
+}
+```
+
+
+---
+
+### 总结
+
+```
+Spring DI 注入 6 个实现
+       │
+       ▼
+  nodeMap = {"fetcher"→FetcherNode, "parser"→ParserNode, ...}
+       │
+       │  用户创建流水线时指定每个节点的 nodeType（存入 DB）
+       │  执行任务时从 DB 读出 PipelineDefinition
+       ▼
+  executeNode() → nodeMap.get(nodeConfig.nodeType) → 找到对应实现 → 执行
+```
+
+
+**切换逻辑不在代码里，而在数据库里**。你想让流水线跳过 Enhancer？创建时不要加 `"nodeType": "enhancer"` 的节点就行。你想在 Chunker 之前插入一个自定义节点？注册一个新的 `IngestionNode` 实现，然后在流水线配置中加入对应的 `nodeType` 即可。这就是**可配置流水线**的核心价值。
