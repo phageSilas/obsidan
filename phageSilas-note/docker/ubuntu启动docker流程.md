@@ -29,7 +29,7 @@ sudo systemctl enable docker
 
 ## 查看docker中正在运行的进程
 ``` bash
-docker ps
+docker ps 
 ```
 
 ## 启动Redis
@@ -63,7 +63,7 @@ docker inspect -f '{{.HostConfig.RestartPolicy.Name}}' redis
 
 先用 `docker ps -a` 找到 PostgreSQL 的容器名
 ```bash
-docker ps -a
+docker ps -a (该命令是查看docker中所有包括已停止的容器)
 ```
 在输出中找到 `IMAGE` 列包含 `postgres` 的行，记下postgres的 `NAMES`
 
