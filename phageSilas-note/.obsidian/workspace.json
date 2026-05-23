@@ -74,8 +74,7 @@
               "title": "书签"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -172,10 +171,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "2da55a8935c461ad",
+  "active": "86dec970c3e102ad",
   "lastOpenFiles": [
-    "AI-agent/名词索引.md",
+    "未命名.base",
     "docker/ubuntu启动docker流程.md",
+    "AI-agent/名词索引.md",
     "docker",
     "AI-agent/Attachment/image-1.png",
     "AI-agent/Attachment/image.png",
@@ -202,7 +202,6 @@
     "JAVA基础笔试/JUC",
     "JAVA基础笔试/基础",
     "JAVA基础笔试",
-    "面试/项目/黑马点评",
     "面试/项目/未命名.md",
     "未命名.md",
     "面试/JVM/内存溢出与内存泄漏.md",
@@ -218,7 +217,6 @@
     "面试/JUC/锁升级.md",
     "面试/JUC/CAS.md",
     "面试/JUC/Java内存模型与volatile关键字.md",
-    "面试/项目/短链接/AI提问.md",
-    "JAVA/Redis/缓存穿透.md"
+    "面试/项目/短链接/AI提问.md"
   ]
 }
