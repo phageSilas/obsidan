@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "StringB",
+                "query": "tag:#下面这行",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -74,7 +74,8 @@
               "title": "书签"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -171,7 +172,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "86dec970c3e102ad",
+  "active": "2da55a8935c461ad",
   "lastOpenFiles": [
     "AI-agent/名词索引.md",
     "docker/ubuntu启动docker流程.md",

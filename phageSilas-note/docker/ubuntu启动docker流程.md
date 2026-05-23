@@ -27,4 +27,33 @@ sudo systemctl start docker
 sudo systemctl enable docker
 ```
 
+## 查看docker中正在运行的进程
+``` bash
+docker ps
+```
+
 ## 启动Redis
+查看docker中Redis是否已启动
+``` bash
+docker ps -a --filter name=redis
+```
+
+``` bash
+ ID   IMAGE     COMMAND                   CREATED      STATUS         PORTS                                         NAMES
+a6e43522ef0f   redis     "docker-entrypoint.s…"   3 days ago   Up 9 minutes   0.0.0.0:6379->6379/tcp, [::]:6379->6379/tcp   redis
+```
+看到STATUS和Up 表明启动成功
+
+否则 进行设置Redis随Docker自启动
+``` bash
+ docker update --restart=always redis
+ 
+ # 输出
+ redis 或什么也不显示
+```
+
+检查是否设置自启动成功
+``` bash
+docker inspect -f '{{.HostConfig.RestartPolicy.Name}}' redis
+```
+ 输出：always
