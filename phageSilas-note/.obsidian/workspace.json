@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docker/ubuntu启动docker流程.md",
+                "file": "面试/项目/Ragent/bootstrap模块/整体贯穿.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "ubuntu启动docker流程"
+              "title": "整体贯穿"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docker/ubuntu启动docker流程.md",
+                "file": "面试/项目/Ragent/bootstrap模块/整体贯穿.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "ubuntu启动docker流程 的大纲"
+              "title": "整体贯穿 的大纲"
             }
           }
         ],
@@ -173,9 +173,14 @@
   },
   "active": "86dec970c3e102ad",
   "lastOpenFiles": [
-    "未命名.base",
-    "docker/ubuntu启动docker流程.md",
+    "面试/项目/Ragent/bootstrap模块/Attachment/image.png",
+    "面试/项目/Ragent/bootstrap模块/Attachment",
+    "面试/agent/题目.md",
+    "面试/项目/Ragent/bootstrap模块/整体贯穿.md",
+    "面试/项目/Ragent/bootstrap模块",
     "AI-agent/名词索引.md",
+    "docker/ubuntu启动docker流程.md",
+    "未命名.base",
     "docker",
     "AI-agent/Attachment/image-1.png",
     "AI-agent/Attachment/image.png",
@@ -196,12 +201,9 @@
     "JAVA/JAVASE/比较抽象的SE基础/lambda表达式与匿名内部类.md",
     "JAVA基础笔试/基础/集合",
     "JAVA基础笔试/基础/JavaSE",
-    "面试/agent/题目.md",
     "面试/项目/黑马点评/AI.md",
     "JAVA基础笔试/JVM",
     "JAVA基础笔试/JUC",
-    "JAVA基础笔试/基础",
-    "JAVA基础笔试",
     "面试/项目/未命名.md",
     "未命名.md",
     "面试/JVM/内存溢出与内存泄漏.md",
@@ -216,7 +218,6 @@
     "面试/JUC/synchronized与ReentrantLock.md",
     "面试/JUC/锁升级.md",
     "面试/JUC/CAS.md",
-    "面试/JUC/Java内存模型与volatile关键字.md",
-    "面试/项目/短链接/AI提问.md"
+    "面试/JUC/Java内存模型与volatile关键字.md"
   ]
 }
