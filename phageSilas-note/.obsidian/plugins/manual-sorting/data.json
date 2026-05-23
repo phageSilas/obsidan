@@ -154,7 +154,6 @@
       "JAVA/JAVASE/Attachment"
     ],
     "JAVA/JAVASE/比较抽象的SE基础": [
-      "JAVA/JAVASE/比较抽象的SE基础/Record记录类.md",
       "JAVA/JAVASE/比较抽象的SE基础/接口.md",
       "JAVA/JAVASE/比较抽象的SE基础/抽象类,抽象方法.md",
       "JAVA/JAVASE/比较抽象的SE基础/匿名内部类.md",
@@ -162,7 +161,9 @@
       "JAVA/JAVASE/比较抽象的SE基础/通过lambda或双冒号进行方法引用.md",
       "JAVA/JAVASE/比较抽象的SE基础/关于方法返回类型的探究.md",
       "JAVA/JAVASE/比较抽象的SE基础/关于集合泛型的探究.md",
-      "JAVA/JAVASE/比较抽象的SE基础/动态代理.md"
+      "JAVA/JAVASE/比较抽象的SE基础/动态代理.md",
+      "JAVA/JAVASE/比较抽象的SE基础/record记录类.md",
+      "JAVA/JAVASE/比较抽象的SE基础/permits关键字.md"
     ],
     "JAVA/JAVASE/Attachment": [
       "JAVA/JAVASE/Attachment/Pasted image 20250718205744.png",
@@ -186,6 +187,7 @@
       "JAVA/JAVASE/SE基础/数据类型规范(待补充).md",
       "JAVA/JAVASE/SE基础/集合.md",
       "JAVA/JAVASE/SE基础/集合遍历.md",
+      "JAVA/JAVASE/SE基础/Map.of().md",
       "JAVA/JAVASE/SE基础/Attachment"
     ],
     "JAVA/JAVASE/SE基础/Attachment": [
