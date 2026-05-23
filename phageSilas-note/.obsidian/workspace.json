@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "AI-agent/名词索引.md",
+                "file": "docker/ubuntu启动docker流程.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "名词索引"
+              "title": "ubuntu启动docker流程"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "AI-agent/名词索引.md",
+                "file": "docker/ubuntu启动docker流程.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "名词索引 的大纲"
+              "title": "ubuntu启动docker流程 的大纲"
             }
           }
         ],
@@ -173,11 +173,13 @@
   },
   "active": "86dec970c3e102ad",
   "lastOpenFiles": [
+    "AI-agent/名词索引.md",
+    "docker/ubuntu启动docker流程.md",
+    "docker",
     "AI-agent/Attachment/image-1.png",
     "AI-agent/Attachment/image.png",
     "AI-agent/Attachment",
     "面试/JUC/线程安全.md",
-    "AI-agent/名词索引.md",
     "JAVA基础笔试/基础/JavaSE.md",
     "JAVA基础笔试/基础/Attachment/image-9.png",
     "JAVA基础笔试/基础/Attachment/image-8.png",
@@ -189,7 +191,6 @@
     "JAVA基础笔试/Spring.md",
     "JAVA基础笔试/基础/Attachment/image-3.png",
     "JAVA基础笔试/基础/Attachment/image-2.png",
-    "JAVA基础笔试/基础/Attachment/image-1.png",
     "JAVA基础笔试/基础/Attachment",
     "JAVA/JAVASE/比较抽象的SE基础/lambda表达式与匿名内部类.md",
     "JAVA基础笔试/基础/集合",
@@ -203,7 +204,6 @@
     "面试/项目/黑马点评",
     "面试/项目/未命名.md",
     "未命名.md",
-    "AI-agent",
     "面试/JVM/内存溢出与内存泄漏.md",
     "面试/JVM/垃圾回收GC.md",
     "面试/JVM/类加载器与双亲委派.md",
