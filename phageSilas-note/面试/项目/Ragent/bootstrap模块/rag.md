@@ -129,15 +129,15 @@ MultiChannelRetrievalEngine
 
 **核心类**：
 
-| 类 | 作用 |
-|---|---|
-| [MultiChannelRetrievalEngine](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/core/retrieve/MultiChannelRetrievalEngine.java) | 协调器：收集意图 → 并行调通道 → 顺序执行后处理器 |
-| [SearchChannel](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/core/retrieve/channel/SearchChannel.java) 接口 | 检索通道抽象，含 `isEnabled()`、`search()`、优先级 |
-| [VectorGlobalSearchChannel](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/core/retrieve/channel/VectorGlobalSearchChannel.java) | 全局向量检索：将问题向量化后在 Milvus 全库搜索 Top-K |
-| [IntentDirectedSearchChannel](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/core/retrieve/channel/IntentDirectedSearchChannel.java) | 意图定向：只搜该意图节点绑定的 collection |
-| [SearchResultPostProcessor](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/core/retrieve/postprocessor/SearchResultPostProcessor.java) | 后处理器接口 |
-| [DeduplicationPostProcessor](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/core/retrieve/postprocessor/DeduplicationPostProcessor.java) | MMR 去重（避免返回相似度过高的 chunk） |
-| [RerankPostProcessor](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/core/retrieve/postprocessor/RerankPostProcessor.java) | Rerank 重排序（用更精确的模型重新打分） |
+| 类                                                                                                                                                                         | 作用                                    |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| [MultiChannelRetrievalEngine](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/core/retrieve/MultiChannelRetrievalEngine.java)             | 协调器：收集意图 → 并行调通道 → 顺序执行后处理器           |
+| [SearchChannel](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/core/retrieve/channel/SearchChannel.java) 接口                              | 检索通道抽象，含 `isEnabled()`、`search()`、优先级 |
+| [VectorGlobalSearchChannel](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/core/retrieve/channel/VectorGlobalSearchChannel.java)         | 全局向量检索：将问题向量化后在 Milvus 全库搜索 Top-K     |
+| [IntentDirectedSearchChannel](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/core/retrieve/channel/IntentDirectedSearchChannel.java)     | 意图定向：只搜该意图节点绑定的 collection            |
+| [SearchResultPostProcessor](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/core/retrieve/postprocessor/SearchResultPostProcessor.java)   | 后处理器接口                                |
+| [DeduplicationPostProcessor](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/core/retrieve/postprocessor/DeduplicationPostProcessor.java) | MMR 去重（避免返回相似度过高的 chunk）              |
+| [RerankPostProcessor](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/core/retrieve/postprocessor/RerankPostProcessor.java)               | Rerank 重排序（用更精确的模型重新打分）               |
 
 `channel/strategy/` 下还有两种并行检索策略：
 - `CollectionParallelRetriever` — 同一 KB 下多个 collection 并行搜
@@ -190,27 +190,27 @@ MIXED    → 用模板 MCP_KB_MIXED_PROMPT_PATH（知识库 + 工具调用混合
 
 ## 三、业务服务层 — `service/`
 
-| 子包/类 | 作用 |
-|---|---|
-| [RAGChatServiceImpl](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/service/impl/RAGChatServiceImpl.java) | `streamChat()` 主流程：创建 Trace → 创建 Pipeline 上下文 → 调用 `StreamChatPipeline.execute()` |
-| [pipeline/StreamChatPipeline](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/service/pipeline/StreamChatPipeline.java) | **流水线编排器**，私有方法串联全部核心步骤 |
-| [pipeline/StreamChatContext](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/service/pipeline/StreamChatContext.java) | 流水线上下文（承载 question、history、callback、intents 等） |
-| [handler/StreamTaskManager](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/service/handler/StreamTaskManager.java) | 管理并发的流式任务，支持按 `taskId` 取消 |
-| [handler/StreamChatEventHandler](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/service/handler/StreamChatEventHandler.java) | SSE 事件处理器 |
-| [ratelimit/ChatQueueLimiter](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/service/ratelimit/ChatQueueLimiter.java) | 聊天排队限流（控制并发 LLM 调用数） |
-| [ratelimit/FairDistributedRateLimiter](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/service/ratelimit/FairDistributedRateLimiter.java) | **分布式公平限流器**：Redis ZSet 排队 + Lua 原子抢位 + Redisson Semaphore 控流 |
-| [RagTraceRecordService](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/service/RagTraceRecordService.java) | 链路追踪记录的持久化 |
-| [S3FileStorageService](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/service/impl/S3FileStorageService.java) | 文件上传到 S3（MinIO），聊天中引用文件 |
+| 子包/类                                                                                                                                                                      | 作用                                                                                |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| [RAGChatServiceImpl](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/service/impl/RAGChatServiceImpl.java)                                | `streamChat()` 主流程：创建 Trace → 创建 Pipeline 上下文 → 调用 `StreamChatPipeline.execute()` |
+| [pipeline/StreamChatPipeline](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/service/pipeline/StreamChatPipeline.java)                   | **流水线编排器**，私有方法串联全部核心步骤                                                           |
+| [pipeline/StreamChatContext](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/service/pipeline/StreamChatContext.java)                     | 流水线上下文（承载 question、history、callback、intents 等）                                    |
+| [handler/StreamTaskManager](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/service/handler/StreamTaskManager.java)                       | 管理并发的流式任务，支持按 `taskId` 取消                                                         |
+| [handler/StreamChatEventHandler](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/service/handler/StreamChatEventHandler.java)             | SSE 事件处理器                                                                         |
+| [ratelimit/ChatQueueLimiter](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/service/ratelimit/ChatQueueLimiter.java)                     | 聊天排队限流（控制并发 LLM 调用数）                                                              |
+| [ratelimit/FairDistributedRateLimiter](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/service/ratelimit/FairDistributedRateLimiter.java) | **分布式公平限流器**：Redis ZSet 排队 + Lua 原子抢位 + Redisson Semaphore 控流                     |
+| [RagTraceRecordService](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/service/RagTraceRecordService.java)                               | 链路追踪记录的持久化                                                                        |
+| [S3FileStorageService](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/service/impl/S3FileStorageService.java)                            | 文件上传到 S3（MinIO），聊天中引用文件                                                           |
 
 ---
 
 ## 四、链路追踪层 — `trace/`
 
-| 类 | 作用 |
-|---|---|
-| [StreamChatTraceRunner](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/trace/StreamChatTraceRunner.java) | 用 callback 包装器拦截 onFirstContent → 记录 TTFT；onComplete/onError → finishRun |
-| [RagStreamTraceSupportImpl](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/trace/RagStreamTraceSupportImpl.java) | Trace 上下文支持 |
-| [aop/RagTraceAspect](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/aop/RagTraceAspect.java) | AOP 切面：拦截 `@RagTraceNode` 注解的方法，自动记录节点耗时和状态 |
+| 类                                                                                                                                                 | 作用                                                                       |
+| ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| [StreamChatTraceRunner](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/trace/StreamChatTraceRunner.java)         | 用 callback 包装器拦截 onFirstContent → 记录 TTFT；onComplete/onError → finishRun |
+| [RagStreamTraceSupportImpl](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/trace/RagStreamTraceSupportImpl.java) | Trace 上下文支持                                                              |
+| [aop/RagTraceAspect](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/aop/RagTraceAspect.java)                     | AOP 切面：拦截 `@RagTraceNode` 注解的方法，自动记录节点耗时和状态                              |
 
 **记录指标**：
 - TTFT（首包时间）：从请求进入到前端收到第一个字
@@ -233,25 +233,26 @@ MIXED    → 用模板 MCP_KB_MIXED_PROMPT_PATH（知识库 + 工具调用混合
 
 ### `config/` — 配置
 
-| 类 | 作用 |
-|---|---|
-| [RAGConfigProperties](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/config/RAGConfigProperties.java) | RAG 核心配置 |
-| [SearchChannelProperties](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/config/SearchChannelProperties.java) | 检索通道开关和参数 |
-| [RAGRateLimitProperties](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/config/RAGRateLimitProperties.java) | 限流参数 |
-| [MemoryProperties](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/config/MemoryProperties.java) | 记忆配置（摘要触发阈值等） |
-| [MilvusConfig](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/config/MilvusConfig.java) | Milvus 连接配置 |
-| [DemoModeInterceptor](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/config/DemoModeInterceptor.java) | 演示模式拦截器 |
+| 类                                                                                                                                                | 作用                                  |
+| ------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------- |
+| [RAGConfigProperties](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/config/RAGConfigProperties.java)           | RAG 核心配置                            |
+| [SearchChannelProperties](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/config/SearchChannelProperties.java)   | 检索通道开关和参数                           |
+| [RAGRateLimitProperties](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/config/RAGRateLimitProperties.java)     | 限流参数                                |
+| [MemoryProperties](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/config/MemoryProperties.java)                 | 记忆配置（摘要触发阈值等）                       |
+| [MilvusConfig](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/config/MilvusConfig.java)                         | Milvus 连接配置                         |
+| [DemoModeInterceptor](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/config/DemoModeInterceptor.java)           | 演示模式拦截器                             |
 | [ThreadPoolExecutorConfig](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/rag/config/ThreadPoolExecutorConfig.java) | 专用线程池（retrieval、intent、streaming 等） |
 
 ### `dao/` — 数据访问
 
-| 实体 | 作用 |
-|---|---|
-| `ConversationDO/MessageDO` | 会话和消息记录 |
-| `IntentNodeDO` | 意图树节点（KB 节点/MCP 节点） |
-| `QueryTermMappingDO` | 查询词映射 |
-| `RagTraceRunDO/NodeDO` | 链路追踪记录 |
-| `MessageFeedbackDO` | 消息反馈（点赞/点踩） |
+| 实体                         | 作用                  |
+| -------------------------- | ------------------- |
+| `ConversationDO/MessageDO` | 会话和消息记录             |
+| `IntentNodeDO`             | 意图树节点（KB 节点/MCP 节点） |
+| `QueryTermMappingDO`       | 查询词映射               |
+| `RagTraceRunDO/NodeDO`     | 链路追踪记录              |
+| `MessageFeedbackDO`        | 消息反馈（点赞/点踩）         |
+|                            |                     |
 
 ### `dto/` / `enums/` / `constant/` — 公共数据结构
 
