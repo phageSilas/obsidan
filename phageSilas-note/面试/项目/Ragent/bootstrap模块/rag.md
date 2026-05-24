@@ -275,31 +275,4 @@ MIXED    → 用模板 MCP_KB_MIXED_PROMPT_PATH（知识库 + 工具调用混合
 ---
 
 ## 完整请求生命周期
-
-```
-GET /rag/v3/chat?question=xxx&conversationId=yyy
-         │
-         ▼
-RAGChatController.chat()
-  → 创建 SseEmitter，调用 RAGChatService.streamChat()
-         │
-         ▼
-RAGChatServiceImpl.streamChat()
-  → StreamChatTraceRunner.run()  (trace 包装)
-         │
-         ▼
-StreamChatPipeline.execute(ctx)
-  ├── loadMemory()         → ConversationMemoryService
-  ├── rewriteQuery()       → QueryRewriteService (LLM 改写 + 拆分子问题)
-  ├── resolveIntents()     → IntentResolver (并行 classify)
-  ├── handleGuidance()     → 歧义？直接返回引导语
-  ├── handleSystemOnly()   → 纯系统？直接 LLM 回答
-  ├── retrieve()           → MultiChannelRetrievalEngine (并行通道 + 后处理)
-  ├── handleEmptyRetrieval() → 无结果？提示用户
-  └── streamRagResponse()  → RAGPromptService → LLMService.streamChat()
-         │
-         ▼
-SSE 推送给前端 (text/event-stream)
-  event: content → "您好..."
-  event: complete → done
-```
+![[image-9.png|579x513]]

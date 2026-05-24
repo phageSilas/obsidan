@@ -173,6 +173,7 @@
   },
   "active": "86dec970c3e102ad",
   "lastOpenFiles": [
+    "面试/项目/Ragent/bootstrap模块/Attachment/image-9.png",
     "面试/项目/Ragent/bootstrap模块/knowledge.md",
     "面试/项目/Ragent/bootstrap模块/rag.md",
     "面试/项目/Ragent/分块-向量化-存入向量数据库.md",
@@ -217,7 +218,6 @@
     "未命名.md",
     "面试/JVM/内存溢出与内存泄漏.md",
     "面试/JVM/垃圾回收GC.md",
-    "面试/JVM/类加载器与双亲委派.md",
-    "面试/JVM/运行数据区.md"
+    "面试/JVM/类加载器与双亲委派.md"
   ]
 }
