@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "面试/项目/Ragent/bootstrap模块/knowledge.md",
+                "file": "面试/项目/Ragent/bootstrap模块/rag.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "knowledge"
+              "title": "rag"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "面试/项目/Ragent/bootstrap模块/knowledge.md",
+                "file": "面试/项目/Ragent/bootstrap模块/rag.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "knowledge 的大纲"
+              "title": "rag 的大纲"
             }
           }
         ],
@@ -173,12 +173,13 @@
   },
   "active": "86dec970c3e102ad",
   "lastOpenFiles": [
+    "面试/项目/Ragent/bootstrap模块/knowledge.md",
+    "面试/项目/Ragent/bootstrap模块/rag.md",
     "面试/项目/Ragent/分块-向量化-存入向量数据库.md",
     "面试/项目/Ragent/Attachment/image-2.png",
     "面试/项目/Ragent/Attachment/image-1.png",
     "面试/项目/Ragent/Attachment/image.png",
     "面试/项目/Ragent/Attachment",
-    "面试/项目/Ragent/bootstrap模块/knowledge.md",
     "面试/项目/Ragent/未命名",
     "面试/项目/Ragent/bootstrap模块/Attachment/image-8.png",
     "面试/项目/Ragent/bootstrap模块/Attachment/image-7.png",
