@@ -62,11 +62,11 @@ KnowledgeBase (知识库)                     e.g. "产品A知识库"
 
 ![[image-6.png|579x176]]
 
-| 类 | 职责 |
-|---|---|
-| [KnowledgeDocumentChunkEvent](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/knowledge/mq/event/KnowledgeDocumentChunkEvent.java) | MQ 消息体：docId、kbId、操作人 |
-| [KnowledgeDocumentChunkConsumer](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/knowledge/mq/KnowledgeDocumentChunkConsumer.java) | RocketMQ 消费者，消费后调用 `executeChunk()` 执行分块 |
-| [KnowledgeDocumentChunkTransactionChecker](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/knowledge/mq/KnowledgeDocumentChunkTransactionChecker.java) | 事务消息回查（保证消息不丢） |
+| 类                                                                                                                                                                                  | 职责                                       |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| [KnowledgeDocumentChunkEvent](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/knowledge/mq/event/KnowledgeDocumentChunkEvent.java)                     | MQ 消息体：docId、kbId、操作人                    |
+| [KnowledgeDocumentChunkConsumer](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/knowledge/mq/KnowledgeDocumentChunkConsumer.java)                     | RocketMQ 消费者，消费后调用 `executeChunk()` 执行分块 |
+| [KnowledgeDocumentChunkTransactionChecker](file:///D:/IDEA-java/ragent/bootstrap/src/main/java/com/nageoffer/ai/ragent/knowledge/mq/KnowledgeDocumentChunkTransactionChecker.java) | 事务消息回查（保证消息不丢）                           |
 
 ---
 
