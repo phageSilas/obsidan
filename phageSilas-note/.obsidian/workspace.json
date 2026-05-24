@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "面试/项目/Ragent/bootstrap模块/knowledge.md",
+                "file": "面试/项目/Ragent/分块-向量化-存入向量数据库.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "knowledge"
+              "title": "分块-向量化-存入向量数据库"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "面试/项目/Ragent/bootstrap模块/knowledge.md",
+                "file": "面试/项目/Ragent/分块-向量化-存入向量数据库.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "knowledge 的大纲"
+              "title": "分块-向量化-存入向量数据库 的大纲"
             }
           }
         ],
@@ -173,11 +173,17 @@
   },
   "active": "86dec970c3e102ad",
   "lastOpenFiles": [
+    "面试/项目/Ragent/Attachment/image-2.png",
+    "面试/项目/Ragent/Attachment/image-1.png",
+    "面试/项目/Ragent/Attachment/image.png",
+    "面试/项目/Ragent/Attachment",
+    "面试/项目/Ragent/bootstrap模块/knowledge.md",
+    "面试/项目/Ragent/分块-向量化-存入向量数据库.md",
+    "面试/项目/Ragent/未命名",
     "面试/项目/Ragent/bootstrap模块/Attachment/image-8.png",
     "面试/项目/Ragent/bootstrap模块/Attachment/image-7.png",
     "面试/项目/Ragent/bootstrap模块/Attachment/image-6.png",
     "面试/项目/Ragent/bootstrap模块/ingestion.md",
-    "面试/项目/Ragent/bootstrap模块/knowledge.md",
     "面试/项目/Ragent/bootstrap模块/Attachment/image-5.png",
     "面试/项目/Ragent/bootstrap模块/Attachment/image-4.png",
     "面试/项目/Ragent/bootstrap模块/整体贯穿.md",
@@ -194,14 +200,11 @@
     "JAVA/JAVASE/比较抽象的SE基础/permits关键字.md",
     "JAVA/JAVASE/比较抽象的SE基础/record记录类.md",
     "未命名 1.base",
-    "面试/项目/Ragent/bootstrap模块/Attachment/image.png",
     "面试/项目/Ragent/bootstrap模块/Attachment",
     "面试/agent/题目.md",
     "面试/项目/Ragent/bootstrap模块",
     "未命名.base",
     "docker",
-    "AI-agent/Attachment/image-1.png",
-    "AI-agent/Attachment/image.png",
     "AI-agent/Attachment",
     "面试/JUC/线程安全.md",
     "JAVA基础笔试/基础/JavaSE.md",
@@ -209,15 +212,12 @@
     "JAVA基础笔试/Spring.md",
     "JAVA基础笔试/基础/Attachment",
     "JAVA/JAVASE/比较抽象的SE基础/lambda表达式与匿名内部类.md",
-    "JAVA基础笔试/基础/集合",
-    "JAVA基础笔试/基础/JavaSE",
     "面试/项目/黑马点评/AI.md",
     "面试/项目/未命名.md",
     "未命名.md",
     "面试/JVM/内存溢出与内存泄漏.md",
     "面试/JVM/垃圾回收GC.md",
     "面试/JVM/类加载器与双亲委派.md",
-    "面试/JVM/运行数据区.md",
-    "面试/JVM/类生命周期.md"
+    "面试/JVM/运行数据区.md"
   ]
 }
