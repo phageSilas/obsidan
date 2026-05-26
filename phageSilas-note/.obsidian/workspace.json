@@ -26,12 +26,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "面试/JavaSE/Redisson实现的分布式锁.md",
+                "file": "面试/JavaSE/未命名.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Redisson实现的分布式锁"
+              "title": "未命名"
             }
           }
         ],
@@ -156,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "面试/JavaSE/Redisson实现的分布式锁.md",
+                "file": "面试/JavaSE/未命名.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Redisson实现的分布式锁 的大纲"
+              "title": "未命名 的大纲"
             }
           }
         ],
@@ -185,10 +185,12 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "a3eeb43931558d9b",
+  "active": "34d6b36d87ac3e98",
   "lastOpenFiles": [
-    "JAVA/Redis/锁/分布式锁/Redisson的multiLock.md",
+    "面试/MySql",
     "面试/JavaSE/Redisson实现的分布式锁.md",
+    "面试/JavaSE/未命名.md",
+    "JAVA/Redis/锁/分布式锁/Redisson的multiLock.md",
     "面试/JavaSE",
     "JAVA/Redis/锁/分布式锁/Lua脚本(各种锁的基础).md",
     "JAVA/Redis/锁/分布式锁/可重入锁.md",
@@ -228,8 +230,6 @@
     "JAVA/JAVASE/比较抽象的SE基础/枚举类.md",
     "JAVA/JAVASE/SE基础/Map.of().md",
     "JAVA/JAVASE/SE基础/集合遍历.md",
-    "JAVA/JAVASE/SE基础/集合.md",
-    "JAVA/JAVASE/比较抽象的SE基础/permits关键字.md",
     "面试/项目/Ragent/bootstrap模块/Attachment",
     "面试/项目/Ragent/bootstrap模块",
     "docker"

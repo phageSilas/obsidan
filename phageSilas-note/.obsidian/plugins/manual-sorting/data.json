@@ -15,6 +15,7 @@
     ],
     "面试": [
       "面试/JavaSE",
+      "面试/MySql",
       "面试/项目",
       "面试/JUC",
       "面试/JVM",
@@ -65,6 +66,7 @@
       "面试/agent/题目.md"
     ],
     "面试/JavaSE": [
+      "面试/JavaSE/未命名.md",
       "面试/JavaSE/Redisson实现的分布式锁.md"
     ],
     "面试/JUC": [
@@ -445,7 +447,8 @@
       "JAVA基础笔试/基础/Attachment/image.png"
     ],
     "JAVA基础笔试/JUC": [],
-    "JAVA基础笔试/JVM": []
+    "JAVA基础笔试/JVM": [],
+    "面试/MySql": []
   },
   "draggingEnabled": true,
   "selectedSortOrder": "manual-sorting"
