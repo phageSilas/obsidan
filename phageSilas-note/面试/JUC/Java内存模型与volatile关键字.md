@@ -58,6 +58,8 @@ JMM 并没有真实存在的物理组件，它是一组**规则和规范**。它
 
 ### ② 禁止指令重排序 (保证有序性)
 
+![[image-4.png]]
+
 底层是通过插入**内存屏障 (Memory Barrier)** 来实现的。
 
 - 在每个 `volatile` 写操作的前后，分别插入 `StoreStore` 和 `StoreLoad` 屏障。
