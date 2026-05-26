@@ -26,12 +26,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA/Redis/消息队列/删除策略.md",
+                "file": "面试/JavaSE/Redisson实现的分布式锁.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "删除策略"
+              "title": "Redisson实现的分布式锁"
             }
           }
         ],
@@ -156,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA/Redis/消息队列/删除策略.md",
+                "file": "面试/JavaSE/Redisson实现的分布式锁.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "删除策略 的大纲"
+              "title": "Redisson实现的分布式锁 的大纲"
             }
           }
         ],
@@ -187,12 +187,17 @@
   },
   "active": "a3eeb43931558d9b",
   "lastOpenFiles": [
+    "JAVA/Redis/锁/分布式锁/Redisson的multiLock.md",
+    "面试/JavaSE/Redisson实现的分布式锁.md",
+    "面试/JavaSE",
+    "JAVA/Redis/锁/分布式锁/Lua脚本(各种锁的基础).md",
+    "JAVA/Redis/锁/分布式锁/可重入锁.md",
+    "JAVA/Redis/消息队列/删除策略.md",
     "JAVA/Redis/消息队列/Attachment/image-1.png",
     "JAVA/Redis/消息队列/Attachment/image.png",
     "JAVA/Redis/消息队列/Attachment",
     "JAVA/Redis/Attachment/image-16.png",
     "JAVA/Redis/持久化.md",
-    "JAVA/Redis/消息队列/删除策略.md",
     "JAVA/Redis/Attachment/image-15.png",
     "JAVA/Redis/Attachment/image-14.png",
     "JAVA/Redis/Attachment/image-13.png",
@@ -214,7 +219,6 @@
     "面试/项目/Ragent/bootstrap模块/Attachment/image-9.png",
     "面试/项目/Ragent/bootstrap模块/knowledge.md",
     "面试/项目/Ragent/分块-向量化-存入向量数据库.md",
-    "面试/项目/Ragent/Attachment/image-2.png",
     "面试/项目/Ragent/Attachment",
     "面试/项目/Ragent/未命名",
     "面试/项目/Ragent/bootstrap模块/ingestion.md",
@@ -226,12 +230,8 @@
     "JAVA/JAVASE/SE基础/集合遍历.md",
     "JAVA/JAVASE/SE基础/集合.md",
     "JAVA/JAVASE/比较抽象的SE基础/permits关键字.md",
-    "JAVA/JAVASE/比较抽象的SE基础/record记录类.md",
     "面试/项目/Ragent/bootstrap模块/Attachment",
-    "面试/agent/题目.md",
     "面试/项目/Ragent/bootstrap模块",
-    "docker",
-    "AI-agent/Attachment",
-    "面试/JUC/线程安全.md"
+    "docker"
   ]
 }
