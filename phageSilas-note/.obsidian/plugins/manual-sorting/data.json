@@ -373,11 +373,16 @@
       "JAVA/Redis/锁/Attachment/image.png"
     ],
     "JAVA/Redis/消息队列": [
+      "JAVA/Redis/消息队列/删除策略.md",
       "JAVA/Redis/消息队列/基于Redis的消息队列.md",
       "JAVA/Redis/消息队列/削峰.md",
       "JAVA/Redis/消息队列/幂等.md"
     ],
     "JAVA/Redis/Attachment": [
+      "JAVA/Redis/Attachment/image-12.png",
+      "JAVA/Redis/Attachment/image-13.png",
+      "JAVA/Redis/Attachment/image-14.png",
+      "JAVA/Redis/Attachment/image-15.png",
       "JAVA/Redis/Attachment/image-11.png",
       "JAVA/Redis/Attachment/image-10.png",
       "JAVA/Redis/Attachment/image-9.png",
