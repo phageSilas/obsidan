@@ -349,6 +349,7 @@
       "JAVA/Redis/缓存穿透.md",
       "JAVA/Redis/缓存击穿.md",
       "JAVA/Redis/缓存雪崩.md",
+      "JAVA/Redis/持久化.md",
       "JAVA/Redis/消息队列",
       "JAVA/Redis/锁",
       "JAVA/Redis/Feed流推送消息.md",

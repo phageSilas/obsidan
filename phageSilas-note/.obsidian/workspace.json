@@ -26,12 +26,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "面试/项目/短链接/AI提问.md",
+                "file": "JAVA/Redis/持久化.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "AI提问"
+              "title": "持久化"
             }
           }
         ],
@@ -156,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "面试/项目/短链接/AI提问.md",
+                "file": "JAVA/Redis/持久化.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "AI提问 的大纲"
+              "title": "持久化 的大纲"
             }
           }
         ],
@@ -187,6 +187,8 @@
   },
   "active": "a3eeb43931558d9b",
   "lastOpenFiles": [
+    "面试/项目/短链接/AI提问.md",
+    "JAVA/Redis/持久化.md",
     "面试/项目/黑马点评/AI.md",
     "JAVA/Redis/缓存雪崩.md",
     "JAVA/Redis/缓存击穿.md",
@@ -230,8 +232,6 @@
     "面试/JUC/线程安全.md",
     "JAVA基础笔试/基础/JavaSE.md",
     "JAVA基础笔试/基础/集合.md",
-    "JAVA基础笔试/Spring.md",
-    "JAVA基础笔试/基础/Attachment",
-    "JAVA/JAVASE/比较抽象的SE基础/lambda表达式与匿名内部类.md"
+    "JAVA基础笔试/基础/Attachment"
   ]
 }
