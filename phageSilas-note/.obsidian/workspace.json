@@ -185,8 +185,14 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "34d6b36d87ac3e98",
+  "active": "a3eeb43931558d9b",
   "lastOpenFiles": [
+    "面试/项目/Ragent/MCP-server/Attachment/image-4.png",
+    "面试/项目/Ragent/MCP-server/Attachment/image-3.png",
+    "面试/项目/Ragent/MCP-server/Attachment/image-2.png",
+    "面试/项目/Ragent/MCP-server/Attachment/image-1.png",
+    "面试/项目/Ragent/MCP-server/Attachment/image.png",
+    "面试/项目/Ragent/MCP-server/Attachment",
     "面试/项目/Ragent/infra-ai/整体贯穿.md",
     "面试/项目/Ragent/MCP-server/整体贯穿.md",
     "面试/项目/Ragent/MCP-server",
@@ -211,27 +217,21 @@
     "JAVA/Redis/Attachment/image-15.png",
     "JAVA/Redis/Attachment/image-14.png",
     "JAVA/Redis/Attachment/image-13.png",
-    "JAVA/Redis/Attachment/image-12.png",
     "面试/项目/短链接/AI提问.md",
     "面试/项目/黑马点评/AI.md",
     "JAVA/Redis/缓存雪崩.md",
     "JAVA/Redis/缓存击穿.md",
     "JAVA/Redis/缓存穿透.md",
     "面试/JUC/Java内存模型与volatile关键字.md",
-    "面试/JUC/Attachment/image-4.png",
-    "面试/JUC/Attachment/image-3.png",
     "docker/ubuntu启动docker流程.md",
     "Ragent项目简历.md",
     "未命名.base",
     "未命名 1.base",
-    "面试/项目/Ragent/bootstrap模块/Attachment/image-9.png",
     "面试/项目/Ragent/bootstrap模块/knowledge.md",
     "面试/项目/Ragent/分块-向量化-存入向量数据库.md",
     "面试/项目/Ragent/Attachment",
     "面试/项目/Ragent/bootstrap模块/ingestion.md",
     "面试/项目/Ragent/bootstrap模块/整体贯穿.md",
-    "AI-agent/名词索引.md",
-    "JAVA/JAVASE/比较抽象的SE基础/枚举类.md",
-    "面试/项目/Ragent/bootstrap模块/Attachment"
+    "AI-agent/名词索引.md"
   ]
 }
