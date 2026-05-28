@@ -1,0 +1,12 @@
+diff --git a/面试/集合/LinkList.md b/面试/集合/LinkList.md
+index 000000..000000 100644
+--- a/面试/集合/LinkList.md
++++ b/面试/集合/LinkList.md
+@@ -1,1 +1,4 @@
+-双xiang'lie
+\ No newline at end of file
++双向列表
++# 时间复杂度
++插入，删除只需要修改指针O(1)
++访问元素需要从头或尾开始遍历O(n)
+\ No newline at end of file

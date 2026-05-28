@@ -67,7 +67,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "异常",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -88,7 +88,8 @@
               "title": "书签"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -185,7 +186,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "a3eeb43931558d9b",
+  "active": "2da55a8935c461ad",
   "lastOpenFiles": [
     "面试/集合/ArrayList.md",
     "面试/集合/LinkList.md",
