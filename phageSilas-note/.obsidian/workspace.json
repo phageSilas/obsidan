@@ -26,12 +26,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "面试/项目/Ragent/MCP-server/整体贯穿.md",
+                "file": "面试/集合/LinkList.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "整体贯穿"
+              "title": "LinkList"
             }
           }
         ],
@@ -156,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "面试/项目/Ragent/MCP-server/整体贯穿.md",
+                "file": "面试/集合/LinkList.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "整体贯穿 的大纲"
+              "title": "LinkList 的大纲"
             }
           }
         ],
@@ -187,6 +187,10 @@
   },
   "active": "a3eeb43931558d9b",
   "lastOpenFiles": [
+    "面试/集合/ArrayList.md",
+    "面试/集合/LinkList.md",
+    "面试/项目/Ragent/MCP-server/整体贯穿.md",
+    "面试/集合",
     "面试/项目/Ragent/MCP-server/Attachment/image-4.png",
     "面试/项目/Ragent/MCP-server/Attachment/image-3.png",
     "面试/项目/Ragent/MCP-server/Attachment/image-2.png",
@@ -194,7 +198,6 @@
     "面试/项目/Ragent/MCP-server/Attachment/image.png",
     "面试/项目/Ragent/MCP-server/Attachment",
     "面试/项目/Ragent/infra-ai/整体贯穿.md",
-    "面试/项目/Ragent/MCP-server/整体贯穿.md",
     "面试/项目/Ragent/MCP-server",
     "面试/项目/Ragent/意图树.md",
     "面试/项目/Ragent/infra-ai",
@@ -216,7 +219,6 @@
     "JAVA/Redis/持久化.md",
     "JAVA/Redis/Attachment/image-15.png",
     "JAVA/Redis/Attachment/image-14.png",
-    "JAVA/Redis/Attachment/image-13.png",
     "面试/项目/短链接/AI提问.md",
     "面试/项目/黑马点评/AI.md",
     "JAVA/Redis/缓存雪崩.md",
@@ -229,9 +231,7 @@
     "未命名 1.base",
     "面试/项目/Ragent/bootstrap模块/knowledge.md",
     "面试/项目/Ragent/分块-向量化-存入向量数据库.md",
-    "面试/项目/Ragent/Attachment",
     "面试/项目/Ragent/bootstrap模块/ingestion.md",
-    "面试/项目/Ragent/bootstrap模块/整体贯穿.md",
-    "AI-agent/名词索引.md"
+    "面试/项目/Ragent/bootstrap模块/整体贯穿.md"
   ]
 }

@@ -14,11 +14,16 @@
       "Attachment"
     ],
     "面试": [
+      "面试/集合",
       "面试/JavaSE",
       "面试/项目",
       "面试/JUC",
       "面试/JVM",
       "面试/agent"
+    ],
+    "面试/集合": [
+      "面试/集合/ArrayList.md",
+      "面试/集合/LinkList.md"
     ],
     "面试/项目": [
       "面试/项目/黑马点评",
@@ -69,6 +74,17 @@
     ],
     "面试/项目/Ragent/infra-ai": [
       "面试/项目/Ragent/infra-ai/整体贯穿.md"
+    ],
+    "面试/项目/Ragent/MCP-server": [
+      "面试/项目/Ragent/MCP-server/Attachment",
+      "面试/项目/Ragent/MCP-server/整体贯穿.md"
+    ],
+    "面试/项目/Ragent/MCP-server/Attachment": [
+      "面试/项目/Ragent/MCP-server/Attachment/image.png",
+      "面试/项目/Ragent/MCP-server/Attachment/image-1.png",
+      "面试/项目/Ragent/MCP-server/Attachment/image-2.png",
+      "面试/项目/Ragent/MCP-server/Attachment/image-3.png",
+      "面试/项目/Ragent/MCP-server/Attachment/image-4.png"
     ],
     "面试/agent": [
       "面试/agent/题目.md"
@@ -451,9 +467,6 @@
       "JAVA基础笔试/基础/Attachment/image-2.png",
       "JAVA基础笔试/基础/Attachment/image-3.png",
       "JAVA基础笔试/基础/Attachment/image.png"
-    ],
-    "面试/项目/Ragent/MCP-server": [
-      "面试/项目/Ragent/MCP-server/整体贯穿.md"
     ]
   },
   "draggingEnabled": true,
