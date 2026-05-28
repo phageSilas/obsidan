@@ -26,7 +26,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "面试/项目/framework模块/整体贯穿.md",
+                "file": "面试/项目/Ragent/MCP-server/整体贯穿.md",
                 "mode": "source",
                 "source": false
               },
@@ -156,7 +156,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "面试/项目/framework模块/整体贯穿.md",
+                "file": "面试/项目/Ragent/MCP-server/整体贯穿.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -185,11 +185,16 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "a3eeb43931558d9b",
+  "active": "34d6b36d87ac3e98",
   "lastOpenFiles": [
+    "面试/项目/Ragent/infra-ai/整体贯穿.md",
+    "面试/项目/Ragent/MCP-server/整体贯穿.md",
+    "面试/项目/Ragent/MCP-server",
+    "面试/项目/Ragent/意图树.md",
+    "面试/项目/Ragent/infra-ai",
+    "面试/项目/Ragent/framework模块/整体贯穿.md",
     "面试/项目/Ragent/bootstrap模块/rag.md",
-    "面试/项目/framework模块/整体贯穿.md",
-    "面试/项目/framework模块",
+    "面试/项目/Ragent/framework模块",
     "面试/JavaSE/未命名.md",
     "面试/MySql",
     "面试/JavaSE/Redisson实现的分布式锁.md",
@@ -215,7 +220,6 @@
     "面试/JUC/Java内存模型与volatile关键字.md",
     "面试/JUC/Attachment/image-4.png",
     "面试/JUC/Attachment/image-3.png",
-    "面试/项目/Ragent/意图树.md",
     "docker/ubuntu启动docker流程.md",
     "Ragent项目简历.md",
     "未命名.base",
@@ -226,12 +230,8 @@
     "面试/项目/Ragent/Attachment",
     "面试/项目/Ragent/bootstrap模块/ingestion.md",
     "面试/项目/Ragent/bootstrap模块/整体贯穿.md",
-    "面试/项目/Ragent/bootstrap模块/未命名",
     "AI-agent/名词索引.md",
     "JAVA/JAVASE/比较抽象的SE基础/枚举类.md",
-    "JAVA/JAVASE/SE基础/Map.of().md",
-    "JAVA/JAVASE/SE基础/集合遍历.md",
-    "面试/项目/Ragent/bootstrap模块/Attachment",
-    "面试/项目/Ragent/bootstrap模块"
+    "面试/项目/Ragent/bootstrap模块/Attachment"
   ]
 }
