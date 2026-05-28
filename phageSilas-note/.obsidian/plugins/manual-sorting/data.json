@@ -15,7 +15,6 @@
     ],
     "面试": [
       "面试/JavaSE",
-      "面试/MySql",
       "面试/项目",
       "面试/JUC",
       "面试/JVM",
@@ -424,8 +423,6 @@
       "JAVA/SpringCloud微服务/Attachment/image.png"
     ],
     "JAVA基础笔试": [
-      "JAVA基础笔试/JVM",
-      "JAVA基础笔试/JUC",
       "JAVA基础笔试/基础",
       "JAVA基础笔试/Spring.md"
     ],
@@ -445,10 +442,7 @@
       "JAVA基础笔试/基础/Attachment/image-2.png",
       "JAVA基础笔试/基础/Attachment/image-3.png",
       "JAVA基础笔试/基础/Attachment/image.png"
-    ],
-    "JAVA基础笔试/JUC": [],
-    "JAVA基础笔试/JVM": [],
-    "面试/MySql": []
+    ]
   },
   "draggingEnabled": true,
   "selectedSortOrder": "manual-sorting"
