@@ -67,7 +67,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "异常",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -88,7 +88,8 @@
               "title": "书签"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -187,6 +188,7 @@
   },
   "active": "a3eeb43931558d9b",
   "lastOpenFiles": [
+    "面试/项目/短链接/Attachment/image-1.png",
     "面试/项目/短链接/Attachment/image.png",
     "面试/项目/短链接/Attachment",
     "Ragent项目简历.md",
@@ -226,7 +228,6 @@
     "JAVA/Redis/Attachment/image-16.png",
     "JAVA/Redis/持久化.md",
     "JAVA/Redis/Attachment/image-15.png",
-    "JAVA/Redis/Attachment/image-14.png",
     "面试/项目/短链接/AI提问.md",
     "面试/项目/黑马点评/AI.md",
     "面试/JUC/Java内存模型与volatile关键字.md",
