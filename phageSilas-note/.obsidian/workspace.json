@@ -187,6 +187,8 @@
   },
   "active": "a3eeb43931558d9b",
   "lastOpenFiles": [
+    "面试/项目/短链接/Attachment/image.png",
+    "面试/项目/短链接/Attachment",
     "Ragent项目简历.md",
     "面试/项目/短链接/面经.md",
     "未命名 1.base",
@@ -221,7 +223,6 @@
     "JAVA/Redis/消息队列/删除策略.md",
     "JAVA/Redis/消息队列/Attachment/image-1.png",
     "JAVA/Redis/消息队列/Attachment/image.png",
-    "JAVA/Redis/消息队列/Attachment",
     "JAVA/Redis/Attachment/image-16.png",
     "JAVA/Redis/持久化.md",
     "JAVA/Redis/Attachment/image-15.png",
@@ -231,7 +232,6 @@
     "面试/JUC/Java内存模型与volatile关键字.md",
     "docker/ubuntu启动docker流程.md",
     "面试/项目/Ragent/bootstrap模块/knowledge.md",
-    "面试/项目/Ragent/分块-向量化-存入向量数据库.md",
-    "面试/项目/Ragent/bootstrap模块/ingestion.md"
+    "面试/项目/Ragent/分块-向量化-存入向量数据库.md"
   ]
 }
