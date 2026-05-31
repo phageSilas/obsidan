@@ -1,10 +1,9 @@
 ## **反射说一下，优缺点，用途**(难)
+## string buffer、string和string builder的区别
 
 
 
-
-
-## hashmap的数据结构
+## hashmap的数据结构,put()的流程
 ## hashmap为什么是线程不安全的(1.7和1.8区别)
 ## 说说concurrenthashmap怎么保证线程安全的
 ## hashmap 和 hashtable 有什么区别？
@@ -16,7 +15,8 @@
 ## 动态线程池如何动态参数调整？如何实现动态线程池
 ## threadlocal底层原理(难)
 ## 创建线程的一个方式有哪些？
-
+## 线程池的参数？submit() 和 execute()的区别？
+## CAS 和 Synchronized 的区别，分别对应什么使用场景？
 
 
 
