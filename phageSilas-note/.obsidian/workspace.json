@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "面试/项目/Ragent/简历项目亮点解析.md",
+                "file": "面试/项目/Ragent/简历项目特点解析.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "简历项目亮点解析"
+              "title": "简历项目特点解析"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "面试/项目/Ragent/简历项目亮点解析.md",
+                "file": "面试/项目/Ragent/简历项目特点解析.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "简历项目亮点解析 的大纲"
+              "title": "简历项目特点解析 的大纲"
             }
           }
         ],
@@ -174,7 +174,7 @@
   "active": "86dec970c3e102ad",
   "lastOpenFiles": [
     "面试/项目/Ragent/面试说法.md",
-    "面试/项目/Ragent/简历项目亮点解析.md",
+    "面试/项目/Ragent/简历项目特点解析.md",
     "面试/项目/Ragent/bootstrap模块/ingestion.md",
     "Ragent项目简历.md",
     "面试/java常见八股.md",
