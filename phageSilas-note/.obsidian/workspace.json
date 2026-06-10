@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "面试/项目/Ragent/简历项目特点解析.md",
+                "file": "面试/真实面试总结.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "简历项目特点解析"
+              "title": "真实面试总结"
             }
           }
         ]
@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 399.5
+    "width": 223.5
   },
   "right": {
     "id": "791d29b6d015dc2f",
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "面试/项目/Ragent/简历项目特点解析.md",
+                "file": "面试/真实面试总结.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "简历项目特点解析 的大纲"
+              "title": "真实面试总结 的大纲"
             }
           }
         ],
@@ -173,11 +173,16 @@
   },
   "active": "86dec970c3e102ad",
   "lastOpenFiles": [
+    "面试/Attachment/image-2.png",
+    "面试/Attachment/image-1.png",
+    "面试/Attachment/image.png",
+    "面试/Attachment",
+    "面试/项目/Ragent/简历项目特点解析.md",
+    "面试/真实面试总结.md",
     "面试/项目/Ragent/Attachment/image-12.png",
     "面试/项目/Ragent/Attachment/image-11.png",
     "面试/项目/短链接/面经.md",
     "面试/项目/短链接/简历特点分析.md",
-    "面试/项目/Ragent/简历项目特点解析.md",
     "面试/项目/Ragent/Attachment/image-10.png",
     "面试/java常见八股.md",
     "面试/项目/Ragent/Attachment/image-9.png",
@@ -185,9 +190,6 @@
     "面试/项目/Ragent/Attachment/image-7.png",
     "面试/项目/Ragent/Attachment/image-6.png",
     "面试/项目/短链接/Attachment/image-11.png",
-    "面试/项目/短链接/Attachment/image-10.png",
-    "面试/项目/短链接/Attachment/image-9.png",
-    "面试/项目/短链接/Attachment/image-8.png",
     "面试/项目/Ragent/面试说法.md",
     "面试/项目/Ragent/bootstrap模块/ingestion.md",
     "Ragent项目简历.md",
@@ -213,11 +215,9 @@
     "面试/项目/Ragent/bootstrap模块/rag.md",
     "面试/项目/Ragent/framework模块",
     "面试/JavaSE/未命名.md",
-    "面试/MySql",
     "面试/JavaSE/Redisson实现的分布式锁.md",
     "JAVA/Redis/锁/分布式锁/Redisson的multiLock.md",
     "JAVA/Redis/锁/分布式锁/Lua脚本(各种锁的基础).md",
-    "JAVA/Redis/锁/分布式锁/可重入锁.md",
-    "JAVA/Redis/消息队列/删除策略.md"
+    "JAVA/Redis/锁/分布式锁/可重入锁.md"
   ]
 }

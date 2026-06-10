@@ -15,6 +15,8 @@
       "Attachment"
     ],
     "面试": [
+      "面试/Attachment",
+      "面试/真实面试总结.md",
       "面试/java常见八股.md",
       "面试/Mysql和Redis.md",
       "面试/集合",
@@ -120,6 +122,9 @@
     ],
     "面试/agent": [
       "面试/agent/题目.md"
+    ],
+    "面试/Attachment": [
+      "面试/Attachment/image.png"
     ],
     "面试/JavaSE": [
       "面试/JavaSE/未命名.md",
