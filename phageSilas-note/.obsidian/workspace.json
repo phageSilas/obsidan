@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "面试/Spring/SpringBoot启动流程.md",
+                "file": "面试/项目/短链接/简历特点分析.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "SpringBoot启动流程"
+              "title": "简历特点分析"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "面试/Spring/SpringBoot启动流程.md",
+                "file": "面试/项目/短链接/简历特点分析.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "SpringBoot启动流程 的大纲"
+              "title": "简历特点分析 的大纲"
             }
           }
         ],
@@ -173,10 +173,10 @@
   },
   "active": "86dec970c3e102ad",
   "lastOpenFiles": [
+    "面试/Spring/SpringBoot启动流程.md",
     "面试/Spring/Attachment/image.png",
     "面试/Spring/Attachment",
     "JAVA基础笔试/Spring.md",
-    "面试/Spring/SpringBoot启动流程.md",
     "面试/Spring",
     "面试/力扣hot100/链表/hot21 合并两个有序链表.md",
     "Ragent项目简历.md",
@@ -202,7 +202,6 @@
     "面试/项目/Ragent/Attachment/image-9.png",
     "面试/项目/Ragent/Attachment/image-8.png",
     "面试/项目/Ragent/Attachment/image-7.png",
-    "面试/项目/Ragent/Attachment/image-6.png",
     "面试/项目/Ragent/面试说法.md",
     "面试/项目/Ragent/bootstrap模块/ingestion.md",
     "面试/Mysql和Redis.md",
