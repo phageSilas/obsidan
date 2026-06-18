@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "a67c197b00218dd6",
+        "id": "bb3e02af0f40256b",
         "type": "tabs",
         "children": [
           {
-            "id": "86dec970c3e102ad",
+            "id": "3a263b6b90e57ca7",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -171,11 +171,12 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "86dec970c3e102ad",
+  "active": "34d6b36d87ac3e98",
   "lastOpenFiles": [
+    "push.md",
+    "面试/项目/短链接/微服务专题.md",
     "面试/项目/短链接/Attachment/image-12.png",
     "面试/springcloud微服务/未命名.md",
-    "面试/项目/短链接/微服务专题.md",
     "面试/springcloud微服务/Attachment/image.png",
     "面试/springcloud微服务/Attachment",
     "面试/项目/Ragent/简历项目特点解析.md",
@@ -208,7 +209,6 @@
     "面试/项目/Ragent/Attachment/image-10.png",
     "面试/java常见八股.md",
     "面试/项目/Ragent/Attachment/image-9.png",
-    "面试/项目/Ragent/Attachment/image-8.png",
     "面试/项目/Ragent/bootstrap模块/ingestion.md",
     "面试/Mysql和Redis.md",
     "面试/项目/Ragent/分块-向量化-存入向量数据库.md",
