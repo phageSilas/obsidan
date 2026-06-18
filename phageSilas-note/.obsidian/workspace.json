@@ -171,8 +171,9 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "34d6b36d87ac3e98",
+  "active": "3a263b6b90e57ca7",
   "lastOpenFiles": [
+    "面试/项目/短链接/Attachment/image-13.png",
     "push.md",
     "面试/项目/短链接/微服务专题.md",
     "面试/项目/短链接/Attachment/image-12.png",
@@ -217,7 +218,6 @@
     "JAVA/Redis/缓存雪崩.md",
     "JAVA/Redis/缓存击穿.md",
     "JAVA/Redis/缓存穿透.md",
-    "面试/项目/Ragent/MCP-server/整体贯穿.md",
-    "面试/项目/Ragent/infra-ai/整体贯穿.md"
+    "面试/项目/Ragent/MCP-server/整体贯穿.md"
   ]
 }
