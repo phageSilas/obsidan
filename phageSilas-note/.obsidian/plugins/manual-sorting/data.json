@@ -202,6 +202,10 @@
       "面试/JVM/Attachment/image-2.png",
       "面试/JVM/Attachment/image.png"
     ],
+    "面试/Redis": [
+      "面试/Redis/Redis基础.md",
+      "面试/Redis/Redisson.md"
+    ],
     "面试/Spring": [
       "面试/Spring/Attachment",
       "面试/Spring/SpringBoot启动流程.md"
@@ -534,9 +538,6 @@
       "JAVA基础笔试/基础/Attachment/image-2.png",
       "JAVA基础笔试/基础/Attachment/image-3.png",
       "JAVA基础笔试/基础/Attachment/image.png"
-    ],
-    "面试/Redis": [
-      "面试/Redis/Redisson.md"
     ]
   },
   "draggingEnabled": true,
