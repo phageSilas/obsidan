@@ -134,8 +134,12 @@
       "面试/项目/Ragent/MCP-server/Attachment/image-4.png"
     ],
     "面试/agent": [
+      "面试/agent/Attachment",
       "面试/agent/基础知识.md",
       "面试/agent/题目.md"
+    ],
+    "面试/agent/Attachment": [
+      "面试/agent/Attachment/image.png"
     ],
     "面试/Attachment": [
       "面试/Attachment/image-1.png",

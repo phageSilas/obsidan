@@ -173,6 +173,8 @@
   },
   "active": "3a263b6b90e57ca7",
   "lastOpenFiles": [
+    "面试/agent/Attachment/image.png",
+    "面试/agent/Attachment",
     "面试/熙牛医疗面试.md",
     "面试/Redis/Redis基础.md",
     "面试/Redis/Redisson.md",
@@ -205,7 +207,6 @@
     "未命名 1.base",
     "面试/力扣hot100/链表",
     "面试/力扣hot100/未命名.md",
-    "面试/力扣hot100",
     "面试/项目/短链接/面经.md",
     "面试/项目/短链接/AI提问.md",
     "面试/Attachment/image-2.png",
@@ -217,7 +218,6 @@
     "面试/项目/Ragent/bootstrap模块/ingestion.md",
     "面试/项目/Ragent/分块-向量化-存入向量数据库.md",
     "面试/集合/ArrayList.md",
-    "面试/集合/LinkList.md",
-    "JAVA/Redis/缓存雪崩.md"
+    "面试/集合/LinkList.md"
   ]
 }
