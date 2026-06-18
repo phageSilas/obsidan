@@ -12,6 +12,7 @@
       "Attachment"
     ],
     "面试": [
+      "面试/Redis",
       "面试/springcloud微服务",
       "面试/熙牛医疗面试.md",
       "面试/力扣hot100",
@@ -533,6 +534,9 @@
       "JAVA基础笔试/基础/Attachment/image-2.png",
       "JAVA基础笔试/基础/Attachment/image-3.png",
       "JAVA基础笔试/基础/Attachment/image.png"
+    ],
+    "面试/Redis": [
+      "面试/Redis/Redisson.md"
     ]
   },
   "draggingEnabled": true,
