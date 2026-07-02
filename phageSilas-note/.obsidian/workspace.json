@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "面试/项目/Ragent/bootstrap模块/整体贯穿.md",
+                "file": "面试/项目/Ragent/infra-ai/整体贯穿.md",
                 "mode": "source",
                 "source": false
               },
@@ -142,7 +142,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "面试/项目/Ragent/bootstrap模块/整体贯穿.md",
+                "file": "面试/项目/Ragent/infra-ai/整体贯穿.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -173,6 +173,11 @@
   },
   "active": "3a263b6b90e57ca7",
   "lastOpenFiles": [
+    "面试/项目/Ragent/framework模块/整体贯穿.md",
+    "面试/项目/Ragent/bootstrap模块/整体贯穿.md",
+    "面试/项目/Ragent/bootstrap模块/rag.md",
+    "面试/项目/Ragent/bootstrap模块/ingestion.md",
+    "面试/项目/Ragent/bootstrap模块/knowledge.md",
     "面试/项目/Ragent/分块-向量化-存入向量数据库.md",
     "面试/项目/Ragent/面试说法.md",
     "面试/项目/Ragent/简历项目特点解析.md",
@@ -194,11 +199,6 @@
     "面试/项目/短链接/微服务专题.md",
     "JAVA/Redis/缓存雪崩.md",
     "JAVA/Redis/缓存击穿.md",
-    "JAVA/Redis/缓存穿透.md",
-    "面试/Mysql和Redis.md",
-    "面试/java常见八股.md",
-    "面试/真实面试总结.md",
-    "面试/agent/基础知识.md",
     "面试/agent/Attachment/image.png",
     "面试/agent/Attachment",
     "面试/Redis",
