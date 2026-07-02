@@ -1,7 +1,6 @@
 {
   "customFileOrder": {
     "/": [
-      "push.md",
       "AI-agent",
       "面试",
       "JAVA基础笔试",
@@ -450,9 +449,9 @@
       "JAVA/MySQL/查询/比较运算符/模糊查询LIKE.md"
     ],
     "JAVA/Redis": [
+      "JAVA/Redis/缓存穿透.md",
       "JAVA/Redis/Attachment",
       "JAVA/Redis/Redis基础命令.md",
-      "JAVA/Redis/缓存穿透.md",
       "JAVA/Redis/缓存击穿.md",
       "JAVA/Redis/缓存雪崩.md",
       "JAVA/Redis/持久化.md",
