@@ -1,6 +1,7 @@
 {
   "customFileOrder": {
     "/": [
+      "前端",
       "AI-agent",
       "面试",
       "JAVA基础笔试",
@@ -223,6 +224,9 @@
     ],
     "面试/springcloud微服务/Attachment": [
       "面试/springcloud微服务/Attachment/image.png"
+    ],
+    "前端": [
+      "前端/nvm管理node版本.md"
     ],
     "算法": [
       "算法/二分查找.md",

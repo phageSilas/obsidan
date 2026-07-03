@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA/JAVASE/SE基础/自定义注解.md",
+                "file": "前端/nvm管理node版本.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "自定义注解"
+              "title": "nvm管理node版本"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA/JAVASE/SE基础/自定义注解.md",
+                "file": "前端/nvm管理node版本.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "自定义注解 的大纲"
+              "title": "nvm管理node版本 的大纲"
             }
           }
         ],
@@ -173,8 +173,10 @@
   },
   "active": "3a263b6b90e57ca7",
   "lastOpenFiles": [
-    "JAVA/JavaWeb/MyBatis常用注解.md",
     "JAVA/JAVASE/SE基础/自定义注解.md",
+    "前端/nvm管理node版本.md",
+    "前端",
+    "JAVA/JavaWeb/MyBatis常用注解.md",
     "面试/Spring/SpringBoot启动流程.md",
     "面试/项目/Ragent/infra-ai/整体贯穿.md",
     "面试/项目/Ragent/framework模块/整体贯穿.md",
@@ -198,7 +200,6 @@
     "JAVA/JAVASE/SE基础/创建对象new与get,set方法与创建子类对象.md",
     "JAVA/JAVASE/SE基础/get与set方法用法解释.md",
     "JAVA/JAVASE/SE基础/自定义返回类型的方法.md",
-    "面试/Redis/传感器复习总结.md",
     "面试/agent/Attachment/image.png",
     "面试/agent/Attachment",
     "面试/Redis",
@@ -214,7 +215,6 @@
     "未命名 2.base",
     "未命名.base",
     "未命名 1.base",
-    "面试/力扣hot100/链表",
     "面试/Attachment/image-2.png",
     "面试/Attachment/image-1.png",
     "面试/Attachment/image.png",
