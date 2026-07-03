@@ -149,7 +149,7 @@ return teacherService.findTeachersByClass(klassId);
 若请求 URL 为 /klasses/123/teachers，则 klassId = 123。
 ```
 ## @RequestParam
-用于绑定查询参数
+用于绑定查询参数,防止因参数位置不同导致的读取错误
 ``` java
 @GetMapping("/klasses/{klassId}/teachers") 
 public List<Teacher> getTeachersByClass(@PathVariable Long klassId, @RequestParam(value = "type", required = false) String type) { return teacherService.findTeachersByClassAndType(klassId, type); 
