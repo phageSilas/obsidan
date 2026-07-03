@@ -149,16 +149,45 @@ return teacherService.findTeachersByClass(klassId);
 若请求 URL 为 /klasses/123/teachers，则 klassId = 123。
 ```
 ## @RequestParam
-用于绑定查询参数,防止因参数位置不同导致的读取错误
+用于绑定查询参数,用于**将 HTTP 请求中的参数（Query String 或 Form Data）绑定到 Controller（控制器）中方法的形参上**。
+假设前端发来一个 GET 请求：
+`http://localhost:8080/user?name=张三&age=18`
 ``` java
-@GetMapping("/klasses/{klassId}/teachers") 
-public List<Teacher> getTeachersByClass(@PathVariable Long klassId, @RequestParam(value = "type", required = false) String type) { return teacherService.findTeachersByClassAndType(klassId, type); 
+@GetMapping("/user")
+public String getUser(@RequestParam String name, @RequestParam int age) {
+    System.out.println("姓名：" + name); // 输出：张三
+    System.out.println("年龄：" + age); // 输出：18
+    return "success";
 }
-若请求 URL 为 /klasses/123/teachers?type=web，则 klassId = 123，
-type = web。
 ```
+Spring 会自动把 URL 中的 `name` 和 `age` 赋值给方法中的参数
+### 参数名不一致时（使用 `value` 或 `name`）
 
+如果前端传的参数名是 `userName`，但后端变量想叫 `name`，可以用 `value` 指定映射：
 
+``` java
+@GetMapping("/user")
+public String getUser(@RequestParam(value = "userName") String name) {
+    // 前端传 ?userName=张三，后端 name 变量接收到 "张三"
+    return "success";
+}
+
+```
+### 核心的三个属性（必知必会）
+
+除了 `value`，还有两个非常常用的属性：
+
+- **`required`（是否必传）**：默认为 `true`。如果前端没传这个参数，后端会直接报错 **400（Bad Request）**。如果该参数可有可无，请设置为 `false`。
+
+``` java
+@RequestParam(required = false) String name
+```
+    
+- **`defaultValue`（默认值）**：当参数没传或传空值时，给一个兜底值。设置了此项，`required` 就自动失效了。
+
+``` java
+@RequestParam(defaultValue = "1") int pageNum  // 没传pageNum时，默认为1
+```
 
 ## @Value
 对于一些经常变化的参数,如网页链接,定时更新的参数,可以在配置文件中,通过@Value
