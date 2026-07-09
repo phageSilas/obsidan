@@ -34,23 +34,9 @@
               "icon": "lucide-file",
               "title": "考勤管理_薪资管理_模块系分文档"
             }
-          },
-          {
-            "id": "4cdfb33a81588885",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "hrms-attendance-payroll-spec.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "hrms-attendance-payroll-spec"
-            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -171,13 +157,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "hrms-attendance-payroll-spec.md",
+                "file": "考勤管理_薪资管理_模块系分文档.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "hrms-attendance-payroll-spec 的大纲"
+              "title": "考勤管理_薪资管理_模块系分文档 的大纲"
             }
           }
         ],
@@ -200,13 +186,14 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "4cdfb33a81588885",
+  "active": "e01cb152060471d9",
   "lastOpenFiles": [
+    "hrms-attendance-payroll-spec.md",
+    "Attachment/image-17.png",
     "薪资管理_模块系分文档.md",
     "01-HRMS全局开发规范.md",
     "前端系分模版.md",
     "考勤管理_薪资管理_模块系分文档.md",
-    "hrms-attendance-payroll-spec.md",
     "01-HRMS全局开发规范旧.md",
     "考勤管理_spanclass=_em__·__span_薪资管理_br_模块系分文档 - 副本.md",
     "HRMS-.md",
@@ -235,12 +222,10 @@
     "面试/项目/Ragent/bootstrap模块/knowledge.md",
     "面试/项目/Ragent/分块-向量化-存入向量数据库.md",
     "面试/项目/Ragent/面试说法.md",
-    "面试/项目/Ragent/简历项目特点解析.md",
     "面试/agent/Attachment/image.png",
     "面试/agent/Attachment",
     "面试/Redis",
     "面试/项目/Ragent/Attachment/image-13.png",
-    "面试/项目/短链接/Attachment/image-13.png",
     "面试/springcloud微服务/Attachment",
     "面试/springcloud微服务",
     "面试/Spring/Attachment",
