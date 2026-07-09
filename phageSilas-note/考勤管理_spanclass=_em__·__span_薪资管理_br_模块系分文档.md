@@ -352,6 +352,7 @@ AttendanceStat --> Employee
 
 
 ```
+![[image-13.png|629x339]]
 
 ### 7-2 打卡时序图
 
@@ -387,6 +388,7 @@ end
 ![[image-10.png]]
 ### 7-3 请假申请时序图
 
+```
 @startuml
 actor Employee as emp
 participant "前端" as fe
@@ -416,9 +418,11 @@ note over wf, db
 审批拒绝/撤回 → 回滚预扣减余额
 end note
 @enduml
+```
 ![[image-11.png]]
 ### 7-4 月度考勤统计时序图
 
+```
 @startuml
 participant "定时任务调度" as scheduler
 participant "考勤统计服务" as statSvc
@@ -436,42 +440,47 @@ statSvc -&gt; db : 批量 UPSERT attendance\_stat
 statSvc -&gt; cache : 缓存 AntV 可视化数据集
 statSvc --&gt; scheduler : 统计完成，归档上月数据
 @enduml
+```
 ![[image-12.png]]
 ## 8数据库设计
 
 ### 8-1 考勤组表 attendance\_group
 
-CREATE TABLE IF NOT EXISTS attendance\_group (
-id                      BIGINT UNSIGNED NOT NULL AUTO\_INCREMENT COMMENT '主键ID',
-name                    VARCHAR(64)     NOT NULL COMMENT '考勤组名称',
-shift\_type              TINYINT         NOT NULL COMMENT '班次类型：1=固定班 2=弹性班 3=排班制',
-work\_start              TIME            NOT NULL COMMENT '上班时间',
-work\_end                TIME            NOT NULL COMMENT '下班时间',
-rest\_start              TIME                     COMMENT '午休开始',
-rest\_end                TIME                     COMMENT '午休结束',
-flexible\_start          TIME                     COMMENT '弹性最早打卡',
-flexible\_end            TIME                     COMMENT '弹性最晚打卡',
-late\_threshold          INT             NOT NULL DEFAULT 15 COMMENT '迟到阈值（分钟）',
-early\_leave\_threshold   INT             NOT NULL DEFAULT 15 COMMENT '早退阈值（分钟）',
-status                  TINYINT         NOT NULL DEFAULT 1 COMMENT '0=禁用 1=启用',
-create\_time             DATETIME        NOT NULL DEFAULT CURRENT\_TIMESTAMP,
-update\_time             DATETIME        NOT NULL DEFAULT CURRENT\_TIMESTAMP ON UPDATE CURRENT\_TIMESTAMP,
-is\_deleted              TINYINT         NOT NULL DEFAULT 0,
-PRIMARY KEY (id)
-) DEFAULT CHARACTER SET = utf8mb4 COMMENT = '考勤组表';
+``` sql
+CREATE TABLE IF NOT EXISTS attendance_group (  
+id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT ‘主键ID’,  
+name VARCHAR(64) NOT NULL COMMENT ‘考勤组名称’,  
+shift_type TINYINT NOT NULL COMMENT ‘班次类型：1=固定班 2=弹性班 3=排班制’,  
+work_start TIME NOT NULL COMMENT ‘上班时间’,  
+work_end TIME NOT NULL COMMENT ‘下班时间’,  
+rest_start TIME COMMENT ‘午休开始’,  
+rest_end TIME COMMENT ‘午休结束’,  
+flexible_start TIME COMMENT ‘弹性最早打卡’,  
+flexible_end TIME COMMENT ‘弹性最晚打卡’,  
+late_threshold INT NOT NULL DEFAULT 15 COMMENT ‘迟到阈值（分钟）’,  
+early_leave_threshold INT NOT NULL DEFAULT 15 COMMENT ‘早退阈值（分钟）’,  
+status TINYINT NOT NULL DEFAULT 1 COMMENT ‘0=禁用 1=启用’,  
+create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,  
+update_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  
+is_deleted TINYINT NOT NULL DEFAULT 0,  
+PRIMARY KEY (id)  
+) DEFAULT CHARACTER SET = utf8mb4 COMMENT = ‘考勤组表’;
+```
 
 ### 8-2 考勤组成员表 attendance\_group\_member
 
-CREATE TABLE IF NOT EXISTS attendance\_group\_member (
-id           BIGINT UNSIGNED NOT NULL AUTO\_INCREMENT,
-group\_id     BIGINT UNSIGNED NOT NULL COMMENT '考勤组ID',
-member\_type  TINYINT         NOT NULL COMMENT '成员类型：1=部门 2=职位 3=个人',
-member\_id    BIGINT UNSIGNED NOT NULL COMMENT '成员ID',
-create\_time  DATETIME        NOT NULL DEFAULT CURRENT\_TIMESTAMP,
-PRIMARY KEY (id),
-KEY idx\_group\_id (group\_id),
-KEY idx\_member (member\_type, member\_id)
-) DEFAULT CHARACTER SET = utf8mb4 COMMENT = '考勤组成员表';
+``` sql
+CREATE TABLE IF NOT EXISTS attendance_group_member (  
+id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,  
+group_id BIGINT UNSIGNED NOT NULL COMMENT ‘考勤组ID’,  
+member_type TINYINT NOT NULL COMMENT ‘成员类型：1=部门 2=职位 3=个人’,  
+member_id BIGINT UNSIGNED NOT NULL COMMENT ‘成员ID’,  
+create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,  
+PRIMARY KEY (id),  
+KEY idx_group_id (group_id),  
+KEY idx_member (member_type, member_id)  
+) DEFAULT CHARACTER SET = utf8mb4 COMMENT = ‘考勤组成员表’;
+```
 
 ### 8-3 工作日设置表 work\_schedule
 
