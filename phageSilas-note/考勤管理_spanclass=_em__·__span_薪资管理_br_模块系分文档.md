@@ -235,100 +235,121 @@ QA
 ``` 
 @startuml
 class AttendanceGroup {
-  - id: Long
-  - name: String
-  - memberType: MemberType
-  - shiftType: ShiftType
-  - workStart: LocalTime
-  - workEnd: LocalTime
-  - restStart: LocalTime
-  - restEnd: LocalTime
-  - flexibleRange: String
-  - lateThreshold: Integer
-  - earlyLeaveThreshold: Integer
+  - id: Long "主键ID"
+  - name: String "考勤组名称"
+  - memberType: MemberType "成员类型"
+  - shiftType: ShiftType "班次类型"
+  - workStart: LocalTime "上班时间"
+  - workEnd: LocalTime "下班时间"
+  - restStart: LocalTime "午休开始时间"
+  - restEnd: LocalTime "午休结束时间"
+  - flexibleRange: String "弹性范围"
+  - lateThreshold: Integer "迟到阈值（分钟）"
+  - earlyLeaveThreshold: Integer "早退阈值（分钟）"
 }
 
 class WorkSchedule {
-  - id: Long
-  - groupId: Long
-  - date: LocalDate
-  - dayType: DayType
+  - id: Long "主键ID"
+  - groupId: Long "考勤组ID"
+  - date: LocalDate "日期"
+  - dayType: DayType "日期类型"
 }
 
 enum DayType {
-  STANDARD_WORKDAY
-  REST_DAY
-  HOLIDAY
+  STANDARD_WORKDAY "标准工作日"
+  REST_DAY "休息日"
+  HOLIDAY "法定节假日"
 }
 
 class AttendanceRecord {
-  - id: Long
-  - employeeId: Long
-  - groupId: Long
-  - recordDate: LocalDate
-  - clockInTime: LocalDateTime
-  - clockOutTime: LocalDateTime
-  - clockInStatus: ClockStatus
-  - clockOutStatus: ClockStatus
-  - ipAddress: String
-  - gpsLocation: String
+  - id: Long "主键ID"
+  - employeeId: Long "员工ID"
+  - groupId: Long "考勤组ID"
+  - recordDate: LocalDate "打卡日期"
+  - clockInTime: LocalDateTime "上班打卡时间"
+  - clockOutTime: LocalDateTime "下班打卡时间"
+  - clockInStatus: ClockStatus "上班状态"
+  - clockOutStatus: ClockStatus "下班状态"
+  - ipAddress: String "打卡IP地址"
+  - gpsLocation: String "GPS位置"
 }
 
 enum ClockStatus {
-  NORMAL
-  LATE
-  EARLY_LEAVE
-  ABSENCE
-  MISSING
+  NORMAL "正常"
+  LATE "迟到"
+  EARLY_LEAVE "早退"
+  ABSENCE "旷工"
+  MISSING "缺卡"
 }
 
 class LeaveType {
-  - id: Long
-  - name: String
-  - hasBalance: Boolean
-  - needProof: Boolean
+  - id: Long "主键ID"
+  - name: String "请假类型名称"
+  - hasBalance: Boolean "是否管理余额"
+  - needProof: Boolean "是否需要证明材料"
 }
 
 class LeaveBalance {
-  - id: Long
-  - employeeId: Long
-  - leaveTypeId: Long
-  - year: Integer
-  - totalDays: BigDecimal
-  - usedDays: BigDecimal
-  - remainingDays: BigDecimal
+  - id: Long "主键ID"
+  - employeeId: Long "员工ID"
+  - leaveTypeId: Long "请假类型ID"
+  - year: Integer "年份"
+  - totalDays: BigDecimal "总天数"
+  - usedDays: BigDecimal "已使用天数"
+  - remainingDays: BigDecimal "剩余天数"
 }
 
 class LeaveRequest {
-  - id: Long
-  - employeeId: Long
-  - leaveTypeId: Long
-  - startTime: LocalDateTime
-  - endTime: LocalDateTime
-  - days: BigDecimal
-  - reason: String
-  - attachmentUrl: String
-  - status: ApprovalStatus
+  - id: Long "主键ID"
+  - employeeId: Long "员工ID"
+  - leaveTypeId: Long "请假类型ID"
+  - startTime: LocalDateTime "开始时间"
+  - endTime: LocalDateTime "结束时间"
+  - days: BigDecimal "请假天数"
+  - reason: String "请假事由"
+  - attachmentUrl: String "附件URL"
+  - status: ApprovalStatus "审批状态"
 }
 
 class AttendanceStat {
-  - id: Long
-  - employeeId: Long
-  - statMonth: String
-  - shouldAttendDays: Integer
-  - actualAttendDays: Integer
-  - lateCount: Integer
-  - earlyLeaveCount: Integer
-  - absenceDays: BigDecimal
-  - leaveDays: BigDecimal
-  - overtimeHours: BigDecimal
+  - id: Long "主键ID"
+  - employeeId: Long "员工ID"
+  - statMonth: String "统计月份"
+  - shouldAttendDays: Integer "应出勤天数"
+  - actualAttendDays: Integer "实际出勤天数"
+  - lateCount: Integer "迟到次数"
+  - earlyLeaveCount: Integer "早退次数"
+  - absenceDays: BigDecimal "旷工天数"
+  - leaveDays: BigDecimal "请假天数"
+  - overtimeHours: BigDecimal "加班时长"
+}
+
+class Employee {
+  - id: Long "主键ID"
+  - employeeNo: String "工号"
+  - account: String "系统账号"
+  - status: EmployeeStatus "在职状态"
+  - hireDate: LocalDate "入职日期"
+  - createTime: LocalDateTime "创建时间"
+}
+
+enum EmployeeStatus {
+  PROBATION "试用期"
+  REGULAR "正式"
+  PENDING_LEAVE "待离职"
+  RESIGNED "已离职"
 }
 
 AttendanceGroup *-- WorkSchedule
 AttendanceRecord --> AttendanceGroup
 LeaveBalance --> LeaveType
 LeaveRequest --> LeaveType
+AttendanceRecord --> Employee
+LeaveRequest --> Employee
+LeaveBalance --> Employee
+AttendanceStat --> Employee
 @enduml
+
 
 ```
 
@@ -395,7 +416,7 @@ note over wf, db
 审批拒绝/撤回 → 回滚预扣减余额
 end note
 @enduml
-
+![[image-11.png]]
 ### 7-4 月度考勤统计时序图
 
 @startuml
@@ -415,7 +436,7 @@ statSvc -&gt; db : 批量 UPSERT attendance\_stat
 statSvc -&gt; cache : 缓存 AntV 可视化数据集
 statSvc --&gt; scheduler : 统计完成，归档上月数据
 @enduml
-
+![[image-12.png]]
 ## 8数据库设计
 
 ### 8-1 考勤组表 attendance\_group
