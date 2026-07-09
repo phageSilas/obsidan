@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "01-HRMS全局开发规范.md",
+                "file": "考勤管理_薪资管理_模块系分文档.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "01-HRMS全局开发规范"
+              "title": "考勤管理_薪资管理_模块系分文档"
             }
           }
         ],
@@ -157,13 +157,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "01-HRMS全局开发规范.md",
+                "file": "考勤管理_薪资管理_模块系分文档.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "01-HRMS全局开发规范 的大纲"
+              "title": "考勤管理_薪资管理_模块系分文档 的大纲"
             }
           }
         ],
@@ -188,11 +188,11 @@
   },
   "active": "e01cb152060471d9",
   "lastOpenFiles": [
-    "考勤管理_薪资管理_模块系分文档.md",
+    "考勤管理_spanclass=_em__·__span_薪资管理_br_模块系分文档 - 副本.md",
     "01-HRMS全局开发规范.md",
+    "考勤管理_薪资管理_模块系分文档.md",
     "01-HRMS全局开发规范旧.md",
     "HRMS-.md",
-    "考勤管理_spanclass=_em__·__span_薪资管理_br_模块系分文档 - 副本.md",
     "前端系分模版.md",
     "Attachment/image-16.png",
     "Attachment/image-15.png",
