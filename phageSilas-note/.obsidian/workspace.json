@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "未命名.md",
+                "file": "HRMS-.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "未命名"
+              "title": "HRMS-"
             }
           }
         ],
@@ -157,13 +157,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "未命名.md",
+                "file": "HRMS-.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "未命名 的大纲"
+              "title": "HRMS- 的大纲"
             }
           }
         ],
@@ -189,7 +189,7 @@
   "active": "125cc0551d26526e",
   "lastOpenFiles": [
     "前端系分模版.md",
-    "未命名.md",
+    "HRMS-.md",
     "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具基础篇.md",
     "JAVA/JAVASE/SE基础/自定义注解.md",
     "JAVA/JavaWeb/MyBatis常用注解.md",
