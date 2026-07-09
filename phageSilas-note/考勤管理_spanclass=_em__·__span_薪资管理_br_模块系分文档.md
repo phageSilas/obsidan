@@ -469,6 +469,35 @@ statSvc --&gt; scheduler : 统计完成，归档上月数据
 
 用于定义一组适用相同考勤规则的员工集合，支持固定班、弹性班和排班制。
 
+```sql
+CREATE TABLE IF NOT EXISTS `hr_attendance_group` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `group_name` VARCHAR(64) NOT NULL COMMENT '考勤组名称',
+  `shift_type` VARCHAR(32) NOT NULL COMMENT '班次类型：FIXED/FLEXIBLE/SCHEDULED',
+  `work_start_time` TIME NOT NULL COMMENT '上班时间',
+  `work_end_time` TIME NOT NULL COMMENT '下班时间',
+  `rest_start_time` TIME DEFAULT NULL COMMENT '午休开始',
+  `rest_end_time` TIME DEFAULT NULL COMMENT '午休结束',
+  `flexible_start_time` TIME DEFAULT NULL COMMENT '弹性最早打卡',
+  `flexible_end_time` TIME DEFAULT NULL COMMENT '弹性最晚打卡',
+  `late_threshold_minutes` INT NOT NULL DEFAULT 15 COMMENT '迟到阈值，单位分钟',
+  `early_leave_threshold_minutes` INT NOT NULL DEFAULT 15 COMMENT '早退阈值，单位分钟',
+  `clock_ip_whitelist` VARCHAR(500) DEFAULT NULL COMMENT 'IP白名单，多个用逗号分隔',
+  `clock_gps_scope` VARCHAR(500) DEFAULT NULL COMMENT 'GPS打卡范围配置',
+  `monthly_correction_limit` INT NOT NULL DEFAULT 2 COMMENT '每月补卡次数上限',
+  `status` TINYINT NOT NULL DEFAULT 1 COMMENT '启停状态：1启用，0禁用',
+  `create_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '创建人',
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '更新人',
+  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+  `version` INT NOT NULL DEFAULT 0 COMMENT '版本号',
+  `remark` VARCHAR(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`),
+  KEY `idx_hr_attendance_group_status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='考勤组表';
+```
+
 | 字段名 | 类型 | 必填 | 字段作用 | 约束与说明 |
 | --- | --- | --- | --- | --- |
 | `id` | `BIGINT UNSIGNED` | 是 | 主键ID | 自增主键 |
@@ -493,15 +522,39 @@ statSvc --&gt; scheduler : 统计完成，归档上月数据
 
 用于承接考勤组适用范围，可按部门、职位或员工指定。
 
-| 字段名 | 类型 | 必填 | 字段作用 | 约束与说明 |
-| --- | --- | --- | --- | --- |
-| `id` | `BIGINT UNSIGNED` | 是 | 主键ID | 自增主键 |
-| `group_id` | `BIGINT UNSIGNED` | 是 | 考勤组ID | 关联 `hr_attendance_group.id` |
-| `member_type` | `VARCHAR(32)` | 是 | 成员类型 | `DEPT`、`POST`、`EMPLOYEE` |
-| `member_id` | `BIGINT UNSIGNED` | 是 | 成员ID | 按类型关联 `sys_dept.id`、`sys_post.id`、`hr_employee.id` |
-| `effective_date` | `DATE` | 否 | 生效日期 | 支持未来生效 |
-| `expire_date` | `DATE` | 否 | 失效日期 | 离职或调整考勤组时回填 |
-| `status` | `TINYINT` | 是 | 状态 | `1` 有效，`0` 失效 |
+```sql
+CREATE TABLE IF NOT EXISTS `hr_attendance_group_member` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `group_id` BIGINT UNSIGNED NOT NULL COMMENT '考勤组ID',
+  `member_type` VARCHAR(32) NOT NULL COMMENT '成员类型：DEPT/POST/EMPLOYEE',
+  `member_id` BIGINT UNSIGNED NOT NULL COMMENT '成员ID，按成员类型关联部门、职位或员工',
+  `effective_date` DATE DEFAULT NULL COMMENT '生效日期',
+  `expire_date` DATE DEFAULT NULL COMMENT '失效日期',
+  `status` TINYINT NOT NULL DEFAULT 1 COMMENT '状态：1有效，0失效',
+  `create_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '创建人',
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '更新人',
+  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+  `version` INT NOT NULL DEFAULT 0 COMMENT '版本号',
+  `remark` VARCHAR(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_hr_att_grp_member` (`group_id`, `member_type`, `member_id`, `is_deleted`),
+  KEY `idx_hr_att_grp_member_member` (`member_type`, `member_id`),
+  KEY `idx_hr_att_grp_member_group` (`group_id`),
+  CONSTRAINT `fk_hr_att_grp_member_group` FOREIGN KEY (`group_id`) REFERENCES `hr_attendance_group` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='考勤组成员分支表';
+```
+
+| 字段名              | 类型                | 必填  | 字段作用  | 约束与说明                                              |
+| ---------------- | ----------------- | --- | ----- | -------------------------------------------------- |
+| `id`             | `BIGINT UNSIGNED` | 是   | 主键ID  | 自增主键                                               |
+| `group_id`       | `BIGINT UNSIGNED` | 是   | 考勤组ID | 关联 `hr_attendance_group.id`                        |
+| `member_type`    | `VARCHAR(32)`     | 是   | 成员类型  | `DEPT`、`POST`、`EMPLOYEE`                           |
+| `member_id`      | `BIGINT UNSIGNED` | 是   | 成员ID  | 按类型关联 `sys_dept.id`、`sys_post.id`、`hr_employee.id` |
+| `effective_date` | `DATE`            | 否   | 生效日期  | 支持未来生效                                             |
+| `expire_date`    | `DATE`            | 否   | 失效日期  | 离职或调整考勤组时回填                                        |
+| `status`         | `TINYINT`         | 是   | 状态    | `1` 有效，`0` 失效                                      |
 
 建议唯一索引：`uk_hr_attendance_group_member(group_id, member_type, member_id, is_deleted)`。
 
@@ -509,19 +562,73 @@ statSvc --&gt; scheduler : 统计完成，归档上月数据
 
 用于配置考勤组维度的标准工作日、休息日和法定节假日。
 
-| 字段名 | 类型 | 必填 | 字段作用 | 约束与说明 |
-| --- | --- | --- | --- | --- |
-| `id` | `BIGINT UNSIGNED` | 是 | 主键ID | 自增主键 |
-| `group_id` | `BIGINT UNSIGNED` | 是 | 考勤组ID | 关联 `hr_attendance_group.id` |
-| `calendar_date` | `DATE` | 是 | 日期 | 工作日判断主维度 |
-| `day_type` | `VARCHAR(32)` | 是 | 日期类型 | `WORKDAY`、`REST_DAY`、`HOLIDAY` |
-| `source_type` | `VARCHAR(32)` | 是 | 配置来源 | `MANUAL`、`SYSTEM_IMPORT` |
+```sql
+CREATE TABLE IF NOT EXISTS `hr_attendance_calendar` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `group_id` BIGINT UNSIGNED NOT NULL COMMENT '考勤组ID',
+  `calendar_date` DATE NOT NULL COMMENT '日期',
+  `day_type` VARCHAR(32) NOT NULL COMMENT '日期类型：WORKDAY/REST_DAY/HOLIDAY',
+  `source_type` VARCHAR(32) NOT NULL DEFAULT 'MANUAL' COMMENT '配置来源：MANUAL/SYSTEM_IMPORT',
+  `create_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '创建人',
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '更新人',
+  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+  `version` INT NOT NULL DEFAULT 0 COMMENT '版本号',
+  `remark` VARCHAR(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_hr_att_cal_group_date` (`group_id`, `calendar_date`, `is_deleted`),
+  KEY `idx_hr_att_cal_group` (`group_id`),
+  KEY `idx_hr_att_cal_date` (`calendar_date`),
+  CONSTRAINT `fk_hr_att_cal_group` FOREIGN KEY (`group_id`) REFERENCES `hr_attendance_group` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='工作日配置表';
+```
+
+| 字段名             | 类型                | 必填  | 字段作用  | 约束与说明                          |
+| --------------- | ----------------- | --- | ----- | ------------------------------ |
+| `id`            | `BIGINT UNSIGNED` | 是   | 主键ID  | 自增主键                           |
+| `group_id`      | `BIGINT UNSIGNED` | 是   | 考勤组ID | 关联 `hr_attendance_group.id`    |
+| `calendar_date` | `DATE`            | 是   | 日期    | 工作日判断主维度                       |
+| `day_type`      | `VARCHAR(32)`     | 是   | 日期类型  | `WORKDAY`、`REST_DAY`、`HOLIDAY` |
+| `source_type`   | `VARCHAR(32)`     | 是   | 配置来源  | `MANUAL`、`SYSTEM_IMPORT`       |
 
 建议唯一索引：`uk_hr_attendance_calendar_group_date(group_id, calendar_date, is_deleted)`。
 
 ### 8-4 打卡记录表 hr_attendance_record
 
 记录员工网页端上下班打卡结果，为考勤统计与薪资扣款提供明细来源。
+
+```sql
+CREATE TABLE IF NOT EXISTS `hr_attendance_record` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `employee_id` BIGINT UNSIGNED NOT NULL COMMENT '员工ID',
+  `group_id` BIGINT UNSIGNED NOT NULL COMMENT '考勤组ID',
+  `record_date` DATE NOT NULL COMMENT '打卡日期',
+  `clock_in_time` DATETIME DEFAULT NULL COMMENT '上班打卡时间',
+  `clock_out_time` DATETIME DEFAULT NULL COMMENT '下班打卡时间',
+  `clock_in_status` VARCHAR(32) DEFAULT NULL COMMENT '上班状态：NORMAL/LATE/MISSING/ABSENCE',
+  `clock_out_status` VARCHAR(32) DEFAULT NULL COMMENT '下班状态：NORMAL/EARLY_LEAVE/MISSING/ABSENCE',
+  `clock_in_ip` VARCHAR(64) DEFAULT NULL COMMENT '上班打卡IP',
+  `clock_out_ip` VARCHAR(64) DEFAULT NULL COMMENT '下班打卡IP',
+  `clock_in_gps` VARCHAR(128) DEFAULT NULL COMMENT '上班打卡GPS',
+  `clock_out_gps` VARCHAR(128) DEFAULT NULL COMMENT '下班打卡GPS',
+  `device_info` VARCHAR(255) DEFAULT NULL COMMENT '设备信息',
+  `correction_status` VARCHAR(32) NOT NULL DEFAULT 'NONE' COMMENT '补卡状态',
+  `create_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '创建人',
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '更新人',
+  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+  `version` INT NOT NULL DEFAULT 0 COMMENT '版本号',
+  `remark` VARCHAR(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_hr_att_rec_emp_date` (`employee_id`, `record_date`, `is_deleted`),
+  KEY `idx_hr_att_rec_group_date` (`group_id`, `record_date`),
+  KEY `idx_hr_att_rec_employee` (`employee_id`),
+  CONSTRAINT `fk_hr_att_rec_employee` FOREIGN KEY (`employee_id`) REFERENCES `hr_employee` (`id`),
+  CONSTRAINT `fk_hr_att_rec_group` FOREIGN KEY (`group_id`) REFERENCES `hr_attendance_group` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='打卡记录表';
+```
 
 | 字段名 | 类型 | 必填 | 字段作用 | 约束与说明 |
 | --- | --- | --- | --- | --- |
@@ -544,6 +651,36 @@ statSvc --&gt; scheduler : 统计完成，归档上月数据
 
 用于记录每月最多 2 次的补卡申请，审批任务由审批中心统一承载。
 
+```sql
+CREATE TABLE IF NOT EXISTS `hr_attendance_correction_request` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `request_no` VARCHAR(64) NOT NULL COMMENT '补卡申请单号',
+  `employee_id` BIGINT UNSIGNED NOT NULL COMMENT '申请员工ID',
+  `record_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '原打卡记录ID',
+  `correction_date` DATE NOT NULL COMMENT '补卡日期',
+  `correction_type` VARCHAR(32) NOT NULL COMMENT '补卡类型：CLOCK_IN/CLOCK_OUT',
+  `correction_time` DATETIME NOT NULL COMMENT '补卡时间',
+  `reason` VARCHAR(500) NOT NULL COMMENT '补卡原因',
+  `approval_instance_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '审批实例ID',
+  `approval_status` VARCHAR(32) NOT NULL DEFAULT 'DRAFT' COMMENT '审批状态',
+  `create_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '创建人',
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '更新人',
+  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+  `version` INT NOT NULL DEFAULT 0 COMMENT '版本号',
+  `remark` VARCHAR(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_hr_att_corr_request_no` (`request_no`),
+  KEY `idx_hr_att_corr_emp_date` (`employee_id`, `correction_date`),
+  KEY `idx_hr_att_corr_record` (`record_id`),
+  KEY `idx_hr_att_corr_approval` (`approval_instance_id`),
+  CONSTRAINT `fk_hr_att_corr_employee` FOREIGN KEY (`employee_id`) REFERENCES `hr_employee` (`id`),
+  CONSTRAINT `fk_hr_att_corr_record` FOREIGN KEY (`record_id`) REFERENCES `hr_attendance_record` (`id`),
+  CONSTRAINT `fk_hr_att_corr_approval` FOREIGN KEY (`approval_instance_id`) REFERENCES `hr_approval_instance` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='补卡申请表';
+```
+
 | 字段名 | 类型 | 必填 | 字段作用 | 约束与说明 |
 | --- | --- | --- | --- | --- |
 | `id` | `BIGINT UNSIGNED` | 是 | 主键ID | 自增主键 |
@@ -563,6 +700,29 @@ statSvc --&gt; scheduler : 统计完成，归档上月数据
 
 用于配置年假、病假、事假、婚假、产假、丧假、调休等类型及证明材料规则。
 
+```sql
+CREATE TABLE IF NOT EXISTS `hr_leave_type` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `leave_code` VARCHAR(32) NOT NULL COMMENT '请假类型编码',
+  `leave_name` VARCHAR(32) NOT NULL COMMENT '请假类型名称',
+  `has_balance` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '是否管理余额',
+  `need_proof` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '是否需要证明',
+  `proof_required_days` DECIMAL(6,1) DEFAULT NULL COMMENT '超过该天数必须上传证明',
+  `sort_no` INT NOT NULL DEFAULT 0 COMMENT '排序号',
+  `status` TINYINT NOT NULL DEFAULT 1 COMMENT '状态：1启用，0禁用',
+  `create_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '创建人',
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '更新人',
+  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+  `version` INT NOT NULL DEFAULT 0 COMMENT '版本号',
+  `remark` VARCHAR(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_hr_leave_type_code` (`leave_code`, `is_deleted`),
+  KEY `idx_hr_leave_type_status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='请假类型表';
+```
+
 | 字段名 | 类型 | 必填 | 字段作用 | 约束与说明 |
 | --- | --- | --- | --- | --- |
 | `id` | `BIGINT UNSIGNED` | 是 | 主键ID | 自增主键 |
@@ -579,6 +739,33 @@ statSvc --&gt; scheduler : 统计完成，归档上月数据
 ### 8-7 假期余额表 hr_leave_balance
 
 用于管理员工年度年假、调休等需要余额控制的假期。
+
+```sql
+CREATE TABLE IF NOT EXISTS `hr_leave_balance` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `employee_id` BIGINT UNSIGNED NOT NULL COMMENT '员工ID',
+  `leave_type_id` BIGINT UNSIGNED NOT NULL COMMENT '请假类型ID',
+  `balance_year` SMALLINT NOT NULL COMMENT '余额年份',
+  `total_days` DECIMAL(6,1) NOT NULL DEFAULT 0 COMMENT '总额度',
+  `used_days` DECIMAL(6,1) NOT NULL DEFAULT 0 COMMENT '已使用额度',
+  `frozen_days` DECIMAL(6,1) NOT NULL DEFAULT 0 COMMENT '审批中冻结额度',
+  `remaining_days` DECIMAL(6,1) NOT NULL DEFAULT 0 COMMENT '剩余额度',
+  `expire_date` DATE DEFAULT NULL COMMENT '过期日期',
+  `create_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '创建人',
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '更新人',
+  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+  `version` INT NOT NULL DEFAULT 0 COMMENT '版本号',
+  `remark` VARCHAR(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_hr_leave_bal_emp_type_year` (`employee_id`, `leave_type_id`, `balance_year`, `is_deleted`),
+  KEY `idx_hr_leave_bal_employee` (`employee_id`),
+  KEY `idx_hr_leave_bal_type` (`leave_type_id`),
+  CONSTRAINT `fk_hr_leave_bal_employee` FOREIGN KEY (`employee_id`) REFERENCES `hr_employee` (`id`),
+  CONSTRAINT `fk_hr_leave_bal_type` FOREIGN KEY (`leave_type_id`) REFERENCES `hr_leave_type` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='假期余额表';
+```
 
 | 字段名 | 类型 | 必填 | 字段作用 | 约束与说明 |
 | --- | --- | --- | --- | --- |
@@ -597,6 +784,45 @@ statSvc --&gt; scheduler : 统计完成，归档上月数据
 ### 8-8 请假申请表 hr_leave_request
 
 用于记录请假业务单据，请假审批任务由审批中心承载。
+
+```sql
+CREATE TABLE IF NOT EXISTS `hr_leave_request` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `request_no` VARCHAR(64) NOT NULL COMMENT '请假申请单号',
+  `employee_id` BIGINT UNSIGNED NOT NULL COMMENT '申请员工ID',
+  `leave_type_id` BIGINT UNSIGNED NOT NULL COMMENT '请假类型ID',
+  `start_time` DATETIME NOT NULL COMMENT '开始时间',
+  `end_time` DATETIME NOT NULL COMMENT '结束时间',
+  `start_period` VARCHAR(16) NOT NULL COMMENT '开始时段：AM/PM',
+  `end_period` VARCHAR(16) NOT NULL COMMENT '结束时段：AM/PM',
+  `leave_days` DECIMAL(6,1) NOT NULL COMMENT '请假天数',
+  `reason` VARCHAR(500) NOT NULL COMMENT '请假事由',
+  `handover_employee_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '工作交接人',
+  `attachment_file_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '证明附件ID',
+  `approval_instance_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '审批实例ID',
+  `approval_status` VARCHAR(32) NOT NULL DEFAULT 'DRAFT' COMMENT '审批状态',
+  `create_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '创建人',
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '更新人',
+  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+  `version` INT NOT NULL DEFAULT 0 COMMENT '版本号',
+  `remark` VARCHAR(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_hr_leave_request_no` (`request_no`),
+  KEY `idx_hr_leave_req_employee` (`employee_id`),
+  KEY `idx_hr_leave_req_type` (`leave_type_id`),
+  KEY `idx_hr_leave_req_status` (`approval_status`),
+  KEY `idx_hr_leave_req_handover` (`handover_employee_id`),
+  KEY `idx_hr_leave_req_file` (`attachment_file_id`),
+  KEY `idx_hr_leave_req_approval` (`approval_instance_id`),
+  CONSTRAINT `fk_hr_leave_req_employee` FOREIGN KEY (`employee_id`) REFERENCES `hr_employee` (`id`),
+  CONSTRAINT `fk_hr_leave_req_type` FOREIGN KEY (`leave_type_id`) REFERENCES `hr_leave_type` (`id`),
+  CONSTRAINT `fk_hr_leave_req_handover` FOREIGN KEY (`handover_employee_id`) REFERENCES `hr_employee` (`id`),
+  CONSTRAINT `fk_hr_leave_req_file` FOREIGN KEY (`attachment_file_id`) REFERENCES `sys_file` (`id`),
+  CONSTRAINT `fk_hr_leave_req_approval` FOREIGN KEY (`approval_instance_id`) REFERENCES `hr_approval_instance` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='请假申请表';
+```
 
 | 字段名 | 类型 | 必填 | 字段作用 | 约束与说明 |
 | --- | --- | --- | --- | --- |
@@ -620,6 +846,34 @@ statSvc --&gt; scheduler : 统计完成，归档上月数据
 
 用于记录已审批加班数据，并作为调休余额与薪资加班费的数据来源。
 
+```sql
+CREATE TABLE IF NOT EXISTS `hr_overtime_request` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `request_no` VARCHAR(64) NOT NULL COMMENT '加班申请单号',
+  `employee_id` BIGINT UNSIGNED NOT NULL COMMENT '申请员工ID',
+  `start_time` DATETIME NOT NULL COMMENT '加班开始时间',
+  `end_time` DATETIME NOT NULL COMMENT '加班结束时间',
+  `overtime_hours` DECIMAL(6,1) NOT NULL COMMENT '加班时长',
+  `convert_leave_hours` DECIMAL(6,1) NOT NULL DEFAULT 0 COMMENT '可转调休时长',
+  `reason` VARCHAR(500) NOT NULL COMMENT '加班原因',
+  `approval_instance_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '审批实例ID',
+  `approval_status` VARCHAR(32) NOT NULL DEFAULT 'DRAFT' COMMENT '审批状态',
+  `create_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '创建人',
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '更新人',
+  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+  `version` INT NOT NULL DEFAULT 0 COMMENT '版本号',
+  `remark` VARCHAR(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_hr_overtime_request_no` (`request_no`),
+  KEY `idx_hr_overtime_emp_time` (`employee_id`, `start_time`),
+  KEY `idx_hr_overtime_approval` (`approval_instance_id`),
+  CONSTRAINT `fk_hr_overtime_employee` FOREIGN KEY (`employee_id`) REFERENCES `hr_employee` (`id`),
+  CONSTRAINT `fk_hr_overtime_approval` FOREIGN KEY (`approval_instance_id`) REFERENCES `hr_approval_instance` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='加班申请表';
+```
+
 | 字段名 | 类型 | 必填 | 字段作用 | 约束与说明 |
 | --- | --- | --- | --- | --- |
 | `id` | `BIGINT UNSIGNED` | 是 | 主键ID | 自增主键 |
@@ -638,6 +892,36 @@ statSvc --&gt; scheduler : 统计完成，归档上月数据
 ### 8-10 月度考勤统计表 hr_attendance_month_stat
 
 用于沉淀个人月度考勤统计结果，并向薪资核算模块提供考勤扣款、加班费与异常检测依据。
+
+```sql
+CREATE TABLE IF NOT EXISTS `hr_attendance_month_stat` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `employee_id` BIGINT UNSIGNED NOT NULL COMMENT '员工ID',
+  `dept_id` BIGINT UNSIGNED NOT NULL COMMENT '部门ID',
+  `stat_month` CHAR(7) NOT NULL COMMENT '统计月份，格式yyyy-MM',
+  `should_attend_days` DECIMAL(6,1) NOT NULL DEFAULT 0 COMMENT '应出勤天数',
+  `actual_attend_days` DECIMAL(6,1) NOT NULL DEFAULT 0 COMMENT '实际出勤天数',
+  `late_count` INT NOT NULL DEFAULT 0 COMMENT '迟到次数',
+  `early_leave_count` INT NOT NULL DEFAULT 0 COMMENT '早退次数',
+  `absence_days` DECIMAL(6,1) NOT NULL DEFAULT 0 COMMENT '旷工天数',
+  `leave_days` DECIMAL(6,1) NOT NULL DEFAULT 0 COMMENT '请假天数',
+  `overtime_hours` DECIMAL(6,1) NOT NULL DEFAULT 0 COMMENT '加班小时数',
+  `annual_leave_remaining` DECIMAL(6,1) DEFAULT NULL COMMENT '年假剩余额度',
+  `stat_status` VARCHAR(32) NOT NULL DEFAULT 'GENERATED' COMMENT '统计状态：GENERATED/LOCKED',
+  `create_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '创建人',
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '更新人',
+  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+  `version` INT NOT NULL DEFAULT 0 COMMENT '版本号',
+  `remark` VARCHAR(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_hr_att_month_stat_emp_month` (`employee_id`, `stat_month`, `is_deleted`),
+  KEY `idx_hr_att_month_stat_dept_month` (`dept_id`, `stat_month`),
+  CONSTRAINT `fk_hr_att_month_stat_employee` FOREIGN KEY (`employee_id`) REFERENCES `hr_employee` (`id`),
+  CONSTRAINT `fk_hr_att_month_stat_dept` FOREIGN KEY (`dept_id`) REFERENCES `sys_dept` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='月度考勤统计表';
+```
 
 | 字段名 | 类型 | 必填 | 字段作用 | 约束与说明 |
 | --- | --- | --- | --- | --- |
@@ -1241,6 +1525,27 @@ fe --&gt; emp : 展示工资项目 + 趋势图
 
 用于定义薪资计算模板，包括适用范围、生效日期和启停状态。
 
+```sql
+CREATE TABLE IF NOT EXISTS `hr_salary_template` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `template_name` VARCHAR(64) NOT NULL COMMENT '薪资账套名称',
+  `scope_type` VARCHAR(32) NOT NULL COMMENT '适用范围：DEPT/POST/JOB_LEVEL/EMPLOYEE',
+  `scope_value` VARCHAR(500) NOT NULL COMMENT '适用范围值',
+  `effective_date` DATE NOT NULL COMMENT '生效日期',
+  `status` TINYINT NOT NULL DEFAULT 1 COMMENT '状态：1启用，0停用',
+  `create_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '创建人',
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '更新人',
+  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+  `version` INT NOT NULL DEFAULT 0 COMMENT '版本号',
+  `remark` VARCHAR(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`),
+  KEY `idx_hr_salary_template_status` (`status`),
+  KEY `idx_hr_salary_template_effective_date` (`effective_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='薪资账套表';
+```
+
 | 字段名 | 类型 | 必填 | 字段作用 | 约束与说明 |
 | --- | --- | --- | --- | --- |
 | `id` | `BIGINT UNSIGNED` | 是 | 主键ID | 自增主键 |
@@ -1255,6 +1560,31 @@ fe --&gt; emp : 展示工资项目 + 趋势图
 ### 8-2 工资项目表 hr_salary_template_item
 
 用于定义账套中的固定收入、变动收入、考勤扣款、社保、公积金、个税等工资项。
+
+```sql
+CREATE TABLE IF NOT EXISTS `hr_salary_template_item` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `template_id` BIGINT UNSIGNED NOT NULL COMMENT '薪资账套ID',
+  `item_code` VARCHAR(32) NOT NULL COMMENT '工资项目编码',
+  `item_name` VARCHAR(64) NOT NULL COMMENT '工资项目名称',
+  `item_type` VARCHAR(32) NOT NULL COMMENT '项目类型',
+  `calc_rule` VARCHAR(1000) DEFAULT NULL COMMENT '计算规则或公式',
+  `is_required` TINYINT(1) NOT NULL DEFAULT 1 COMMENT '是否必算项',
+  `sort_no` INT NOT NULL DEFAULT 0 COMMENT '排序号',
+  `status` TINYINT NOT NULL DEFAULT 1 COMMENT '状态：1启用，0停用',
+  `create_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '创建人',
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '更新人',
+  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+  `version` INT NOT NULL DEFAULT 0 COMMENT '版本号',
+  `remark` VARCHAR(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_hr_sal_tpl_item_code` (`template_id`, `item_code`, `is_deleted`),
+  KEY `idx_hr_sal_tpl_item_template` (`template_id`),
+  CONSTRAINT `fk_hr_sal_tpl_item_template` FOREIGN KEY (`template_id`) REFERENCES `hr_salary_template` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='工资项目表';
+```
 
 | 字段名 | 类型 | 必填 | 字段作用 | 约束与说明 |
 | --- | --- | --- | --- | --- |
@@ -1273,6 +1603,36 @@ fe --&gt; emp : 展示工资项目 + 趋势图
 ### 8-3 员工薪资档案表 hr_employee_salary_profile
 
 用于维护每个员工独立的薪资档案，承接账套、基本工资、津贴基数、社保公积金基数、绩效基数和试用期比例。
+
+```sql
+CREATE TABLE IF NOT EXISTS `hr_employee_salary_profile` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `employee_id` BIGINT UNSIGNED NOT NULL COMMENT '员工ID',
+  `template_id` BIGINT UNSIGNED NOT NULL COMMENT '薪资账套ID',
+  `base_salary` DECIMAL(12,2) NOT NULL COMMENT '基本工资',
+  `allowance_base` DECIMAL(12,2) DEFAULT 0 COMMENT '津贴基数',
+  `social_insurance_base` DECIMAL(12,2) NOT NULL COMMENT '社保基数',
+  `housing_fund_base` DECIMAL(12,2) NOT NULL COMMENT '公积金基数',
+  `performance_base` DECIMAL(12,2) DEFAULT 0 COMMENT '绩效基数',
+  `probation_salary_ratio` DECIMAL(5,2) NOT NULL DEFAULT 100.00 COMMENT '试用期薪资比例',
+  `effective_date` DATE NOT NULL COMMENT '生效日期',
+  `expire_date` DATE DEFAULT NULL COMMENT '失效日期',
+  `status` TINYINT NOT NULL DEFAULT 1 COMMENT '状态：1生效，0失效',
+  `create_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '创建人',
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '更新人',
+  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+  `version` INT NOT NULL DEFAULT 0 COMMENT '版本号',
+  `remark` VARCHAR(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`),
+  KEY `idx_hr_emp_sal_profile_emp` (`employee_id`),
+  KEY `idx_hr_emp_sal_profile_template` (`template_id`),
+  KEY `idx_hr_emp_sal_profile_status` (`employee_id`, `status`, `is_deleted`),
+  CONSTRAINT `fk_hr_emp_sal_profile_emp` FOREIGN KEY (`employee_id`) REFERENCES `hr_employee` (`id`),
+  CONSTRAINT `fk_hr_emp_sal_profile_template` FOREIGN KEY (`template_id`) REFERENCES `hr_salary_template` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='员工薪资档案表';
+```
 
 | 字段名 | 类型 | 必填 | 字段作用 | 约束与说明 |
 | --- | --- | --- | --- | --- |
@@ -1295,6 +1655,39 @@ fe --&gt; emp : 展示工资项目 + 趋势图
 
 用于记录薪资档案变更历史，支撑审计与薪资较上月变动异常检测。
 
+```sql
+CREATE TABLE IF NOT EXISTS `hr_salary_adjustment_record` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `employee_id` BIGINT UNSIGNED NOT NULL COMMENT '员工ID',
+  `profile_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '薪资档案ID',
+  `adjust_date` DATE NOT NULL COMMENT '调薪日期',
+  `old_base_salary` DECIMAL(12,2) DEFAULT NULL COMMENT '调整前基本工资',
+  `new_base_salary` DECIMAL(12,2) DEFAULT NULL COMMENT '调整后基本工资',
+  `old_template_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '调整前账套ID',
+  `new_template_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '调整后账套ID',
+  `adjust_reason` VARCHAR(500) DEFAULT NULL COMMENT '调薪原因',
+  `operator_user_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '操作用户ID',
+  `create_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '创建人',
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '更新人',
+  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+  `version` INT NOT NULL DEFAULT 0 COMMENT '版本号',
+  `remark` VARCHAR(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`),
+  KEY `idx_hr_sal_adj_employee` (`employee_id`),
+  KEY `idx_hr_sal_adj_profile` (`profile_id`),
+  KEY `idx_hr_sal_adj_old_template` (`old_template_id`),
+  KEY `idx_hr_sal_adj_new_template` (`new_template_id`),
+  KEY `idx_hr_sal_adj_operator` (`operator_user_id`),
+  CONSTRAINT `fk_hr_sal_adj_employee` FOREIGN KEY (`employee_id`) REFERENCES `hr_employee` (`id`),
+  CONSTRAINT `fk_hr_sal_adj_profile` FOREIGN KEY (`profile_id`) REFERENCES `hr_employee_salary_profile` (`id`),
+  CONSTRAINT `fk_hr_sal_adj_old_template` FOREIGN KEY (`old_template_id`) REFERENCES `hr_salary_template` (`id`),
+  CONSTRAINT `fk_hr_sal_adj_new_template` FOREIGN KEY (`new_template_id`) REFERENCES `hr_salary_template` (`id`),
+  CONSTRAINT `fk_hr_sal_adj_operator` FOREIGN KEY (`operator_user_id`) REFERENCES `sys_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='调薪历史表';
+```
+
 | 字段名 | 类型 | 必填 | 字段作用 | 约束与说明 |
 | --- | --- | --- | --- | --- |
 | `id` | `BIGINT UNSIGNED` | 是 | 主键ID | 自增主键 |
@@ -1313,6 +1706,36 @@ fe --&gt; emp : 展示工资项目 + 趋势图
 ### 8-5 薪资批次表 hr_salary_batch
 
 用于管理每月薪资核算批次，状态与产品规格中的草稿、计算中、待确认、审批中、已通过、已发放、已驳回保持一致。
+
+```sql
+CREATE TABLE IF NOT EXISTS `hr_salary_batch` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `batch_no` VARCHAR(64) NOT NULL COMMENT '薪资批次编号',
+  `salary_month` CHAR(7) NOT NULL COMMENT '薪资月份，格式yyyy-MM',
+  `scope_type` VARCHAR(32) NOT NULL DEFAULT 'ALL' COMMENT '核算范围：ALL/DEPT/EMPLOYEE',
+  `scope_value` VARCHAR(500) DEFAULT NULL COMMENT '核算范围值',
+  `batch_status` VARCHAR(32) NOT NULL DEFAULT 'DRAFT' COMMENT '批次状态',
+  `approval_instance_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '审批实例ID',
+  `total_count` INT NOT NULL DEFAULT 0 COMMENT '核算员工数',
+  `total_gross_salary` DECIMAL(15,2) NOT NULL DEFAULT 0 COMMENT '应发总额',
+  `total_net_salary` DECIMAL(15,2) NOT NULL DEFAULT 0 COMMENT '实发总额',
+  `yellow_warning_count` INT NOT NULL DEFAULT 0 COMMENT '黄色预警数量',
+  `red_warning_count` INT NOT NULL DEFAULT 0 COMMENT '红色预警数量',
+  `block_count` INT NOT NULL DEFAULT 0 COMMENT '阻断异常数量',
+  `create_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '创建人',
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '更新人',
+  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+  `version` INT NOT NULL DEFAULT 0 COMMENT '版本号',
+  `remark` VARCHAR(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_hr_salary_batch_no` (`batch_no`),
+  UNIQUE KEY `uk_hr_salary_batch_month_scope` (`salary_month`, `scope_type`, `scope_value`, `is_deleted`),
+  KEY `idx_hr_salary_batch_approval` (`approval_instance_id`),
+  CONSTRAINT `fk_hr_salary_batch_approval` FOREIGN KEY (`approval_instance_id`) REFERENCES `hr_approval_instance` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='薪资批次表';
+```
 
 | 字段名 | 类型 | 必填 | 字段作用 | 约束与说明 |
 | --- | --- | --- | --- | --- |
@@ -1335,6 +1758,47 @@ fe --&gt; emp : 展示工资项目 + 趋势图
 ### 8-6 薪资明细表 hr_salary_batch_item
 
 用于记录每位员工在指定批次下的薪资明细和考勤扣款结果。
+
+```sql
+CREATE TABLE IF NOT EXISTS `hr_salary_batch_item` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `batch_id` BIGINT UNSIGNED NOT NULL COMMENT '薪资批次ID',
+  `employee_id` BIGINT UNSIGNED NOT NULL COMMENT '员工ID',
+  `dept_id` BIGINT UNSIGNED NOT NULL COMMENT '部门ID',
+  `attendance_stat_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '考勤月度统计ID',
+  `base_salary` DECIMAL(12,2) NOT NULL DEFAULT 0 COMMENT '基本工资',
+  `allowance_amount` DECIMAL(12,2) NOT NULL DEFAULT 0 COMMENT '津贴金额',
+  `performance_amount` DECIMAL(12,2) NOT NULL DEFAULT 0 COMMENT '绩效奖金',
+  `overtime_pay` DECIMAL(12,2) NOT NULL DEFAULT 0 COMMENT '加班费',
+  `late_deduction` DECIMAL(12,2) NOT NULL DEFAULT 0 COMMENT '迟到扣款',
+  `leave_deduction` DECIMAL(12,2) NOT NULL DEFAULT 0 COMMENT '请假扣款',
+  `social_insurance_amount` DECIMAL(12,2) NOT NULL DEFAULT 0 COMMENT '社保个人扣除',
+  `housing_fund_amount` DECIMAL(12,2) NOT NULL DEFAULT 0 COMMENT '公积金个人扣除',
+  `income_tax_amount` DECIMAL(12,2) NOT NULL DEFAULT 0 COMMENT '个人所得税',
+  `gross_salary` DECIMAL(12,2) NOT NULL DEFAULT 0 COMMENT '应发工资',
+  `deduction_amount` DECIMAL(12,2) NOT NULL DEFAULT 0 COMMENT '应扣合计',
+  `net_salary` DECIMAL(12,2) NOT NULL DEFAULT 0 COMMENT '实发工资',
+  `manual_adjust_amount` DECIMAL(12,2) NOT NULL DEFAULT 0 COMMENT '手动调整金额',
+  `manual_adjust_reason` VARCHAR(500) DEFAULT NULL COMMENT '手动调整原因',
+  `exception_level` VARCHAR(32) NOT NULL DEFAULT 'NORMAL' COMMENT '异常级别',
+  `create_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '创建人',
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '更新人',
+  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+  `version` INT NOT NULL DEFAULT 0 COMMENT '版本号',
+  `remark` VARCHAR(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_hr_salary_batch_item_emp` (`batch_id`, `employee_id`, `is_deleted`),
+  KEY `idx_hr_salary_item_employee` (`employee_id`),
+  KEY `idx_hr_salary_item_dept` (`dept_id`),
+  KEY `idx_hr_salary_item_att_stat` (`attendance_stat_id`),
+  CONSTRAINT `fk_hr_salary_item_batch` FOREIGN KEY (`batch_id`) REFERENCES `hr_salary_batch` (`id`),
+  CONSTRAINT `fk_hr_salary_item_employee` FOREIGN KEY (`employee_id`) REFERENCES `hr_employee` (`id`),
+  CONSTRAINT `fk_hr_salary_item_dept` FOREIGN KEY (`dept_id`) REFERENCES `sys_dept` (`id`),
+  CONSTRAINT `fk_hr_salary_item_att_stat` FOREIGN KEY (`attendance_stat_id`) REFERENCES `hr_attendance_month_stat` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='薪资明细表';
+```
 
 | 字段名 | 类型 | 必填 | 字段作用 | 约束与说明 |
 | --- | --- | --- | --- | --- |
@@ -1365,6 +1829,37 @@ fe --&gt; emp : 展示工资项目 + 趋势图
 
 用于记录薪资核算过程中识别出的黄标预警、红色预警和阻断异常。
 
+```sql
+CREATE TABLE IF NOT EXISTS `hr_salary_exception` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `batch_id` BIGINT UNSIGNED NOT NULL COMMENT '薪资批次ID',
+  `batch_item_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '薪资明细ID',
+  `employee_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '员工ID',
+  `exception_code` VARCHAR(64) NOT NULL COMMENT '异常编码',
+  `exception_level` VARCHAR(32) NOT NULL COMMENT '异常级别',
+  `exception_message` VARCHAR(500) NOT NULL COMMENT '异常说明',
+  `resolved_status` VARCHAR(32) NOT NULL DEFAULT 'UNRESOLVED' COMMENT '处理状态',
+  `resolved_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '处理人用户ID',
+  `resolved_time` DATETIME DEFAULT NULL COMMENT '处理时间',
+  `create_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '创建人',
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '更新人',
+  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+  `version` INT NOT NULL DEFAULT 0 COMMENT '版本号',
+  `remark` VARCHAR(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`),
+  KEY `idx_hr_salary_exception_batch` (`batch_id`),
+  KEY `idx_hr_salary_exception_item` (`batch_item_id`),
+  KEY `idx_hr_salary_exception_emp` (`employee_id`),
+  KEY `idx_hr_salary_exception_resolved` (`resolved_by`),
+  CONSTRAINT `fk_hr_salary_exception_batch` FOREIGN KEY (`batch_id`) REFERENCES `hr_salary_batch` (`id`),
+  CONSTRAINT `fk_hr_salary_exception_item` FOREIGN KEY (`batch_item_id`) REFERENCES `hr_salary_batch_item` (`id`),
+  CONSTRAINT `fk_hr_salary_exception_emp` FOREIGN KEY (`employee_id`) REFERENCES `hr_employee` (`id`),
+  CONSTRAINT `fk_hr_salary_exception_resolved` FOREIGN KEY (`resolved_by`) REFERENCES `sys_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='薪资异常检测表';
+```
+
 | 字段名 | 类型 | 必填 | 字段作用 | 约束与说明 |
 | --- | --- | --- | --- | --- |
 | `id` | `BIGINT UNSIGNED` | 是 | 主键ID | 自增主键 |
@@ -1384,6 +1879,35 @@ fe --&gt; emp : 展示工资项目 + 趋势图
 
 用于存储审批通过后员工可查看的工资条摘要。
 
+```sql
+CREATE TABLE IF NOT EXISTS `hr_payslip` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `batch_id` BIGINT UNSIGNED NOT NULL COMMENT '薪资批次ID',
+  `batch_item_id` BIGINT UNSIGNED NOT NULL COMMENT '薪资明细ID',
+  `employee_id` BIGINT UNSIGNED NOT NULL COMMENT '员工ID',
+  `salary_month` CHAR(7) NOT NULL COMMENT '薪资月份，格式yyyy-MM',
+  `gross_salary` DECIMAL(12,2) NOT NULL DEFAULT 0 COMMENT '应发工资',
+  `deduction_amount` DECIMAL(12,2) NOT NULL DEFAULT 0 COMMENT '应扣合计',
+  `net_salary` DECIMAL(12,2) NOT NULL DEFAULT 0 COMMENT '实发工资',
+  `visible_status` TINYINT NOT NULL DEFAULT 0 COMMENT '是否可见：1可见，0不可见',
+  `first_view_time` DATETIME DEFAULT NULL COMMENT '首次查看时间',
+  `create_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '创建人',
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '更新人',
+  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+  `version` INT NOT NULL DEFAULT 0 COMMENT '版本号',
+  `remark` VARCHAR(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_hr_payslip_item` (`batch_item_id`),
+  UNIQUE KEY `uk_hr_payslip_emp_month` (`employee_id`, `salary_month`, `is_deleted`),
+  KEY `idx_hr_payslip_batch` (`batch_id`),
+  CONSTRAINT `fk_hr_payslip_batch` FOREIGN KEY (`batch_id`) REFERENCES `hr_salary_batch` (`id`),
+  CONSTRAINT `fk_hr_payslip_item` FOREIGN KEY (`batch_item_id`) REFERENCES `hr_salary_batch_item` (`id`),
+  CONSTRAINT `fk_hr_payslip_employee` FOREIGN KEY (`employee_id`) REFERENCES `hr_employee` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='工资条表';
+```
+
 | 字段名 | 类型 | 必填 | 字段作用 | 约束与说明 |
 | --- | --- | --- | --- | --- |
 | `id` | `BIGINT UNSIGNED` | 是 | 主键ID | 自增主键 |
@@ -1402,6 +1926,30 @@ fe --&gt; emp : 展示工资项目 + 趋势图
 ### 8-9 工资条查看日志表 hr_payslip_view_log
 
 用于记录工资条二次验证、首次查看与后续查看审计。
+
+```sql
+CREATE TABLE IF NOT EXISTS `hr_payslip_view_log` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `payslip_id` BIGINT UNSIGNED NOT NULL COMMENT '工资条ID',
+  `employee_id` BIGINT UNSIGNED NOT NULL COMMENT '员工ID',
+  `verify_type` VARCHAR(32) NOT NULL COMMENT '二次验证方式：SMS/PASSWORD',
+  `verify_status` TINYINT NOT NULL DEFAULT 1 COMMENT '验证状态：1成功，0失败',
+  `view_ip` VARCHAR(64) DEFAULT NULL COMMENT '查看IP',
+  `view_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '查看时间',
+  `create_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '创建人',
+  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` BIGINT UNSIGNED DEFAULT NULL COMMENT '更新人',
+  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `is_deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+  `version` INT NOT NULL DEFAULT 0 COMMENT '版本号',
+  `remark` VARCHAR(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`),
+  KEY `idx_hr_payslip_log_payslip` (`payslip_id`),
+  KEY `idx_hr_payslip_log_employee` (`employee_id`, `view_time`),
+  CONSTRAINT `fk_hr_payslip_log_payslip` FOREIGN KEY (`payslip_id`) REFERENCES `hr_payslip` (`id`),
+  CONSTRAINT `fk_hr_payslip_log_employee` FOREIGN KEY (`employee_id`) REFERENCES `hr_employee` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='工资条查看日志表';
+```
 
 | 字段名 | 类型 | 必填 | 字段作用 | 约束与说明 |
 | --- | --- | --- | --- | --- |
