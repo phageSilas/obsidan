@@ -232,106 +232,109 @@ QA
 
 ### 7-1 考勤管理核心领域模型
 
-```
+``` 
 @startuml
 class AttendanceGroup {
-id: Long
-name: String                 "考勤组名称"
-shiftType: ShiftType         "班次类型"
-workStart: LocalTime         "上班时间"
-workEnd: LocalTime           "下班时间"
-restStart: LocalTime
-restEnd: LocalTime
-flexibleStart: LocalTime     "弹性最早打卡"
-flexibleEnd: LocalTime       "弹性最晚打卡"
-lateThreshold: Integer       "迟到阈值（分钟）"
-earlyLeaveThreshold: Integer
-status: Integer              "0=禁用 1=启用"
+  - id: Long
+  - name: String
+  - memberType: MemberType
+  - shiftType: ShiftType
+  - workStart: LocalTime
+  - workEnd: LocalTime
+  - restStart: LocalTime
+  - restEnd: LocalTime
+  - flexibleRange: String
+  - lateThreshold: Integer
+  - earlyLeaveThreshold: Integer
 }
-class AttendanceGroupMember {
-id: Long
-groupId: Long
-memberType: MemberType       "1=部门 2=职位 3=个人"
-memberId: Long
-}
+
 class WorkSchedule {
-id: Long
-groupId: Long
-scheduleDate: LocalDate
-dayType: DayType             "1=工作日 2=休息日 3=节假日"
+  - id: Long
+  - groupId: Long
+  - date: LocalDate
+  - dayType: DayType
 }
+
+enum DayType {
+  STANDARD_WORKDAY
+  REST_DAY
+  HOLIDAY
+}
+
 class AttendanceRecord {
-id: Long
-employeeId: Long
-groupId: Long
-recordDate: LocalDate
-clockInTime: LocalDateTime
-clockOutTime: LocalDateTime
-clockInStatus: ClockStatus
-clockOutStatus: ClockStatus
-clockInIp: String
-clockOutIp: String
-clockInGps: String
-clockOutGps: String
+  - id: Long
+  - employeeId: Long
+  - groupId: Long
+  - recordDate: LocalDate
+  - clockInTime: LocalDateTime
+  - clockOutTime: LocalDateTime
+  - clockInStatus: ClockStatus
+  - clockOutStatus: ClockStatus
+  - ipAddress: String
+  - gpsLocation: String
 }
+
+enum ClockStatus {
+  NORMAL
+  LATE
+  EARLY_LEAVE
+  ABSENCE
+  MISSING
+}
+
 class LeaveType {
-id: Long
-name: String                 "年假/病假/事假/..."
-code: String
-hasBalance: Boolean
-needProof: Boolean
+  - id: Long
+  - name: String
+  - hasBalance: Boolean
+  - needProof: Boolean
 }
+
 class LeaveBalance {
-id: Long
-employeeId: Long
-leaveTypeId: Long
-year: Integer
-totalDays: BigDecimal
-usedDays: BigDecimal
-remainingDays: BigDecimal
+  - id: Long
+  - employeeId: Long
+  - leaveTypeId: Long
+  - year: Integer
+  - totalDays: BigDecimal
+  - usedDays: BigDecimal
+  - remainingDays: BigDecimal
 }
+
 class LeaveRequest {
-id: Long
-requestNo: String
-employeeId: Long
-leaveTypeId: Long
-startTime: LocalDateTime
-endTime: LocalDateTime
-startPeriod: Period
-endPeriod: Period
-days: BigDecimal
-reason: String
-attachmentUrl: String
-handoverId: Long
-status: ApprovalStatus
+  - id: Long
+  - employeeId: Long
+  - leaveTypeId: Long
+  - startTime: LocalDateTime
+  - endTime: LocalDateTime
+  - days: BigDecimal
+  - reason: String
+  - attachmentUrl: String
+  - status: ApprovalStatus
 }
+
 class AttendanceStat {
-id: Long
-employeeId: Long
-statMonth: String            "yyyy-MM"
-shouldAttendDays: Integer
-actualAttendDays: Integer
-lateCount: Integer
-earlyLeaveCount: Integer
-absenceDays: BigDecimal
-leaveDays: BigDecimal
-overtimeHours: BigDecimal
-annualLeaveRemaining: BigDecimal
+  - id: Long
+  - employeeId: Long
+  - statMonth: String
+  - shouldAttendDays: Integer
+  - actualAttendDays: Integer
+  - lateCount: Integer
+  - earlyLeaveCount: Integer
+  - absenceDays: BigDecimal
+  - leaveDays: BigDecimal
+  - overtimeHours: BigDecimal
 }
-enum ShiftType { FIXED  FLEXIBLE  SCHEDULED }
-enum DayType    { WORKDAY  REST  HOLIDAY }
-enum ClockStatus{ NORMAL  LATE  EARLY\_LEAVE  MISSING  ABSENCE }
-AttendanceGroup \*-- AttendanceGroupMember
-AttendanceGroup \*-- WorkSchedule
-AttendanceRecord --&gt; AttendanceGroup
-LeaveBalance --&gt; LeaveType
-LeaveRequest --&gt; LeaveType
-AttendanceStat --&gt; Employee
+
+AttendanceGroup *-- WorkSchedule
+AttendanceRecord --> AttendanceGroup
+LeaveBalance --> LeaveType
+LeaveRequest --> LeaveType
 @enduml
+
 ```
 
 ### 7-2 打卡时序图
 
+```
 @startuml
 actor Employee as emp
 participant "前端" as fe
@@ -340,24 +343,27 @@ participant "考勤服务" as attSvc
 participant "规则校验服务" as ruleSvc
 database "MySQL" as db
 database "Redis" as cache
-emp -&gt; fe : 点击"打卡"
-fe -&gt; gateway : POST /api/v1/attendance/clock
-gateway -&gt; attSvc : 转发打卡请求(含IP/GPS)
-attSvc -&gt; cache : 查询员工考勤组(预热)
-cache --&gt; attSvc : 返回考勤组配置
-attSvc -&gt; ruleSvc : 校验打卡条件(工作日/IP/GPS)
-ruleSvc --&gt; attSvc : 校验结果
+
+emp -> fe : 点击"打卡"
+fe -> gateway : POST /api/v1/attendance/clock
+gateway -> attSvc : 转发打卡请求
+attSvc -> cache : 查询员工考勤组(预热)
+cache --> attSvc : 返回考勤组配置
+attSvc -> ruleSvc : 校验打卡条件(IP/GPS/工作日)
+ruleSvc --> attSvc : 校验结果
 alt 校验通过
-attSvc -&gt; db : INSERT/UPDATE attendance\_record
-attSvc -&gt; cache : 刷新当日打卡状态
-attSvc --&gt; fe : 返回打卡成功+状态
-fe --&gt; emp : 展示打卡结果与状态
+    attSvc -> db : INSERT 打卡记录
+    attSvc -> cache : 更新当日打卡状态
+    attSvc --> fe : 返回打卡成功+状态
+    fe --> emp : 展示打卡结果
 else 校验失败
-attSvc --&gt; fe : 返回失败原因
-fe --&gt; emp : 提示失败原因
+    attSvc --> fe : 返回失败原因
+    fe --> emp : 提示失败原因
 end
 @enduml
 
+```
+![[image-10.png]]
 ### 7-3 请假申请时序图
 
 @startuml
