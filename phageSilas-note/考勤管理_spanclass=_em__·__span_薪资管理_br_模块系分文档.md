@@ -1340,6 +1340,7 @@ HR 预览 / 调整 / 提交审批 ──&gt; 审批中
 
 ### 7-1 薪资管理核心领域模型
 
+```
 @startuml
 class SalaryAccount {
 id: Long
@@ -1431,16 +1432,18 @@ month: String
 viewed: Boolean
 viewTime: LocalDateTime
 }
-SalaryAccount \*-- SalaryItem
-EmployeeSalary --&gt; SalaryAccount
-EmployeeSalary \*-- SalaryAdjustment
-SalaryBatch \*-- SalaryBatchItem
-SalaryBatchItem --&gt; EmployeeSalary
-Payslip --&gt; SalaryBatchItem
+SalaryAccount *-- SalaryItem
+EmployeeSalary --> SalaryAccount
+EmployeeSalary *-- SalaryAdjustment
+SalaryBatch *-- SalaryBatchItem
+SalaryBatchItem --> EmployeeSalary
+Payslip --> SalaryBatchItem
 @enduml
-
+```
+![[image-14.png]]
 ### 7-2 薪资核算时序图
 
+```
 @startuml
 actor HR as hr
 participant "前端" as fe
@@ -1451,30 +1454,34 @@ participant "异常检测" as ruleSvc
 participant "审批引擎" as wf
 database "MySQL" as db
 database "Redis" as cache
-hr -&gt; fe : 创建薪资批次（月份/范围）
-fe -&gt; salSvc : POST /api/v1/salary/batches
-salSvc -&gt; db : INSERT salary\_batch (status=DRAFT)
-salSvc --&gt; fe : 返回批次ID
-hr -&gt; fe : 点击"开始计算"
-fe -&gt; salSvc : POST /api/v1/salary/batches/{id}/calculate
-salSvc -&gt; db : UPDATE status=CALCULATING
-salSvc -&gt; attSvc : 拉取当月考勤统计
-attSvc --&gt; salSvc : 返回考勤数据
-salSvc -&gt; cache : 查询员工薪资档案(预热)
-cache --&gt; salSvc : 返回档案
-salSvc -&gt; calcEngine : 逐项计算（固定/变动/扣款/社保/个税）
-calcEngine --&gt; salSvc : 返回计算结果
-salSvc -&gt; ruleSvc : 异常检测
-ruleSvc --&gt; salSvc : 返回异常标记
-salSvc -&gt; db : 批量 INSERT salary\_batch\_item
-salSvc -&gt; db : UPDATE status=PENDING\_CONFIRM
-salSvc -&gt; cache : 缓存可视化数据集
-salSvc --&gt; fe : 计算完成
-fe --&gt; hr : 展示预览与异常列表
+
+hr -> fe : 创建薪资批次（月份/范围）
+fe -> salSvc : POST /api/v1/salary/batches
+salSvc -> db : INSERT salary\_batch (status=DRAFT)
+salSvc --> fe : 返回批次ID
+hr -> fe : 点击"开始计算"
+fe -> salSvc : POST /api/v1/salary/batches/{id}/calculate
+salSvc -> db : UPDATE status=CALCULATING
+salSvc -> attSvc : 拉取当月考勤统计
+attSvc --> salSvc : 返回考勤数据
+salSvc -> cache : 查询员工薪资档案(预热)
+cache --> salSvc : 返回档案
+salSvc -> calcEngine : 逐项计算（固定/变动/扣款/社保/个税）
+calcEngine --> salSvc : 返回计算结果
+salSvc -> ruleSvc : 异常检测
+ruleSvc --> salSvc : 返回异常标记
+salSvc -> db : 批量 INSERT salary\_batch\_item
+salSvc -> db : UPDATE status=PENDING\_CONFIRM
+salSvc -> cache : 缓存可视化数据集
+salSvc --> fe : 计算完成
+fe --> hr : 展示预览与异常列表
 @enduml
+```
+![[image-15.png]]
 
 ### 7-3 工资条查看时序图
 
+```
 @startuml
 actor Employee as emp
 participant "前端" as fe
@@ -1496,6 +1503,7 @@ salSvc -&gt; db : UPDATE hr\_payslip SET first\_view\_time=NOW()
 salSvc --&gt; fe : 返回工资条明细
 fe --&gt; emp : 展示工资项目 + 趋势图
 @enduml
+```
 
 ## 8数据库设计
 
@@ -1634,20 +1642,20 @@ CREATE TABLE IF NOT EXISTS `hr_employee_salary_profile` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='员工薪资档案表';
 ```
 
-| 字段名 | 类型 | 必填 | 字段作用 | 约束与说明 |
-| --- | --- | --- | --- | --- |
-| `id` | `BIGINT UNSIGNED` | 是 | 主键ID | 自增主键 |
-| `employee_id` | `BIGINT UNSIGNED` | 是 | 员工ID | 关联 `hr_employee.id` |
-| `template_id` | `BIGINT UNSIGNED` | 是 | 薪资账套ID | 关联 `hr_salary_template.id` |
-| `base_salary` | `DECIMAL(12,2)` | 是 | 基本工资 | 与 `hr_employee.base_salary` 保持同步口径 |
-| `allowance_base` | `DECIMAL(12,2)` | 否 | 津贴基数 | 默认 0 |
-| `social_insurance_base` | `DECIMAL(12,2)` | 是 | 社保基数 | 社保个人扣除计算依据 |
-| `housing_fund_base` | `DECIMAL(12,2)` | 是 | 公积金基数 | 公积金个人扣除计算依据 |
-| `performance_base` | `DECIMAL(12,2)` | 否 | 绩效基数 | 默认 0 |
-| `probation_salary_ratio` | `DECIMAL(5,2)` | 是 | 试用期薪资比例 | 如 `80.00`、`100.00` |
-| `effective_date` | `DATE` | 是 | 生效日期 | 调薪生效口径 |
-| `expire_date` | `DATE` | 否 | 失效日期 | 历史档案关闭时回填 |
-| `status` | `TINYINT` | 是 | 状态 | `1` 生效，`0` 失效 |
+| 字段名                      | 类型                | 必填  | 字段作用    | 约束与说明                              |
+| ------------------------ | ----------------- | --- | ------- | ---------------------------------- |
+| `id`                     | `BIGINT UNSIGNED` | 是   | 主键ID    | 自增主键                               |
+| `employee_id`            | `BIGINT UNSIGNED` | 是   | 员工ID    | 关联 `hr_employee.id`                |
+| `template_id`            | `BIGINT UNSIGNED` | 是   | 薪资账套ID  | 关联 `hr_salary_template.id`         |
+| `base_salary`            | `DECIMAL(12,2)`   | 是   | 基本工资    | 与 `hr_employee.base_salary` 保持同步口径 |
+| `allowance_base`         | `DECIMAL(12,2)`   | 否   | 津贴基数    | 默认 0                               |
+| `social_insurance_base`  | `DECIMAL(12,2)`   | 是   | 社保基数    | 社保个人扣除计算依据                         |
+| `housing_fund_base`      | `DECIMAL(12,2)`   | 是   | 公积金基数   | 公积金个人扣除计算依据                        |
+| `performance_base`       | `DECIMAL(12,2)`   | 否   | 绩效基数    | 默认 0                               |
+| `probation_salary_ratio` | `DECIMAL(5,2)`    | 是   | 试用期薪资比例 | 如 `80.00`、`100.00`                 |
+| `effective_date`         | `DATE`            | 是   | 生效日期    | 调薪生效口径                             |
+| `expire_date`            | `DATE`            | 否   | 失效日期    | 历史档案关闭时回填                          |
+| `status`                 | `TINYINT`         | 是   | 状态      | `1` 生效，`0` 失效                      |
 
 建议索引：`uk_hr_employee_salary_profile_active(employee_id, status, is_deleted)`、`idx_hr_employee_salary_profile_template(template_id)`。
 
