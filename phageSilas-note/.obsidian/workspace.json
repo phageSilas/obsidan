@@ -35,7 +35,8 @@
               "title": "薪资管理_模块系分文档"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -156,13 +157,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "考勤管理_薪资管理_模块系分文档.md",
+                "file": "薪资管理_模块系分文档.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "考勤管理_薪资管理_模块系分文档 的大纲"
+              "title": "薪资管理_模块系分文档 的大纲"
             }
           }
         ],
@@ -185,12 +186,12 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "3a263b6b90e57ca7",
+  "active": "e01cb152060471d9",
   "lastOpenFiles": [
+    "考勤管理_薪资管理_模块系分文档.md",
     "01-HRMS全局开发规范.md",
     "薪资管理_模块系分文档.md",
     "hrms-attendance-payroll-spec.md",
-    "考勤管理_薪资管理_模块系分文档.md",
     "Attachment/image-17.png",
     "前端系分模版.md",
     "01-HRMS全局开发规范旧.md",
