@@ -11,10 +11,14 @@
             "id": "3a263b6b90e57ca7",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "薪资管理_模块后端系分文档.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "新标签页"
+              "title": "薪资管理_模块后端系分文档"
             }
           }
         ]
@@ -138,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "薪资管理_模块系分文档.md",
+                "file": "薪资管理_模块后端系分文档.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "薪资管理_模块系分文档 的大纲"
+              "title": "薪资管理_模块后端系分文档 的大纲"
             }
           }
         ],
@@ -167,13 +171,13 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "34d6b36d87ac3e98",
+  "active": "3a263b6b90e57ca7",
   "lastOpenFiles": [
+    "薪资管理_模块系分文档.md",
     "考勤管理_模块前端系分文档.md",
     "薪资管理_模块后端系分文档.md",
     "考勤管理_模块后端系分文档.md",
     "考勤管理_模块系分文档.md",
-    "薪资管理_模块系分文档.md",
     "01-HRMS全局开发规范.md",
     "hrms-attendance-payroll-spec.md",
     "Attachment/image-17.png",
