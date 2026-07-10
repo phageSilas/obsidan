@@ -1,6 +1,7 @@
 {
   "customFileOrder": {
     "/": [
+      "HRMS项目前端总系分.md",
       "薪资管理_模块前端系分文档.md",
       "薪资管理_模块后端系分文档.md",
       "考勤管理_模块前端系分文档.md",
@@ -248,6 +249,15 @@
       "AI-agent/Attachment/image.png"
     ],
     "Attachment": [
+      "Attachment/image-26.png",
+      "Attachment/image-27.png",
+      "Attachment/image-28.png",
+      "Attachment/image-29.png",
+      "Attachment/image-30.png",
+      "Attachment/PlantUML (1).jpg",
+      "Attachment/PlantUML (2).jpg",
+      "Attachment/PlantUML (3).jpg",
+      "Attachment/PlantUML (4).jpg",
       "Attachment/image-18.png",
       "Attachment/image-19.png",
       "Attachment/image-20.png",

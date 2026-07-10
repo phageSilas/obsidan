@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "考勤管理_模块前端系分文档.md",
+                "file": "01-HRMS全局开发规范.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "考勤管理_模块前端系分文档"
+              "title": "01-HRMS全局开发规范"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "考勤管理_模块前端系分文档.md",
+                "file": "01-HRMS全局开发规范.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "考勤管理_模块前端系分文档 的大纲"
+              "title": "01-HRMS全局开发规范 的大纲"
             }
           }
         ],
@@ -171,10 +171,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "34d6b36d87ac3e98",
+  "active": "3a263b6b90e57ca7",
   "lastOpenFiles": [
-    "考勤管理_模块后端系分文档.md",
+    "01-HRMS全局开发规范旧.md",
     "考勤管理_模块前端系分文档.md",
+    "考勤管理_模块后端系分文档.md",
     "薪资管理_模块后端系分文档.md",
     "薪资管理_模块前端系分文档.md",
     "Attachment/image-30.png",
@@ -192,7 +193,6 @@
     "01-HRMS全局开发规范.md",
     "hrms-attendance-payroll-spec.md",
     "前端系分模版.md",
-    "01-HRMS全局开发规范旧.md",
     "考勤管理_spanclass=_em__·__span_薪资管理_br_模块系分文档 - 副本.md",
     "HRMS-.md",
     "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具基础篇.md",
