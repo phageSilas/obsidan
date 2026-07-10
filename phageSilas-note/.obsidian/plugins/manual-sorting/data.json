@@ -1,6 +1,7 @@
 {
   "customFileOrder": {
     "/": [
+      "assets",
       "HRMS项目前端总系分.md",
       "薪资管理_模块前端系分文档.md",
       "薪资管理_模块后端系分文档.md",
@@ -247,6 +248,12 @@
     "AI-agent/Attachment": [
       "AI-agent/Attachment/image-1.png",
       "AI-agent/Attachment/image.png"
+    ],
+    "assets": [
+      "assets/frontend-prototypes"
+    ],
+    "assets/frontend-prototypes": [
+      "assets/frontend-prototypes/module01-auth-login.png.md"
     ],
     "Attachment": [
       "Attachment/image-26.png",

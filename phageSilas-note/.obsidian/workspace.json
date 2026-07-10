@@ -173,8 +173,11 @@
   },
   "active": "3a263b6b90e57ca7",
   "lastOpenFiles": [
-    "01-HRMS全局开发规范.md",
+    "assets/frontend-prototypes/module01-auth-login.png.md",
+    "assets/frontend-prototypes",
+    "assets",
     "HRMS项目前端总系分.md",
+    "01-HRMS全局开发规范.md",
     "01-HRMS全局开发规范旧.md",
     "考勤管理_模块前端系分文档.md",
     "考勤管理_模块后端系分文档.md",
@@ -209,15 +212,12 @@
     "面试/项目/Ragent/infra-ai/整体贯穿.md",
     "面试/项目/Ragent/framework模块/整体贯穿.md",
     "面试/项目/Ragent/bootstrap模块/整体贯穿.md",
-    "面试/项目/Ragent/bootstrap模块/rag.md",
     "面试/agent/Attachment",
     "面试/Redis",
     "面试/springcloud微服务/Attachment",
     "面试/springcloud微服务",
     "面试/Spring/Attachment",
     "面试/Spring",
-    "未命名 2.base",
-    "未命名.base",
-    "未命名 1.base"
+    "未命名 2.base"
   ]
 }
