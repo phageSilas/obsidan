@@ -1,8 +1,8 @@
 {
   "customFileOrder": {
     "/": [
+      "数字马力管理系统设计理念",
       "前端系分演讲稿.md",
-      "assets",
       "HRMS项目前端总系分.md",
       "薪资管理_模块前端系分文档.md",
       "薪资管理_模块后端系分文档.md",
@@ -238,6 +238,12 @@
     "前端": [
       "前端/nvm管理node版本.md"
     ],
+    "数字马力管理系统设计理念": [
+      "数字马力管理系统设计理念/Attachment",
+      "数字马力管理系统设计理念/redis双重判定分布式锁.md",
+      "数字马力管理系统设计理念/Rabbitmq与消息幂等.md"
+    ],
+    "数字马力管理系统设计理念/Attachment": [],
     "算法": [
       "算法/二分查找.md",
       "算法/数据结构与算法.md"
@@ -249,12 +255,6 @@
     "AI-agent/Attachment": [
       "AI-agent/Attachment/image-1.png",
       "AI-agent/Attachment/image.png"
-    ],
-    "assets": [
-      "assets/frontend-prototypes"
-    ],
-    "assets/frontend-prototypes": [
-      "assets/frontend-prototypes/module01-auth-login.png.md"
     ],
     "Attachment": [
       "Attachment/image-26.png",
