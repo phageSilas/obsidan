@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "薪资管理_模块后端系分文档.md",
+                "file": "HRMS项目前端总系分.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "薪资管理_模块后端系分文档"
+              "title": "HRMS项目前端总系分"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "薪资管理_模块后端系分文档.md",
+                "file": "HRMS项目前端总系分.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "薪资管理_模块后端系分文档 的大纲"
+              "title": "HRMS项目前端总系分 的大纲"
             }
           }
         ],
@@ -174,6 +174,7 @@
   "active": "3a263b6b90e57ca7",
   "lastOpenFiles": [
     "前端系分演讲稿.md",
+    "薪资管理_模块后端系分文档.md",
     "未命名 3.base",
     "未命名 2.base",
     "HRMS项目前端总系分.md",
@@ -186,7 +187,6 @@
     "01-HRMS全局开发规范旧.md",
     "考勤管理_模块前端系分文档.md",
     "考勤管理_模块后端系分文档.md",
-    "薪资管理_模块后端系分文档.md",
     "薪资管理_模块前端系分文档.md",
     "Attachment/image-30.png",
     "Attachment/image-29.png",
