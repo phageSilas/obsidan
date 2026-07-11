@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "HRMS项目前端总系分.md",
+                "file": "数字马力管理系统设计理念/Redis缓存减少数据库压力.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "HRMS项目前端总系分"
+              "title": "Redis缓存减少数据库压力"
             }
           },
           {
@@ -49,8 +49,7 @@
               "title": "Rabbitmq与消息幂等"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -107,7 +106,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 223.5
+    "width": 362.5
   },
   "right": {
     "id": "791d29b6d015dc2f",
@@ -171,13 +170,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "数字马力管理系统设计理念/Rabbitmq与消息幂等.md",
+                "file": "数字马力管理系统设计理念/Redis缓存减少数据库压力.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Rabbitmq与消息幂等 的大纲"
+              "title": "Redis缓存减少数据库压力 的大纲"
             }
           }
         ],
@@ -200,19 +199,20 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "1b581df2f82c2f68",
+  "active": "34d6b36d87ac3e98",
   "lastOpenFiles": [
+    "面试/项目/短链接/简历特点分析.md",
+    "数字马力管理系统设计理念/Redis缓存减少数据库压力.md",
+    "HRMS项目前端总系分.md",
+    "数字马力管理系统设计理念/Rabbitmq与消息幂等.md",
+    "数字马力管理系统设计理念/redis双重判定分布式锁.md",
+    "前端系分演讲稿.md",
     "数字马力管理系统设计理念/Attachment/image.png",
     "数字马力管理系统设计理念/Attachment",
-    "面试/项目/短链接/简历特点分析.md",
     "面试/项目/短链接/微服务专题.md",
     "面试/java常见八股.md",
     "面试/真实面试总结.md",
-    "数字马力管理系统设计理念/Rabbitmq与消息幂等.md",
-    "前端系分演讲稿.md",
     "assets/frontend-prototypes/module01-auth-login.png.md",
-    "数字马力管理系统设计理念/redis双重判定分布式锁.md",
-    "HRMS项目前端总系分.md",
     "数字马力管理系统设计理念",
     "薪资管理_模块后端系分文档.md",
     "未命名 3.base",
@@ -235,7 +235,6 @@
     "Attachment/PlantUML (1).jpg",
     "Attachment/image-27.png",
     "Attachment/image-26.png",
-    "Attachment/image-25.png",
     "薪资管理_模块系分文档.md",
     "考勤管理_模块系分文档.md",
     "hrms-attendance-payroll-spec.md",

@@ -184,6 +184,14 @@ salary.batch.calculate
 
 这个一定要写进系分里，面试也很好讲。
 ![[image.png]]
+MQ 消费幂等设计采用 messageId + Redis SETNX 状态位 + 数据库消费日志 + 业务唯一索引四层保障。
+
+1. 消息首次到达时，消费者使用 SETNX 写入 mq:idempotent:{messageId}=PROCESSING，并设置合理 TTL。
+2. SETNX 成功表示当前消费者获得处理权，执行业务逻辑。
+3. 业务处理成功后，将 Redis 状态改为 SUCCESS，并同步写入 mq_consume_log。
+4. 若消息重复到达，先读取 Redis 状态：SUCCESS 直接 ACK，PROCESSING 延迟重试。
+5. 若 Redis 状态缺失，则查询 mq_consume_log，避免 Redis 过期导致重复消费。
+6. 业务表通过唯一索引兜底，确保重复消费不会生成重复数据。
 ### 1. 每条消息必须有全局唯一 messageId
 
 比如：
@@ -196,35 +204,15 @@ PAYSLIP_GENERATE_202607001
 
 消费者处理前先查是否处理过。
 
-可以建一张表：
-
-```
-hr_mq_consume_log
-```
-
-核心字段：
-
-```
-message_id     消息唯一ID
-biz_type       业务类型
-biz_id         业务ID
-consume_status 处理状态：PROCESSING / SUCCESS / FAILED
-retry_count    重试次数
-error_msg      错误信息
-create_time
-update_time
-```
-
-消费逻辑：
-
-```
-收到消息
--> 根据 messageId 插入消费日志
--> 如果唯一键冲突，说明已消费或处理中，直接跳过
--> 执行业务逻辑
--> 成功后更新 consume_status = SUCCESS
--> 失败则记录 FAILED，交给重试或死信队列
-```
+消息首次到达
+-> SETNX key = "0"，TTL = 2min
+-> 成功：说明我是第一个消费者，处理业务
+   -> 业务成功：value 改为 "1"
+   -> 业务失败：删除 key，抛异常，让 MQ 重试
+-> 失败：说明 key 已存在
+   -> 查 value
+      -> value = "1"：已完成，直接跳过
+      -> value = "0"：处理中，抛异常，让 MQ 稍后重试
 
 ### 2. 数据库唯一约束兜底
 
