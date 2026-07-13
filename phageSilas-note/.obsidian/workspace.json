@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "未命名.md",
+                "file": "数字马力管理系统设计理念/Rabbitmq与消息幂等.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "未命名"
+              "title": "Rabbitmq与消息幂等"
             }
           },
           {
@@ -199,13 +199,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "未命名.md",
+                "file": "数字马力管理系统设计理念/Rabbitmq与消息幂等.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "未命名 的大纲"
+              "title": "Rabbitmq与消息幂等 的大纲"
             }
           }
         ],
@@ -230,8 +230,8 @@
   },
   "active": "5d67a734eaee4966",
   "lastOpenFiles": [
-    "前端系分演讲稿.md",
     "未命名.md",
+    "前端系分演讲稿.md",
     "薪资管理_模块前端系分文档.md",
     "前端系分模版.md",
     "01-HRMS全局开发规范旧.md",
