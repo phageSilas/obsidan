@@ -317,6 +317,7 @@
     ],
     "JAVA/规范": [
       "JAVA/规范/Attachment",
+      "JAVA/规范/lombok的使用.md",
       "JAVA/规范/过滤器Filter与拦截器interceptor.md",
       "JAVA/规范/全局异常拦截器的设计.md",
       "JAVA/规范/错误码的设计.md",
