@@ -240,6 +240,7 @@
       "数字马力管理系统设计理念/redis双重判定分布式锁.md",
       "数字马力管理系统设计理念/Rabbitmq与消息幂等.md",
       "数字马力管理系统设计理念/补充入转调离模块的高级功能.md",
+      "数字马力管理系统设计理念/Mybatis-plus的使用.md",
       "数字马力管理系统设计理念/Attachment"
     ],
     "数字马力管理系统设计理念/Attachment": [
@@ -390,6 +391,7 @@
     ],
     "JAVA/JavaWeb": [
       "JAVA/JavaWeb/MyBatis-plus.md",
+      "JAVA/JavaWeb/Mybatis-plus的使用.md",
       "JAVA/JavaWeb/Http.md",
       "JAVA/JavaWeb/常见错误-异常处理.md",
       "JAVA/JavaWeb/SpringBoot",
