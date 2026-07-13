@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "JAVA/规范/关于返回体Result的设计.md",
+                "file": "JAVA/规范/错误码的设计.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "关于返回体Result的设计"
+              "title": "错误码的设计"
             }
           },
           {
@@ -199,13 +199,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "JAVA/规范/关于返回体Result的设计.md",
+                "file": "JAVA/规范/错误码的设计.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "关于返回体Result的设计 的大纲"
+              "title": "错误码的设计 的大纲"
             }
           }
         ],
@@ -231,7 +231,9 @@
   "active": "5d67a734eaee4966",
   "lastOpenFiles": [
     "JAVA/规范/通过枚举定义常量与静态定义常量.md",
+    "JAVA/规范/错误码的设计.md",
     "JAVA/规范/关于返回体Result的设计.md",
+    "JAVA/规范/JavaWeb分层规范.md",
     "数字马力管理系统设计理念/Rabbitmq与消息幂等.md",
     "未命名.md",
     "前端系分演讲稿.md",
@@ -272,8 +274,6 @@
     "薪资管理_模块系分文档.md",
     "考勤管理_模块系分文档.md",
     "hrms-attendance-payroll-spec.md",
-    "考勤管理_spanclass=_em__·__span_薪资管理_br_模块系分文档 - 副本.md",
-    "HRMS-.md",
     "前端",
     "面试/agent/Attachment"
   ]
