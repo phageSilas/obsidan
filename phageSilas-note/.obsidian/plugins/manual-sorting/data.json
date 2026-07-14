@@ -1,6 +1,7 @@
 {
   "customFileOrder": {
     "/": [
+      "git",
       "后端系统分析.md",
       "未命名.base",
       "数字马力管理系统设计理念",
@@ -304,6 +305,9 @@
     ],
     "docker": [
       "docker/ubuntu启动docker流程.md"
+    ],
+    "git": [
+      "git/把本地分支上传到不同的远程.md"
     ],
     "JAVA": [
       "JAVA/规范",
