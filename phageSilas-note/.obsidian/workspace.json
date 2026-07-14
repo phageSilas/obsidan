@@ -124,7 +124,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "lombok",
+                "query": "Redisson",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -145,7 +145,8 @@
               "title": "书签"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -247,6 +248,8 @@
     "数字马力管理系统设计理念/Rabbitmq与消息幂等.md",
     "数字马力管理系统设计理念/redis双重判定分布式锁.md",
     "数字马力管理系统设计理念/Redis其他功能.md",
+    "数字马力管理系统设计理念/Redis缓存减少数据库压力.md",
+    "数字马力管理系统设计理念/补充入转调离模块的高级功能.md",
     "后端系统分析.md",
     "数字马力管理系统设计理念/Hutool的使用.md",
     "前端系分演讲稿.md",
@@ -257,8 +260,6 @@
     "数字马力管理系统设计理念/Mybatis-plus的使用.md",
     "JAVA/JavaWeb/Mybatis-plus的使用.md",
     "JAVA/JavaWeb/MyBatis-plus.md",
-    "数字马力管理系统设计理念/补充入转调离模块的高级功能.md",
-    "数字马力管理系统设计理念/Redis缓存减少数据库压力.md",
     "薪资管理_模块后端系分文档.md",
     "JAVA/规范/过滤器Filter与拦截器interceptor.md",
     "JAVA/规范/全局异常拦截器的设计.md",
