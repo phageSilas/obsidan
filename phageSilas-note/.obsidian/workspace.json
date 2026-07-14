@@ -124,7 +124,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "Redisson",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -145,8 +145,7 @@
               "title": "书签"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -243,7 +242,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "454fc2b8f1682276",
+  "active": "34d6b36d87ac3e98",
   "lastOpenFiles": [
     "数字马力管理系统设计理念/Rabbitmq与消息幂等.md",
     "数字马力管理系统设计理念/redis双重判定分布式锁.md",
