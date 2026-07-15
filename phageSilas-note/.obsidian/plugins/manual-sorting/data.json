@@ -3,7 +3,6 @@
     "/": [
       "git",
       "后端系统分析.md",
-      "未命名.base",
       "数字马力管理系统设计理念",
       "薪资管理_模块前端系分文档.md",
       "薪资管理_模块后端系分文档.md",
@@ -255,8 +254,12 @@
       "算法/数据结构与算法.md"
     ],
     "AI-agent": [
+      "AI-agent/马丁的笔记",
       "AI-agent/Attachment",
       "AI-agent/名词索引.md"
+    ],
+    "AI-agent/马丁的笔记": [
+      "AI-agent/马丁的笔记/05-react-loop.md"
     ],
     "AI-agent/Attachment": [
       "AI-agent/Attachment/image-1.png",
