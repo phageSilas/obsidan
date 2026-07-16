@@ -64,4 +64,3 @@ https://restapi.amap.com/v3/ip?ip=114.247.50.2&output=xml&key=<用户的key>
     - "rectangle" :"116.0119343,39.66127144;116.7829835,40.2164962"
     
     **}**
-
