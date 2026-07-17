@@ -118,9 +118,23 @@
               "icon": "lucide-file",
               "title": "请假管理页开发方案"
             }
+          },
+          {
+            "id": "0b1c0e7fa0c3a57a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "未命名 3.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "未命名 3"
+            }
           }
         ],
-        "currentTab": 7
+        "currentTab": 8
       }
     ],
     "direction": "vertical"
@@ -241,13 +255,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "请假管理页开发方案.md",
+                "file": "未命名 3.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "请假管理页开发方案 的大纲"
+              "title": "未命名 3 的大纲"
             }
           }
         ],
@@ -270,10 +284,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "568fe673ea08b612",
+  "active": "0b1c0e7fa0c3a57a",
   "lastOpenFiles": [
-    "关于前端实现随时更新获取后端数据的方法.md",
     "请假管理页开发方案.md",
+    "未命名 3.md",
+    "关于前端实现随时更新获取后端数据的方法.md",
     "未命名 1.md",
     "未命名 2.md",
     "通过js获取用户具体位置ip.md",
@@ -300,7 +315,6 @@
     "JAVA/JavaWeb/常见错误-异常处理.md",
     "数字马力管理系统设计理念/Mybatis-plus的使用.md",
     "JAVA/JavaWeb/Mybatis-plus的使用.md",
-    "JAVA/JavaWeb/MyBatis-plus.md",
     "JAVA/规范/Attachment/image.png",
     "JAVA/规范/Attachment",
     "数字马力管理系统设计理念/Attachment/image.png",
