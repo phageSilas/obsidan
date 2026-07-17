@@ -104,9 +104,23 @@
               "icon": "lucide-file",
               "title": "关于前端实现随时更新获取后端数据的方法"
             }
+          },
+          {
+            "id": "568fe673ea08b612",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "请假管理页开发方案.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "请假管理页开发方案"
+            }
           }
         ],
-        "currentTab": 6
+        "currentTab": 7
       }
     ],
     "direction": "vertical"
@@ -227,13 +241,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "关于前端实现随时更新获取后端数据的方法.md",
+                "file": "请假管理页开发方案.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "关于前端实现随时更新获取后端数据的方法 的大纲"
+              "title": "请假管理页开发方案 的大纲"
             }
           }
         ],
@@ -256,10 +270,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "69dd7bc405d9712d",
+  "active": "568fe673ea08b612",
   "lastOpenFiles": [
-    "未命名 1.md",
     "关于前端实现随时更新获取后端数据的方法.md",
+    "请假管理页开发方案.md",
+    "未命名 1.md",
     "未命名 2.md",
     "通过js获取用户具体位置ip.md",
     "未命名.md",
@@ -286,7 +301,6 @@
     "数字马力管理系统设计理念/Mybatis-plus的使用.md",
     "JAVA/JavaWeb/Mybatis-plus的使用.md",
     "JAVA/JavaWeb/MyBatis-plus.md",
-    "薪资管理_模块后端系分文档.md",
     "JAVA/规范/Attachment/image.png",
     "JAVA/规范/Attachment",
     "数字马力管理系统设计理念/Attachment/image.png",
