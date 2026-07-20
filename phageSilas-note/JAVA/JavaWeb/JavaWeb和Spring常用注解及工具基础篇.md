@@ -138,6 +138,10 @@ public ResponseEntity<User> updateUser(@PathVariable(value = "userId") Long user
 
 
 ## @PathVariable
+作用：用于绑定 URL 路径变量（path variables）
+位置：参数嵌入在 URL 路径中，如 /attendances/{id}
+使用场景：通常是资源标识符，如 ID、编号等
+
 用于从 URL 路径中提取参数。
 **用{ }标识路径参数**
 ``` java
@@ -149,6 +153,10 @@ return teacherService.findTeachersByClass(klassId);
 若请求 URL 为 /klasses/123/teachers，则 klassId = 123。
 ```
 ## @RequestParam
+用于绑定 URL 查询参数（query parameters）或表单数据
+位置：参数在 URL 的问号后面，如 ?param1=value1&param2=value2
+使用场景：通常是可选参数、筛选条件、分页参数等
+
 用于绑定查询参数,用于**将 HTTP 请求中的参数（Query String 或 Form Data）绑定到 Controller（控制器）中方法的形参上**。
 假设前端发来一个 GET 请求：
 `http://localhost:8080/user?name=张三&age=18`
