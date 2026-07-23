@@ -16,7 +16,7 @@
       "高德地图api获取ip地址文档.md",
       "git",
       "后端系统分析.md",
-      "数字马力管理系统设计理念",
+      "管理系统设计",
       "薪资管理_模块前端系分文档.md",
       "薪资管理_模块后端系分文档.md",
       "考勤管理_模块前端系分文档.md",
@@ -247,19 +247,6 @@
     ],
     "前端": [
       "前端/nvm管理node版本.md"
-    ],
-    "数字马力管理系统设计理念": [
-      "数字马力管理系统设计理念/Hutool的使用.md",
-      "数字马力管理系统设计理念/Redis缓存减少数据库压力.md",
-      "数字马力管理系统设计理念/Redis其他功能.md",
-      "数字马力管理系统设计理念/redis分布式锁.md",
-      "数字马力管理系统设计理念/Rabbitmq与消息幂等.md",
-      "数字马力管理系统设计理念/补充入转调离模块的高级功能.md",
-      "数字马力管理系统设计理念/Mybatis-plus的使用.md",
-      "数字马力管理系统设计理念/Attachment"
-    ],
-    "数字马力管理系统设计理念/Attachment": [
-      "数字马力管理系统设计理念/Attachment/image.png"
     ],
     "算法": [
       "算法/++和+=和=+.md",
@@ -626,6 +613,19 @@
       "JAVA基础笔试/基础/Attachment/image-2.png",
       "JAVA基础笔试/基础/Attachment/image-3.png",
       "JAVA基础笔试/基础/Attachment/image.png"
+    ],
+    "管理系统设计": [
+      "管理系统设计/Hutool的使用.md",
+      "管理系统设计/Redis缓存减少数据库压力.md",
+      "管理系统设计/Redis其他功能.md",
+      "管理系统设计/redis分布式锁.md",
+      "管理系统设计/Rabbitmq与消息幂等.md",
+      "管理系统设计/补充入转调离模块的高级功能.md",
+      "管理系统设计/Mybatis-plus的使用.md",
+      "管理系统设计/Attachment"
+    ],
+    "管理系统设计/Attachment": [
+      "管理系统设计/Attachment/image.png"
     ]
   },
   "draggingEnabled": true,

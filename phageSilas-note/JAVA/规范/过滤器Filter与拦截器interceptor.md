@@ -112,7 +112,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     }
 }
 ```
-![[image.png]]
+![[JAVA/规范/Attachment/image.png]]
 还需要注册：
 
 ``` java

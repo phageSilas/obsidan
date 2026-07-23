@@ -183,7 +183,7 @@ salary.batch.calculate
 ## MQ 幂等怎么设计
 
 这个一定要写进系分里，面试也很好讲。
-![[image.png]]
+![[管理系统设计/Attachment/image.png]]
 MQ 消费幂等设计采用 messageId + Redis SETNX 状态位 + 数据库消费日志 + 业务唯一索引四层保障。
 
 1. 消息首次到达时，消费者使用 SETNX 写入 mq:idempotent:{messageId}=PROCESSING，并设置合理 TTL。
