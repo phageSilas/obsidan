@@ -83,23 +83,22 @@ c-end/backend       // C 端独立 Spring Boot 服务，端口 8082
 | `notification` | C 端通知查询与已读                | 禁止依赖 B 端用户体系                   |
 | `support`      | 幂等、锁库存、超时释放、支付回调、异步任务     | 禁止暴露 Controller 或承载业务编排        |
 ### 2.3 后端技术栈
-| 类别       | 技术/组件                  | 版本                                     | 用途                                            |
-| -------- | ---------------------- | -------------------------------------- | --------------------------------------------- |
-| 开发语言     | Java                   | `17`（当前 POM）                           | C 端后端开发语言；若要与系分的 Java 21 约束一致，应将父 POM 改为 `21` |
-| 应用框架     | Spring Boot            | `3.5.3`                                | Web 服务、配置管理、依赖注入、定时任务                         |
-| Web 框架   | Spring MVC             | 随 Spring Boot `3.5.3`                  | RESTful API、参数校验、全局异常处理                       |
-| ORM 框架   | MyBatis-Plus           | `3.5.7`                                | PostgreSQL 数据访问、Mapper、分页查询                   |
-| 关系数据库    | PostgreSQL + pgvector  | `16`                                   | C 端账号、挂号、问诊、购药、健康档案等数据存储                      |
-| 缓存       | Redis                  | `7`                                    | Token 会话、图形验证码、幂等键、号源/库存预扣                    |
-| 消息队列     | RabbitMQ               | 建议固定 `3.13.x-management`               | 支付超时释放、通知投递、用药提醒、随访任务等异步处理                    |
-| 身份认证     | JWT                    | `0.12.6`                               | C 端独立 JWT Access Token / Refresh Token        |
-| 密码处理     | 明文比对（演示环境） | 不引入密码加密组件 | 登录密码与模拟支付密码校验 |
-| 参数校验     | Jakarta Validation     | 随 Spring Boot `3.5.3`                  | 请求 DTO 的非空、长度、格式校验                            |
-| JSON 序列化 | Jackson                | 随 Spring Boot `3.5.3`                  | 请求/响应 JSON、时间格式化                              |
-| 数据库驱动    | PostgreSQL JDBC Driver | 由 Spring Boot BOM 管理                   | Java 连接 PostgreSQL                            |
-| 构建工具     | Maven                  | `3.9+` 建议                              | 多模块构建与依赖管理                                    |
-| 简化开发     | Lombok                 | 由 Spring Boot BOM 管理                   | 实体、DTO、日志等样板代码简化                              |
-| 简化开发     | HuTool                 | 由 Spring Boot BOM 管理                   | 提供各种便捷工具类                                     |
+| 类别       | 技术/组件                  | 版本                       | 用途                                            |
+| -------- | ---------------------- | ------------------------ | --------------------------------------------- |
+| 开发语言     | Java                   | `17`（当前 POM）             | C 端后端开发语言；若要与系分的 Java 21 约束一致，应将父 POM 改为 `21` |
+| 应用框架     | Spring Boot            | `3.5.3`                  | Web 服务、配置管理、依赖注入、定时任务                         |
+| Web 框架   | Spring MVC             | 随 Spring Boot `3.5.3`    | RESTful API、参数校验、全局异常处理                       |
+| ORM 框架   | MyBatis-Plus           | `3.5.7`                  | PostgreSQL 数据访问、Mapper、分页查询                   |
+| 关系数据库    | PostgreSQL + pgvector  | `16`                     | C 端账号、挂号、问诊、购药、健康档案等数据存储                      |
+| 缓存       | Redis                  | `7`                      | Token 会话、图形验证码、幂等键、号源/库存预扣                    |
+| 消息队列     | RabbitMQ               | 建议固定 `3.13.x-management` | 支付超时释放、通知投递、用药提醒、随访任务等异步处理                    |
+| 身份认证     | JWT                    | `0.12.6`                 | C 端独立 JWT Access Token / Refresh Token        |
+| 参数校验     | Jakarta Validation     | 随 Spring Boot `3.5.3`    | 请求 DTO 的非空、长度、格式校验                            |
+| JSON 序列化 | Jackson                | 随 Spring Boot `3.5.3`    | 请求/响应 JSON、时间格式化                              |
+| 数据库驱动    | PostgreSQL JDBC Driver | 由 Spring Boot BOM 管理     | Java 连接 PostgreSQL                            |
+| 构建工具     | Maven                  | `3.9+` 建议                | 多模块构建与依赖管理                                    |
+| 简化开发     | Lombok                 | 由 Spring Boot BOM 管理     | 实体、DTO、日志等样板代码简化                              |
+| 简化开发     | HuTool                 | 由 Spring Boot BOM 管理     | 提供各种便捷工具类                                     |
 
 
 ### 2.3 核心业务流程
@@ -119,7 +118,7 @@ flowchart TD
 ```
 
 
-> **演示环境安全说明：** 本项目为本地/课堂演示，密码、手机号、身份证号和药店联系电话按明文存储。任何生产环境、联网部署或真实患者数据场景，必须改用 BCrypt 密码哈希、敏感字段加密与访问审计。接口响应不得返回密码，手机号和身份证号仅以 `***` 形式脱敏展示。
+> **演示环境安全说明：** 本项目为本地/课堂演示，密码、手机号、身份证号和药店联系电话按存储。任何生产环境、联网部署或真实患者数据场景，必须改用 BCrypt 密码哈希、敏感字段加密与访问审计。接口响应不得返回密码，手机号和身份证号仅以 `***` 形式脱敏展示。
 ## 3. 全局接口约定
 
 ### 3.1 基础约定
@@ -225,7 +224,7 @@ hide methods
 class CUser {
     +id: bigint\n用户ID
     +account: varchar\n登录账号
-    +password: varchar\n明文密码（仅演示环境）
+    +password: varchar\n密码（仅演示环境）
     +status: varchar\n账号状态
 }
 class PatientProfile {
@@ -392,7 +391,7 @@ AuthService --> H5: 注册成功
 ```mermaid
 flowchart LR
     A[提交账号密码] --> B[查询 C 端用户]
-    B --> C[明文密码比对]
+    B --> C[密码比对]
     C --> D[签发 C 端 access/refresh Token]
 ```
 
@@ -641,7 +640,7 @@ ProfileService --> H5: 更新后的资料
 
 ```mermaid
 flowchart LR
-    A[提交旧密码和新密码] --> B[校验旧密码] --> C[更新明文登录密码] --> D[撤销其他会话]
+    A[提交旧密码和新密码] --> B[校验旧密码] --> C[更新登录密码] --> D[撤销其他会话]
 ```
 
 ```plantuml
@@ -1205,7 +1204,7 @@ WaitlistService --> H5: waitlistId、排队序号
 
 ```mermaid
 flowchart LR
-    A[输入登录密码] --> B[校验订单归属和有效期] --> C[明文密码比对] --> D[事务标记支付成功] --> E[确认挂号]
+    A[输入登录密码] --> B[校验订单归属和有效期] --> C[密码比对] --> D[事务标记支付成功] --> E[确认挂号]
 ```
 
 ```plantuml
@@ -1214,7 +1213,7 @@ participant H5
 participant PaymentService
 database PostgreSQL
 H5 -> PaymentService: POST /payments/{paymentId}/simulate-pay
-PaymentService -> PostgreSQL: 校验订单、明文密码和支付状态
+PaymentService -> PostgreSQL: 校验订单、密码和支付状态
 PaymentService -> PostgreSQL: PENDING -> SUCCESS，LOCKED -> PAID
 PaymentService --> H5: paymentStatus=SUCCESS
 @enduml
@@ -2929,13 +2928,13 @@ NotificationService --> H5: read=true
 
 ## 6. PostgreSQL 数据库设计
 
-所有主表使用 `bigint generated by default as identity` 主键、`timestamptz not null default now()` 创建和更新时间，业务删除优先使用 `deleted_at` 软删除。身份证号、联系电话和密码均按明文存储；接口响应中必须按规则脱敏展示。
+所有主表使用 `bigint generated by default as identity` 主键、`timestamptz not null default now()` 创建和更新时间，业务删除优先使用 `deleted_at` 软删除。身份证号、联系电话和密码均按存储；接口响应中必须按规则脱敏展示。
 
 | 表名                                            | 用途        | 核心字段与约束                                             |
 | --------------------------------------------- | --------- | --------------------------------------------------- |
 | `c_user`                                      | C 端独立账号   | `account` 唯一，`password`，`status`               |
 | `c_refresh_token`                             | C 端刷新令牌会话 | `token_hash` 唯一，`user_id`，`expired_at`，`revoked_at` |
-| `patient_profile`                             | 患者基础资料    | `user_id` 唯一，姓名、性别、生日、明文联系方式（响应脱敏）                        |
+| `patient_profile`                             | 患者基础资料    | `user_id` 唯一，姓名、性别、生日、联系方式（响应脱敏）                        |
 | `patient_allergy` / `patient_medical_history` | 健康病史      | `patient_id` 外键与归属索引                                |
 | `triage_assessment` | 导诊评估记录 | 患者、输入快照、紧急程度与科室推荐快照 |
 | `department` / `doctor` / `schedule_slot`     | 挂号资源      | 启用状态；时段唯一 `(doctor_id,start_time)`                  |
@@ -2960,7 +2959,7 @@ NotificationService --> H5: read=true
 create table if not exists c_user (
     id bigint generated by default as identity primary key, -- 用户主键
     account varchar(32) not null, -- C 端登录账号
-    password varchar(64) not null, -- 明文登录密码，仅限演示环境
+    password varchar(64) not null, -- 登录密码，仅限演示环境
     status varchar(20) not null default 'ACTIVE', -- 账号状态
     last_login_at timestamptz, -- 最近登录时间
     created_at timestamptz not null default now(), -- 创建时间
@@ -2993,8 +2992,8 @@ create table if not exists patient_profile (
     name varchar(64), -- 患者姓名
     gender varchar(16), -- 性别
     birthday date, -- 出生日期
-    phone varchar(20), -- 明文联系电话，仅限演示环境
-    id_card_no varchar(32), -- 明文身份证号，仅限演示环境
+    phone varchar(20), -- 联系电话，仅限演示环境
+    id_card_no varchar(32), -- 身份证号，仅限演示环境
     emergency_contact varchar(128), -- 紧急联系人信息
     created_at timestamptz not null default now(), -- 创建时间
     updated_at timestamptz not null default now(), -- 更新时间
@@ -3259,7 +3258,7 @@ create table if not exists pharmacy (
     address varchar(500) not null, -- 药店地址
     longitude numeric(10, 7), -- 经度
     latitude numeric(10, 7), -- 纬度
-    phone varchar(20), -- 明文药店联系电话，仅限演示环境
+    phone varchar(20), -- 药店联系电话，仅限演示环境
     status varchar(20) not null default 'ENABLED', -- 药店状态
     created_at timestamptz not null default now(), -- 创建时间
     updated_at timestamptz not null default now(), -- 更新时间
@@ -3429,8 +3428,8 @@ comment on table notification is 'C端站内通知表';
 ### 7.2 密码、认证与数据权限
 
 - 图形验证码以哈希形式存入 Redis，120 秒过期且验证一次即删除；按 IP 和账号限流。
-- 登录密码和模拟支付均采用明文密码比对；密码不得出现在响应、日志或异常信息中。
-- JWT 设置 `aud=c-h5` 和独立签名密钥；C 端网关拒绝 B 端 `aud`，B 端网关同样拒绝 C 端 `aud`。
+- 登录密码和模拟支付均采用密码比对；密码不得出现在响应、日志或异常信息中。
+- JWT 设置 `aud=c-h5` (验证当前账号是否为)和独立签名密钥；C 端网关拒绝 B 端 `aud`，B 端网关同样拒绝 C 端 `aud`。
 - 所有患者资源查询强制追加 `patient_id = currentPatientId`，禁止仅按资源 ID 读取；病历、处方、报告和订单不提供匿名访问。
 
 ### 7.3 异步任务与通知
