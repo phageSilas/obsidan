@@ -2949,7 +2949,7 @@ NotificationService --> H5: read=true
 | `medication_plan` / `follow_up_plan`          | 提醒与随访     | 状态、下次提醒时间、患者归属                                      |
 | `notification`                                | C 端通知     | `(user_id,created_at desc)` 索引、已读时间                 |
 
-### 6.1 关键建表示例
+### 6.1 建表示例
 
 ```sql
 -- 说明：仅创建 C 端业务表；updated_at 由 Spring Boot 应用层维护。
@@ -3423,21 +3423,85 @@ comment on table notification is 'C端站内通知表';
 2. 创建订单执行 Redis Lua 脚本：校验余量大于零、扣减余量、写入 15 分钟锁定标记，保证原子性。
 3. Redis 扣减成功后，在 PostgreSQL 事务中创建订单、支付单和库存流水；事务失败时执行补偿归还 Redis 库存。
 4. 支付、取消和超时处理以订单状态条件更新保证幂等。超时任务扫描 `LOCKED/PENDING_PAYMENT` 且 `expire_at < now()` 的订单，关闭支付单并释放预留。
-5. 每分钟校验 Redis 与 PostgreSQL 库存差异，发生差异时暂停该时段下单并告警、重建缓存。
 
 ### 7.2 密码、认证与数据权限
 
 - 图形验证码以哈希形式存入 Redis，120 秒过期且验证一次即删除；按 IP 和账号限流。
 - 登录密码和模拟支付均采用密码比对；密码不得出现在响应、日志或异常信息中。
-- JWT 设置 `aud=c-h5` (验证当前账号是否为)和独立签名密钥；C 端网关拒绝 B 端 `aud`，B 端网关同样拒绝 C 端 `aud`。
+- JWT 设置 `aud=c-h5` (验证当前账号是否为)和独立签名密钥；C 端、B 端后端服务分别配置独立 JWT 签名密钥和认证过滤器。
+	C 端服务只校验 C 端 Token，B 端服务只校验 B 端 Token。
 - 所有患者资源查询强制追加 `patient_id = currentPatientId`，禁止仅按资源 ID 读取；病历、处方、报告和订单不提供匿名访问。
 
 ### 7.3 异步任务与通知
 
-- 超时释放、候补通知、用药提醒和随访提醒通过持久化任务表或消息队列触发，任务消费必须以业务唯一键幂等。
-- 支付成功后，购药订单用事务外盒模式创建用药计划；失败可重试，不影响已成功支付的订单。
-- 通知仅写入当前 C 端用户的 `notification`，不向 B 端账号域写入患者消息。
+本项目使用 RabbitMQ 解耦订单超时处理、通知创建、用药提醒和随访提醒。C 端后端通过 `RabbitTemplate` 发送消息，消费者负责执行具体业务；不引入微服务网关或复杂的分布式事务框架。
 
+#### 7.3.1 RabbitMQ 基础结构
+
+| 类型 | 名称 | 说明 |
+| --- | --- | --- |
+| Topic Exchange | `cend.business.exchange` | C 端业务事件交换机 |
+| 死信 Exchange | `cend.dlx.exchange` | 消费失败或延迟到期后的死信交换机 |
+| 延迟队列 | `cend.appointment.delay.queue` | 挂号锁号后的 15 分钟延迟队列 |
+| 延迟队列 | `cend.drug-order.delay.queue` | 购药待支付后的 15 分钟延迟队列 |
+| 业务队列 | `cend.appointment.timeout.queue` | 处理挂号订单超时释放 |
+| 业务队列 | `cend.drug-order.timeout.queue` | 处理购药订单超时释放库存 |
+| 业务队列 | `cend.notification.queue` | 创建 C 端站内通知 |
+| 业务队列 | `cend.reminder.queue` | 发送用药提醒 |
+| 业务队列 | `cend.follow-up.queue` | 发送随访提醒 |
+| 死信队列 | `cend.dead-letter.queue` | 保存消费失败的消息，供演示时人工排查 |
+
+#### 7.3.2 路由键约定
+
+| 路由键 | 触发时机 | 消费结果 |
+| --- | --- | --- |
+| `appointment.locked` | 挂号订单锁号成功 | 进入挂号延迟队列，15 分钟后检查是否支付 |
+| `appointment.timeout` | 挂号订单超时 | 订单未支付时更新为 `EXPIRED` 并释放号源 |
+| `drug-order.pending` | 购药订单创建成功 | 进入购药延迟队列，15 分钟后检查是否支付 |
+| `drug-order.timeout` | 购药订单超时 | 订单未支付时更新为 `EXPIRED` 并释放药品库存 |
+| `notification.create` | 挂号成功、候补成功、支付成功等 | 写入当前 C 端用户的 `notification` 表 |
+| `reminder.due` | 用药计划到达提醒时间 | 创建用药提醒通知 |
+| `follow-up.due` | 随访计划到达提醒时间 | 创建随访提醒通知 |
+
+#### 7.3.3 延迟消息处理
+
+RabbitMQ 不依赖额外延迟插件，使用“队列 TTL + 死信交换机”实现 15 分钟超时：
+
+```text
+创建挂号/购药订单
+-> 数据库事务提交成功
+-> 发送 locked/pending 消息到延迟队列
+-> 延迟队列 TTL = 15 分钟
+-> 消息过期后进入死信交换机
+-> 路由至 timeout 业务队列
+-> 消费者查询订单最新状态
+-> 未支付则关闭订单并释放库存
+-> 已支付则直接确认消息，不做任何修改
+```
+
+挂号与购药订单的延迟队列统一设置：
+
+```
+x-message-ttl = 900000
+x-dead-letter-exchange = cend.dlx.exchange
+```
+#### 7.3.4 消息发送与消费规则
+
+- 订单、支付、候补等数据库操作成功提交后，再发送 RabbitMQ 消息，避免事务回滚后仍产生无效消息。
+- 项目可使用 Spring 的 `@TransactionalEventListener(phase = AFTER_COMMIT)` 配合 `RabbitTemplate.convertAndSend(...)` 发送消息。
+- 消息体至少包含：`eventId`、`eventType`、`businessId`、`userId`、`occurredAt`。
+- 消费者必须幂等：以 `eventId` 或“业务 ID + 事件类型”判断是否已处理。可用redis的setnx实现
+- 超时消费者更新订单时必须使用条件更新，例如仅允许：
+    - 挂号订单：`LOCKED -> EXPIRED`
+    - 购药订单：`PENDING_PAYMENT -> EXPIRED`
+- 消费失败时不无限重试；消息进入 `cend.dead-letter.queue`，演示时通过日志和 RabbitMQ 管理界面排查。
+
+#### 7.3.5 提醒与通知
+
+- 用药提醒和随访提醒不使用长期延迟消息。
+- `@Scheduled` 定时扫描到期的 `medication_plan`、`follow_up_plan`，仅负责发送 `reminder.due` 或 `follow-up.due` 消息。
+- RabbitMQ 消费者统一写入当前 C 端用户的 `notification` 表。
+- 通知消息不写入 B 端用户体系，C/B 通知数据保持隔离。
 ## 8. 验收与测试场景
 
 | 场景 | 预期结果 |
