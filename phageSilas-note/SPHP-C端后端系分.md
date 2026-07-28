@@ -1950,6 +1950,7 @@ HealthRecordService --> H5: 健康档案
 | A0301 | 403 | 无权访问该患者资源 | 资源不属于当前 C 端用户 |
 
 #### 5.6.2 维护过敏史
+##### 提交
 
 ```mermaid
 flowchart LR
@@ -1967,11 +1968,9 @@ HealthRecordService --> H5: 过敏史记录
 @enduml
 ```
 
-##### RESTFUL API设计
+###### RESTFUL API设计
 
 **接口路径：** POST /health-record/allergies
-**接口路径：** PUT /health-record/allergies
-
 
 **请求参数：**
 
@@ -2000,8 +1999,58 @@ HealthRecordService --> H5: 过敏史记录
 | A0402 | 404 | 资源不存在或当前用户无可访问资源 | 请求的业务资源未找到或不可访问 |
 | A0301 | 403 | 无权访问该患者资源 | 资源不属于当前 C 端用户 |
 
-#### 5.6.3 维护既往史
+##### 更新
 
+```mermaid
+flowchart LR
+    A[提交过敏史修改] --> B[校验 allergy 归属] --> C[更新记录] --> D[返回结果]
+```
+
+```plantuml
+@startuml
+participant H5
+participant HealthRecordService
+database PostgreSQL
+H5 -> HealthRecordService: PUT /health-record/allergies/{allergyId}
+HealthRecordService -> PostgreSQL: UPDATE patient_allergy WHERE id=? AND patient_id=?
+HealthRecordService --> H5: 更新后的过敏史
+@enduml
+```
+
+###### RESTFUL API设计
+
+**接口路径：** PUT /health-record/allergies/{allergyId}
+
+**请求参数：**
+
+| 参数 | 位置 | 类型 | 必填 | 描述 | 示例/默认值 |
+| --- | --- | --- | --- | --- | --- |
+| Authorization | Header | String | 是 | 当前 C 端访问令牌 | `Bearer eyJ...` |
+| allergyId | Path | Long | 条件必填 | 更新记录时的过敏史 ID | `16001` |
+| allergen | Body | String | 是 | 过敏原名称 | `青霉素` |
+| reaction | Body | String | 否 | 过敏反应描述 | `皮疹` |
+
+**响应示例：**
+```json
+{
+    "code":  "00000",
+    "message":  "操作成功",
+    "data":  {
+                 "allergy":  "allergy",
+                 "status":  "SUCCESS"
+             },
+    "traceId":  "01J7X-EXAMPLE"
+}
+```
+
+| 错误码 | HTTP 状态 | 含义 | 触发场景 |
+| --- | --- | --- | --- |
+| A0402 | 404 | 资源不存在或当前用户无可访问资源 | 请求的业务资源未找到或不可访问 |
+| A0301 | 403 | 无权访问该患者资源 | 资源不属于当前 C 端用户 |
+
+
+#### 5.6.3 维护既往史
+##### 提交
 ```mermaid
 flowchart LR
     A[提交既往史] --> B[校验归属] --> C[写入记录] --> D[返回既往史]
@@ -2018,11 +2067,9 @@ HealthRecordService --> H5: 既往史记录
 @enduml
 ```
 
-##### RESTFUL API设计
+###### RESTFUL API设计
 
 **接口路径：** POST /health-record/histories
-**接口路径：** PUT /health-record/histories
-
 
 
 **请求参数：**
@@ -2052,7 +2099,57 @@ HealthRecordService --> H5: 既往史记录
 | A0402 | 404 | 资源不存在或当前用户无可访问资源 | 请求的业务资源未找到或不可访问 |
 | A0301 | 403 | 无权访问该患者资源 | 资源不属于当前 C 端用户 |
 
+##### 更新
+
+```mermaid
+flowchart LR
+    A[提交既往史修改] --> B[校验记录归属] --> C[更新记录] --> D[返回结果]
+```
+
+```plantuml
+@startuml
+participant H5
+participant HealthRecordService
+database PostgreSQL
+H5 -> HealthRecordService: PUT /health-record/histories/{historyId}
+HealthRecordService -> PostgreSQL: UPDATE patient_medical_history WHERE id=? AND patient_id=?
+HealthRecordService --> H5: 更新后的既往史
+@enduml
+```
+
+##### RESTFUL API设计
+
+**接口路径：** PUT /health-record/histories/{historyId}
+
+**请求参数：**
+
+| 参数 | 位置 | 类型 | 必填 | 描述 | 示例/默认值 |
+| --- | --- | --- | --- | --- | --- |
+| Authorization | Header | String | 是 | 当前 C 端访问令牌 | `Bearer eyJ...` |
+| historyId | Path | Long | 条件必填 | 更新记录时的既往史 ID | `17001` |
+| content | Body | String | 是 | 既往病史内容 | `高血压病史5年` |
+| occurredAt | Body | Date | 否 | 病史发生或记录日期 | `2021-01-01` |
+
+**响应示例：**
+```json
+{
+    "code":  "00000",
+    "message":  "操作成功",
+    "data":  {
+                 "history":  "history",
+                 "status":  "SUCCESS"
+             },
+    "traceId":  "01J7X-EXAMPLE"
+}
+```
+
+| 错误码 | HTTP 状态 | 含义 | 触发场景 |
+| --- | --- | --- | --- |
+| A0402 | 404 | 资源不存在或当前用户无可访问资源 | 请求的业务资源未找到或不可访问 |
+| A0301 | 403 | 无权访问该患者资源 | 资源不属于当前 C 端用户 |
+
 #### 5.6.4 录入和查询检查报告
+##### 录入
 
 ```mermaid
 flowchart LR
@@ -2070,12 +2167,9 @@ ReportService --> H5: 报告数据
 @enduml
 ```
 
-##### RESTFUL API设计
+###### RESTFUL API设计
 
 **接口路径：** POST /reports
-**接口路径：** GET /reports
-
-
 
 **请求参数：**
 
@@ -2092,6 +2186,101 @@ ReportService --> H5: 报告数据
 {
     "code":  "00000",
     "message":  "操作成功",
+    "data":  {
+                 "report":  "report",
+                 "status":  "SUCCESS"
+             },
+    "traceId":  "01J7X-EXAMPLE"
+}
+```
+
+| 错误码 | HTTP 状态 | 含义 | 触发场景 |
+| --- | --- | --- | --- |
+| A0402 | 404 | 资源不存在或当前用户无可访问资源 | 请求的业务资源未找到或不可访问 |
+| A0301 | 403 | 无权访问该患者资源 | 资源不属于当前 C 端用户 |
+
+##### 分页查询
+
+```mermaid
+flowchart LR
+    A[请求报告列表] --> B[按本人档案过滤] --> C[分页查询] --> D[返回列表]
+```
+
+```plantuml
+@startuml
+participant H5
+participant ReportService
+database PostgreSQL
+H5 -> ReportService: GET /reports
+ReportService -> PostgreSQL: SELECT patient_report WHERE patient_id=?
+ReportService --> H5: 分页报告列表
+@enduml
+```
+
+###### RESTFUL API设计
+
+**接口路径：** GET /reports
+
+**请求参数：**
+
+| 参数 | 位置 | 类型 | 必填 | 描述 | 示例/默认值 |
+| --- | --- | --- | --- | --- | --- |
+| Authorization | Header | String | 是 | 当前 C 端访问令牌 | `Bearer eyJ...` |
+| pageNo | Query | Integer | 否 | 页码 | `1` |
+| pageSize | Query | Integer | 否 | 每页条数 | `20` |
+
+**响应示例：**
+```json
+{
+    "code":  "00000",
+    "message":  "查询成功",
+    "data":  {
+                 "records":  "records",
+                 "status":  "SUCCESS"
+             },
+    "traceId":  "01J7X-EXAMPLE"
+}
+```
+
+| 错误码 | HTTP 状态 | 含义 | 触发场景 |
+| --- | --- | --- | --- |
+| A0402 | 404 | 资源不存在或当前用户无可访问资源 | 请求的业务资源未找到或不可访问 |
+| A0301 | 403 | 无权访问该患者资源 | 资源不属于当前 C 端用户 |
+
+##### 查看详情
+
+```mermaid
+flowchart LR
+    A[请求报告详情] --> B[校验报告归属] --> C[查询指标] --> D[返回报告]
+```
+
+```plantuml
+@startuml
+participant H5
+participant ReportService
+database PostgreSQL
+H5 -> ReportService: GET /reports/{reportId}
+ReportService -> PostgreSQL: 查询报告及指标且 patient_id=?
+ReportService --> H5: 报告详情
+@enduml
+```
+
+###### RESTFUL API设计
+
+**接口路径：** GET /reports/{reportId}
+
+**请求参数：**
+
+| 参数 | 位置 | 类型 | 必填 | 描述 | 示例/默认值 |
+| --- | --- | --- | --- | --- | --- |
+| Authorization | Header | String | 是 | 当前 C 端访问令牌 | `Bearer eyJ...` |
+| reportId | Path | Long | 是 | 检查报告 ID | `18001` |
+
+**响应示例：**
+```json
+{
+    "code":  "00000",
+    "message":  "查询成功",
     "data":  {
                  "report":  "report",
                  "status":  "SUCCESS"
@@ -2127,8 +2316,6 @@ ReportService --> H5: 指标说明、就医建议、免责声明
 
 **接口路径：** GET /reports/{reportId}/interpretation
 
-
-
 **请求参数：**
 
 | 参数 | 位置 | 类型 | 必填 | 描述 | 示例/默认值 |
@@ -2155,6 +2342,7 @@ ReportService --> H5: 指标说明、就医建议、免责声明
 | A0301 | 403 | 无权访问该患者资源 | 资源不属于当前 C 端用户 |
 
 #### 5.6.6 查询与更新用药计划
+##### 查询
 
 ```mermaid
 flowchart LR
@@ -2172,12 +2360,59 @@ ReminderService --> H5: 用药计划
 @enduml
 ```
 
-##### RESTFUL API设计
+###### RESTFUL API设计
 
 **接口路径：** GET /medication-plans
+
+**请求参数：**
+
+| 参数 | 位置 | 类型 | 必填 | 描述 | 示例/默认值 |
+| --- | --- | --- | --- | --- | --- |
+| Authorization | Header | String | 是 | 当前 C 端访问令牌 | `Bearer eyJ...` |
+| planId | Path | 条件必填 | 更新计划时的计划 ID | `19001` |
+| status | Query | String | 否 | 查询状态筛选 | `ACTIVE` |
+| action | Body | String | 条件必填 | 更新动作，暂停、恢复或完成 | `PAUSE` |
+
+**响应示例：**
+```json
+{
+    "code":  "00000",
+    "message":  "操作成功",
+    "data":  {
+                 "medicationPlan":  "medicationPlan",
+                 "status":  "SUCCESS"
+             },
+    "traceId":  "01J7X-EXAMPLE"
+}
+```
+
+| 错误码   | HTTP 状态 | 含义               | 触发场景              |
+| ----- | ------- | ---------------- | ----------------- |
+| A0402 | 404     | 资源不存在或当前用户无可访问资源 | 请求的业务资源未找到或不可访问   |
+| A0443 | 409     | 当前业务状态不允许该操作     | 资源状态不满足创建、修改或支付条件 |
+| A0301 | 403     | 无权访问该患者资源        | 资源不属于当前 C 端用户     |
+
+##### 更新
+
+```mermaid
+flowchart LR
+    A[暂停、恢复或完成] --> B[校验计划归属和状态] --> C[更新计划] --> D[返回状态]
+```
+
+```plantuml
+@startuml
+participant H5
+participant ReminderService
+database PostgreSQL
+H5 -> ReminderService: PATCH /medication-plans/{planId}
+ReminderService -> PostgreSQL: 条件更新 medication_plan
+ReminderService --> H5: 计划新状态
+@enduml
+```
+
+###### RESTFUL API设计
+
 **接口路径：** PATCH /medication-plans/{planId}
-
-
 
 **请求参数：**
 
@@ -2207,7 +2442,9 @@ ReminderService --> H5: 用药计划
 | A0443 | 409 | 当前业务状态不允许该操作 | 资源状态不满足创建、修改或支付条件 |
 | A0301 | 403 | 无权访问该患者资源 | 资源不属于当前 C 端用户 |
 
+
 #### 5.6.7 查询与确认随访计划
+##### 查询
 
 ```mermaid
 flowchart LR
@@ -2225,12 +2462,58 @@ FollowUpService --> H5: 随访计划
 @enduml
 ```
 
-##### RESTFUL API设计
+###### RESTFUL API设计
 
 **接口路径：** GET /follow-ups
+
+**请求参数：**
+
+| 参数 | 位置 | 类型 | 必填 | 描述 | 示例/默认值 |
+| --- | --- | --- | --- | --- | --- |
+| Authorization | Header | String | 是 | 当前 C 端访问令牌 | `Bearer eyJ...` |
+| followUpId | Path | 条件必填 | 确认随访时的计划 ID | `20001` |
+| status | Query | String | 否 | 查询状态筛选 | `PENDING_CONFIRM` |
+| remindAt | Body | DateTime | 条件必填 | 确认后的提醒时间 | `2026-08-10T09:00:00+08:00` |
+
+**响应示例：**
+```json
+{
+    "code":  "00000",
+    "message":  "操作成功",
+    "data":  {
+                 "followUp":  "followUp",
+                 "status":  "SUCCESS"
+             },
+    "traceId":  "01J7X-EXAMPLE"
+}
+```
+
+| 错误码 | HTTP 状态 | 含义 | 触发场景 |
+| --- | --- | --- | --- |
+| A0402 | 404 | 资源不存在或当前用户无可访问资源 | 请求的业务资源未找到或不可访问 |
+| A0443 | 409 | 当前业务状态不允许该操作 | 资源状态不满足创建、修改或支付条件 |
+| A0301 | 403 | 无权访问该患者资源 | 资源不属于当前 C 端用户 |
+##### 确认
+
+```mermaid
+flowchart LR
+    A[确认提醒时间] --> B[校验计划归属] --> C[状态改为 CONFIRMED] --> D[返回计划]
+```
+
+```plantuml
+@startuml
+participant H5
+participant FollowUpService
+database PostgreSQL
+H5 -> FollowUpService: POST /follow-ups/{followUpId}/confirm
+FollowUpService -> PostgreSQL: 更新 follow_up_plan 为 CONFIRMED
+FollowUpService --> H5: 已确认的随访计划
+@enduml
+```
+
+###### RESTFUL API设计
+
 **接口路径：** POST /follow-ups/{followUpId}/confirm
-
-
 
 **请求参数：**
 
@@ -2261,7 +2544,7 @@ FollowUpService --> H5: 随访计划
 | A0301 | 403 | 无权访问该患者资源 | 资源不属于当前 C 端用户 |
 
 #### 5.6.8 查询和标记通知已读
-
+##### 查询
 ```mermaid
 flowchart LR
     A[查询或已读通知] --> B[按当前用户过滤] --> C[分页读取或更新] --> D[返回结果]
@@ -2278,12 +2561,9 @@ NotificationService --> H5: 通知数据
 @enduml
 ```
 
-##### RESTFUL API设计
+###### RESTFUL API设计
 
 **接口路径：** GET /notifications
-**接口路径：** POST /notifications/{notificationId}/read
-
-
 
 **请求参数：**
 
@@ -2313,347 +2593,7 @@ NotificationService --> H5: 通知数据
 | A0402 | 404 | 资源不存在或当前用户无可访问资源 | 请求的业务资源未找到或不可访问 |
 | A0301 | 403 | 无权访问该患者资源 | 资源不属于当前 C 端用户 |
 
-### 5.7 组合读写接口的独立图例
-
-本节为第 5 章中参数与响应已分别定义、但原先共用业务描述的接口补充独立流程图与时序图，确保每一个 HTTP 接口均具备可执行的交互描述。
-
-#### 5.7.1 更新个人资料 `PUT /profile`
-
-```mermaid
-flowchart LR
-    A[提交个人资料] --> B[校验当前用户] --> C[更新 patient_profile] --> D[返回更新结果]
-```
-
-```plantuml
-@startuml
-participant H5
-participant ProfileService
-database PostgreSQL
-H5 -> ProfileService: PUT /profile
-ProfileService -> PostgreSQL: UPDATE patient_profile WHERE user_id=token.userId
-ProfileService --> H5: 更新后的资料
-@enduml
-```
-
-##### RESTFUL API设计
-
-**
-
-|      |      |      |      |
-| --- | --- | --- | --- |
-|      |      |      |      |
-|      |      |      |      |
-
-#### 5.7.2 更新过敏史 `PUT /health-record/allergies/{allergyId}`
-
-```mermaid
-flowchart LR
-    A[提交过敏史修改] --> B[校验 allergy 归属] --> C[更新记录] --> D[返回结果]
-```
-
-```plantuml
-@startuml
-participant H5
-participant HealthRecordService
-database PostgreSQL
-H5 -> HealthRecordService: PUT /health-record/allergies/{allergyId}
-HealthRecordService -> PostgreSQL: UPDATE patient_allergy WHERE id=? AND patient_id=?
-HealthRecordService --> H5: 更新后的过敏史
-@enduml
-```
-
-##### RESTFUL API设计
-
-**接口路径：** PUT /health-record/allergies/{allergyId}
-
-
-
-**请求参数：**
-
-| 参数 | 位置 | 类型 | 必填 | 描述 | 示例/默认值 |
-| --- | --- | --- | --- | --- | --- |
-| Authorization | Header | String | 是 | 当前 C 端访问令牌 | `Bearer eyJ...` |
-| allergyId | Path | Long | 条件必填 | 更新记录时的过敏史 ID | `16001` |
-| allergen | Body | String | 是 | 过敏原名称 | `青霉素` |
-| reaction | Body | String | 否 | 过敏反应描述 | `皮疹` |
-
-**响应示例：**
-```json
-{
-    "code":  "00000",
-    "message":  "操作成功",
-    "data":  {
-                 "allergy":  "allergy",
-                 "status":  "SUCCESS"
-             },
-    "traceId":  "01J7X-EXAMPLE"
-}
-```
-
-| 错误码 | HTTP 状态 | 含义 | 触发场景 |
-| --- | --- | --- | --- |
-| A0402 | 404 | 资源不存在或当前用户无可访问资源 | 请求的业务资源未找到或不可访问 |
-| A0301 | 403 | 无权访问该患者资源 | 资源不属于当前 C 端用户 |
-
-#### 5.7.3 更新既往史 `PUT /health-record/histories/{historyId}`
-
-```mermaid
-flowchart LR
-    A[提交既往史修改] --> B[校验记录归属] --> C[更新记录] --> D[返回结果]
-```
-
-```plantuml
-@startuml
-participant H5
-participant HealthRecordService
-database PostgreSQL
-H5 -> HealthRecordService: PUT /health-record/histories/{historyId}
-HealthRecordService -> PostgreSQL: UPDATE patient_medical_history WHERE id=? AND patient_id=?
-HealthRecordService --> H5: 更新后的既往史
-@enduml
-```
-
-##### RESTFUL API设计
-
-**接口路径：** PUT /health-record/histories/{historyId}
-
-
-
-**请求参数：**
-
-| 参数 | 位置 | 类型 | 必填 | 描述 | 示例/默认值 |
-| --- | --- | --- | --- | --- | --- |
-| Authorization | Header | String | 是 | 当前 C 端访问令牌 | `Bearer eyJ...` |
-| historyId | Path | Long | 条件必填 | 更新记录时的既往史 ID | `17001` |
-| content | Body | String | 是 | 既往病史内容 | `高血压病史5年` |
-| occurredAt | Body | Date | 否 | 病史发生或记录日期 | `2021-01-01` |
-
-**响应示例：**
-```json
-{
-    "code":  "00000",
-    "message":  "操作成功",
-    "data":  {
-                 "history":  "history",
-                 "status":  "SUCCESS"
-             },
-    "traceId":  "01J7X-EXAMPLE"
-}
-```
-
-| 错误码 | HTTP 状态 | 含义 | 触发场景 |
-| --- | --- | --- | --- |
-| A0402 | 404 | 资源不存在或当前用户无可访问资源 | 请求的业务资源未找到或不可访问 |
-| A0301 | 403 | 无权访问该患者资源 | 资源不属于当前 C 端用户 |
-
-#### 5.7.4 查询处方详情 `GET /prescriptions/{prescriptionId}`
-
-#### 5.7.5 查询购药订单详情 `GET /drug-orders/{drugOrderId}`
-
-#### 5.7.6 查询报告列表 `GET /reports`
-
-```mermaid
-flowchart LR
-    A[请求报告列表] --> B[按本人档案过滤] --> C[分页查询] --> D[返回列表]
-```
-
-```plantuml
-@startuml
-participant H5
-participant ReportService
-database PostgreSQL
-H5 -> ReportService: GET /reports
-ReportService -> PostgreSQL: SELECT patient_report WHERE patient_id=?
-ReportService --> H5: 分页报告列表
-@enduml
-```
-
-##### RESTFUL API设计
-
-**接口路径：** GET /reports
-
-
-
-**请求参数：**
-
-| 参数 | 位置 | 类型 | 必填 | 描述 | 示例/默认值 |
-| --- | --- | --- | --- | --- | --- |
-| Authorization | Header | String | 是 | 当前 C 端访问令牌 | `Bearer eyJ...` |
-| pageNo | Query | Integer | 否 | 页码 | `1` |
-| pageSize | Query | Integer | 否 | 每页条数 | `20` |
-
-**响应示例：**
-```json
-{
-    "code":  "00000",
-    "message":  "查询成功",
-    "data":  {
-                 "records":  "records",
-                 "status":  "SUCCESS"
-             },
-    "traceId":  "01J7X-EXAMPLE"
-}
-```
-
-| 错误码 | HTTP 状态 | 含义 | 触发场景 |
-| --- | --- | --- | --- |
-| A0402 | 404 | 资源不存在或当前用户无可访问资源 | 请求的业务资源未找到或不可访问 |
-| A0301 | 403 | 无权访问该患者资源 | 资源不属于当前 C 端用户 |
-
-#### 5.7.7 查询报告详情 `GET /reports/{reportId}`
-
-```mermaid
-flowchart LR
-    A[请求报告详情] --> B[校验报告归属] --> C[查询指标] --> D[返回报告]
-```
-
-```plantuml
-@startuml
-participant H5
-participant ReportService
-database PostgreSQL
-H5 -> ReportService: GET /reports/{reportId}
-ReportService -> PostgreSQL: 查询报告及指标且 patient_id=?
-ReportService --> H5: 报告详情
-@enduml
-```
-
-##### RESTFUL API设计
-
-**接口路径：** GET /reports/{reportId}
-
-
-
-**请求参数：**
-
-| 参数 | 位置 | 类型 | 必填 | 描述 | 示例/默认值 |
-| --- | --- | --- | --- | --- | --- |
-| Authorization | Header | String | 是 | 当前 C 端访问令牌 | `Bearer eyJ...` |
-| reportId | Path | Long | 是 | 检查报告 ID | `18001` |
-
-**响应示例：**
-```json
-{
-    "code":  "00000",
-    "message":  "查询成功",
-    "data":  {
-                 "report":  "report",
-                 "status":  "SUCCESS"
-             },
-    "traceId":  "01J7X-EXAMPLE"
-}
-```
-
-| 错误码 | HTTP 状态 | 含义 | 触发场景 |
-| --- | --- | --- | --- |
-| A0402 | 404 | 资源不存在或当前用户无可访问资源 | 请求的业务资源未找到或不可访问 |
-| A0301 | 403 | 无权访问该患者资源 | 资源不属于当前 C 端用户 |
-
-#### 5.7.8 更新用药计划 `PATCH /medication-plans/{planId}`
-
-```mermaid
-flowchart LR
-    A[暂停、恢复或完成] --> B[校验计划归属和状态] --> C[更新计划] --> D[返回状态]
-```
-
-```plantuml
-@startuml
-participant H5
-participant ReminderService
-database PostgreSQL
-H5 -> ReminderService: PATCH /medication-plans/{planId}
-ReminderService -> PostgreSQL: 条件更新 medication_plan
-ReminderService --> H5: 计划新状态
-@enduml
-```
-
-##### RESTFUL API设计
-
-**接口路径：** PATCH /medication-plans/{planId}
-
-
-
-**请求参数：**
-
-| 参数 | 位置 | 类型 | 必填 | 描述 | 示例/默认值 |
-| --- | --- | --- | --- | --- | --- |
-| Authorization | Header | String | 是 | 当前 C 端访问令牌 | `Bearer eyJ...` |
-| planId | Path | 条件必填 | 更新计划时的计划 ID | `19001` |
-| status | Query | String | 否 | 查询状态筛选 | `ACTIVE` |
-| action | Body | String | 条件必填 | 更新动作，暂停、恢复或完成 | `PAUSE` |
-
-**响应示例：**
-```json
-{
-    "code":  "00000",
-    "message":  "操作成功",
-    "data":  {
-                 "medicationPlan":  "medicationPlan",
-                 "status":  "SUCCESS"
-             },
-    "traceId":  "01J7X-EXAMPLE"
-}
-```
-
-| 错误码 | HTTP 状态 | 含义 | 触发场景 |
-| --- | --- | --- | --- |
-| A0402 | 404 | 资源不存在或当前用户无可访问资源 | 请求的业务资源未找到或不可访问 |
-| A0443 | 409 | 当前业务状态不允许该操作 | 资源状态不满足创建、修改或支付条件 |
-| A0301 | 403 | 无权访问该患者资源 | 资源不属于当前 C 端用户 |
-
-#### 5.7.9 确认随访计划 `POST /follow-ups/{followUpId}/confirm`
-
-```mermaid
-flowchart LR
-    A[确认提醒时间] --> B[校验计划归属] --> C[状态改为 CONFIRMED] --> D[返回计划]
-```
-
-```plantuml
-@startuml
-participant H5
-participant FollowUpService
-database PostgreSQL
-H5 -> FollowUpService: POST /follow-ups/{followUpId}/confirm
-FollowUpService -> PostgreSQL: 更新 follow_up_plan 为 CONFIRMED
-FollowUpService --> H5: 已确认的随访计划
-@enduml
-```
-
-##### RESTFUL API设计
-
-**接口路径：** POST /follow-ups/{followUpId}/confirm
-
-
-
-**请求参数：**
-
-| 参数 | 位置 | 类型 | 必填 | 描述 | 示例/默认值 |
-| --- | --- | --- | --- | --- | --- |
-| Authorization | Header | String | 是 | 当前 C 端访问令牌 | `Bearer eyJ...` |
-| followUpId | Path | 条件必填 | 确认随访时的计划 ID | `20001` |
-| status | Query | String | 否 | 查询状态筛选 | `PENDING_CONFIRM` |
-| remindAt | Body | DateTime | 条件必填 | 确认后的提醒时间 | `2026-08-10T09:00:00+08:00` |
-
-**响应示例：**
-```json
-{
-    "code":  "00000",
-    "message":  "操作成功",
-    "data":  {
-                 "followUp":  "followUp",
-                 "status":  "SUCCESS"
-             },
-    "traceId":  "01J7X-EXAMPLE"
-}
-```
-
-| 错误码 | HTTP 状态 | 含义 | 触发场景 |
-| --- | --- | --- | --- |
-| A0402 | 404 | 资源不存在或当前用户无可访问资源 | 请求的业务资源未找到或不可访问 |
-| A0443 | 409 | 当前业务状态不允许该操作 | 资源状态不满足创建、修改或支付条件 |
-| A0301 | 403 | 无权访问该患者资源 | 资源不属于当前 C 端用户 |
-
-#### 5.7.10 标记通知已读 `POST /notifications/{notificationId}/read`
+##### 标记
 
 ```mermaid
 flowchart LR
@@ -2671,11 +2611,9 @@ NotificationService --> H5: read=true
 @enduml
 ```
 
-##### RESTFUL API设计
+###### RESTFUL API设计
 
 **接口路径：** POST /notifications/{notificationId}/read
-
-
 
 **请求参数：**
 
