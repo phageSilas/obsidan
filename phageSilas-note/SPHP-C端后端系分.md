@@ -82,6 +82,26 @@ c-end/backend       // C 端独立 Spring Boot 服务，端口 8082
 | `health`       | 档案、报告、用药提醒、随访             | 禁止访问其他患者的健康记录                  |
 | `notification` | C 端通知查询与已读                | 禁止依赖 B 端用户体系                   |
 | `support`      | 幂等、锁库存、超时释放、支付回调、异步任务     | 禁止暴露 Controller 或承载业务编排        |
+### 2.3 后端技术栈
+| 类别       | 技术/组件                  | 版本                                     | 用途                                            |
+| -------- | ---------------------- | -------------------------------------- | --------------------------------------------- |
+| 开发语言     | Java                   | `17`（当前 POM）                           | C 端后端开发语言；若要与系分的 Java 21 约束一致，应将父 POM 改为 `21` |
+| 应用框架     | Spring Boot            | `3.5.3`                                | Web 服务、配置管理、依赖注入、定时任务                         |
+| Web 框架   | Spring MVC             | 随 Spring Boot `3.5.3`                  | RESTful API、参数校验、全局异常处理                       |
+| ORM 框架   | MyBatis-Plus           | `3.5.7`                                | PostgreSQL 数据访问、Mapper、分页查询                   |
+| 关系数据库    | PostgreSQL + pgvector  | `16`                                   | C 端账号、挂号、问诊、购药、健康档案等数据存储                      |
+| 缓存       | Redis                  | `7`                                    | Token 会话、图形验证码、幂等键、号源/库存预扣                    |
+| 消息队列     | RabbitMQ               | 建议固定 `3.13.x-management`               | 支付超时释放、通知投递、用药提醒、随访任务等异步处理                    |
+| 身份认证     | JWT                    | `0.12.6`                               | C 端独立 JWT Access Token / Refresh Token        |
+| 密码加密     | BCrypt                 | 随 Spring Security Crypto / Boot BOM 管理 | 登录密码与模拟支付密码校验                                 |
+| 参数校验     | Jakarta Validation     | 随 Spring Boot `3.5.3`                  | 请求 DTO 的非空、长度、格式校验                            |
+| JSON 序列化 | Jackson                | 随 Spring Boot `3.5.3`                  | 请求/响应 JSON、时间格式化                              |
+| 数据库驱动    | PostgreSQL JDBC Driver | 由 Spring Boot BOM 管理                   | Java 连接 PostgreSQL                            |
+| 构建工具     | Maven                  | `3.9+` 建议                              | 多模块构建与依赖管理                                    |
+| 简化开发     | Lombok                 | 由 Spring Boot BOM 管理                   | 实体、DTO、日志等样板代码简化                              |
+| 简化开发     | HuTool                 | 由 Spring Boot BOM 管理                   | 提供各种便捷工具类                                     |
+
+
 ### 2.3 核心业务流程
 
 ```mermaid
@@ -121,12 +141,12 @@ flowchart TD
 }
 ```
 
-| 字段 | 类型 | 说明 |
-| --- | --- | --- |
-| code | string | 五位字符串业务码；成功固定为 `00000` |
-| message | string | 面向调用方的简要消息 |
-| data | object | 当前接口的业务数据，失败时为 `null` |
-| traceId | string | 请求追踪 ID |
+| 字段      | 类型     | 说明                     |
+| ------- | ------ | ---------------------- |
+| code    | string | 五位字符串业务码；成功固定为 `00000` |
+| message | string | 面向调用方的简要消息             |
+| data    | object | 当前接口的业务数据，失败时为 `null`  |
+| traceId | string | 请求追踪 ID                |
 
 列表 `data` 固定为：
 
