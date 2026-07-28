@@ -15,7 +15,6 @@
       "未命名.md",
       "高德地图api获取ip地址文档.md",
       "git",
-      "后端系统分析.md",
       "管理系统设计",
       "薪资管理_模块前端系分文档.md",
       "薪资管理_模块后端系分文档.md",
@@ -30,6 +29,19 @@
       "算法",
       "docker",
       "Attachment"
+    ],
+    "管理系统设计": [
+      "管理系统设计/Hutool的使用.md",
+      "管理系统设计/Redis缓存减少数据库压力.md",
+      "管理系统设计/Redis其他功能.md",
+      "管理系统设计/redis分布式锁.md",
+      "管理系统设计/Rabbitmq与消息幂等.md",
+      "管理系统设计/补充入转调离模块的高级功能.md",
+      "管理系统设计/Mybatis-plus的使用.md",
+      "管理系统设计/Attachment"
+    ],
+    "管理系统设计/Attachment": [
+      "管理系统设计/Attachment/image.png"
     ],
     "面试": [
       "面试/Redis",
@@ -613,19 +625,6 @@
       "JAVA基础笔试/基础/Attachment/image-2.png",
       "JAVA基础笔试/基础/Attachment/image-3.png",
       "JAVA基础笔试/基础/Attachment/image.png"
-    ],
-    "管理系统设计": [
-      "管理系统设计/Hutool的使用.md",
-      "管理系统设计/Redis缓存减少数据库压力.md",
-      "管理系统设计/Redis其他功能.md",
-      "管理系统设计/redis分布式锁.md",
-      "管理系统设计/Rabbitmq与消息幂等.md",
-      "管理系统设计/补充入转调离模块的高级功能.md",
-      "管理系统设计/Mybatis-plus的使用.md",
-      "管理系统设计/Attachment"
-    ],
-    "管理系统设计/Attachment": [
-      "管理系统设计/Attachment/image.png"
     ]
   },
   "draggingEnabled": true,
