@@ -4,193 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "eea3cc0e05704859",
+        "id": "a88623d0d3292423",
         "type": "tabs",
         "children": [
           {
-            "id": "1dc78863d841c520",
+            "id": "6ea0bef876bcefa8",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "AI-agent/马丁的笔记/05-react-loop.md",
+                "file": "智慧先锋医院平台产品规格说明书 (1).md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "05-react-loop"
-            }
-          },
-          {
-            "id": "4f01e344c2e91c35",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "高德地图api获取ip地址文档.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "高德地图api获取ip地址文档"
-            }
-          },
-          {
-            "id": "d5c8cf0800a29fc3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "未命名.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "未命名"
-            }
-          },
-          {
-            "id": "b0182a1a73bfc58e",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "通过js获取用户具体位置ip.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "通过js获取用户具体位置ip"
-            }
-          },
-          {
-            "id": "6145073be601a02a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "未命名 2.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "未命名 2"
-            }
-          },
-          {
-            "id": "34ab06768e8991c1",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "关于前端实现随时更新获取后端数据的方法.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "关于前端实现随时更新获取后端数据的方法"
-            }
-          },
-          {
-            "id": "69dd7bc405d9712d",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "关于前端实现随时更新获取后端数据的方法.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "关于前端实现随时更新获取后端数据的方法"
-            }
-          },
-          {
-            "id": "568fe673ea08b612",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "请假管理页开发方案.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "请假管理页开发方案"
-            }
-          },
-          {
-            "id": "0b1c0e7fa0c3a57a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "未命名 3.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "未命名 3"
-            }
-          },
-          {
-            "id": "cda65e7b86b9cbaa",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "工资条管理页可行性结论与后端补充方案.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "工资条管理页可行性结论与后端补充方案"
-            }
-          },
-          {
-            "id": "fbf65388ffabd6bd",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "JAVA/JAVASE/比较抽象的SE基础/枚举类.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "枚举类"
-            }
-          },
-          {
-            "id": "50d8aab562a73fbb",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "重构用户表.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "重构用户表"
-            }
-          },
-          {
-            "id": "c55906632f949a48",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "管理系统设计/补充入转调离模块的高级功能.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "补充入转调离模块的高级功能"
+              "title": "智慧先锋医院平台产品规格说明书 (1)"
             }
           }
-        ],
-        "currentTab": 12
+        ]
       }
     ],
     "direction": "vertical"
@@ -311,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "后端系统分析.md",
+                "file": "智慧先锋医院平台产品规格说明书 (1).md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "后端系统分析 的大纲"
+              "title": "智慧先锋医院平台产品规格说明书 (1) 的大纲"
             }
           }
         ],
@@ -340,8 +171,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "34d6b36d87ac3e98",
+  "active": "6ea0bef876bcefa8",
   "lastOpenFiles": [
+    "后端系统分析.md",
+    "智慧先锋医院平台产品规格说明书 (1).md",
     "管理系统设计/Redis缓存减少数据库压力.md",
     "管理系统设计/补充入转调离模块的高级功能.md",
     "管理系统设计/Rabbitmq与消息幂等.md",
@@ -366,10 +199,8 @@
     "AI-agent/马丁的笔记/05-react-loop.md",
     "AI-agent/名词索引.md",
     "AI-agent/马丁的笔记",
-    "后端系统分析.md",
     "未命名.base",
     "管理系统设计/Hutool的使用.md",
-    "JAVA/规范/通过枚举定义常量与静态定义常量.md",
     "git",
     "JAVA/规范/Attachment/image.png",
     "JAVA/规范/Attachment",
