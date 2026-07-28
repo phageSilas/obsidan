@@ -1,4 +1,4 @@
-﻿# 智愈先锋 C 端传统业务后端系统分析与设计
+# 智愈先锋 C 端传统业务后端系统分析与设计
 
 | 项目 | 内容 |
 | --- | --- |
@@ -150,24 +150,76 @@ flowchart TD
 
 ```plantuml
 @startuml
+' 全局样式配置
+skinparam class {
+    BackgroundColor #F5F5F5
+    BorderColor #6C8EBF
+    ArrowColor #6C8EBF
+    FontName "Microsoft YaHei"
+}
+skinparam linetype ortho
 hide methods
-class CUser { +id: bigint\n+account: varchar\n+passwordHash: varchar\n+status: varchar }
-class PatientProfile { +id: bigint\n+userId: bigint\n+name: varchar\n+idCardNo: varchar }
-class ScheduleSlot { +id: bigint\n+doctorId: bigint\n+startTime: timestamptz\n+totalCount: int\n+availableCount: int }
-class AppointmentOrder { +id: bigint\n+patientId: bigint\n+slotId: bigint\n+status: varchar\n+expireAt: timestamptz }
-class Consultation { +id: bigint\n+appointmentId: bigint\n+status: varchar }
-class Prescription { +id: bigint\n+consultationId: bigint\n+status: varchar }
-class DrugOrder { +id: bigint\n+patientId: bigint\n+status: varchar }
-class PaymentOrder { +id: bigint\n+businessType: varchar\n+businessId: bigint\n+status: varchar }
-CUser "1" *-- "1" PatientProfile
-PatientProfile "1" -- "*" AppointmentOrder
-ScheduleSlot "1" -- "*" AppointmentOrder
-AppointmentOrder "1" -- "0..1" Consultation
-Consultation "1" -- "0..*" Prescription
-PatientProfile "1" -- "*" DrugOrder
-AppointmentOrder "1" -- "1" PaymentOrder
-DrugOrder "1" -- "1" PaymentOrder
+
+' 定义实体类
+class CUser {
+    +id: bigint\n用户ID
+    +account: varchar\n登录账号
+    +passwordHash: varchar\n密码哈希
+    +status: varchar\n账号状态
+}
+class PatientProfile {
+    +id: bigint\n档案ID
+    +userId: bigint\n关联用户ID
+    +name: varchar\n患者姓名
+    +idCardNo: varchar\n身份证号
+}
+class ScheduleSlot {
+    +id: bigint\n排班ID
+    +doctorId: bigint\n关联医生ID
+    +startTime: timestamptz\n开始时间
+    +totalCount: int\n总号数
+    +availableCount: int\n剩余号数
+}
+class AppointmentOrder {
+    +id: bigint\n预约ID
+    +patientId: bigint\n关联患者ID
+    +slotId: bigint\n关联排班ID
+    +status: varchar\n预约状态
+    +expireAt: timestamptz\n过期时间
+}
+class Consultation {
+    +id: bigint\n问诊ID
+    +appointmentId: bigint\n关联预约ID
+    +status: varchar\n问诊状态
+}
+class Prescription {
+    +id: bigint\n处方ID
+    +consultationId: bigint\n关联问诊ID
+    +status: varchar\n处方状态
+}
+class DrugOrder {
+    +id: bigint\n购药订单ID
+    +patientId: bigint\n关联患者ID
+    +status: varchar\n订单状态
+}
+class PaymentOrder {
+    +id: bigint\n支付订单ID
+    +businessType: varchar\n业务类型
+    +businessId: bigint\n关联业务ID
+    +status: varchar\n支付状态
+}
+
+' 定义类关系
+CUser "1" *-- "1" PatientProfile : 组成\n(用户必有档案)
+PatientProfile "1" -- "*" AppointmentOrder : 发起\n(1患者多预约)
+ScheduleSlot "1" -- "*" AppointmentOrder : 包含\n(1排班多预约)
+AppointmentOrder "1" -- "0..1" Consultation : 生成\n(预约可发起问诊)
+Consultation "1" -- "0..*" Prescription : 开具\n(1问诊多处方)
+PatientProfile "1" -- "*" DrugOrder : 发起\n(1患者多购药订单)
+AppointmentOrder "1" -- "1" PaymentOrder : 关联\n(1预约对应1支付)
+DrugOrder "1" -- "1" PaymentOrder : 关联\n(1购药订单对应1支付)
 @enduml
+
 ```
 
 ## 5. API 设计
@@ -246,8 +298,6 @@ AuthService --> H5: 注册成功
 
 **接口路径：** POST /auth/register
 
-
-
 **请求参数：**
 
 | 参数 | 位置 | 类型 | 必填 | 描述 | 示例/默认值 |
@@ -302,8 +352,6 @@ AuthService --> H5: accessToken、refreshToken、expiresIn
 
 **接口路径：** POST /auth/login
 
-
-
 **请求参数：**
 
 | 参数 | 位置 | 类型 | 必填 | 描述 | 示例/默认值 |
@@ -357,8 +405,6 @@ AuthService --> H5: 新 accessToken、新 refreshToken
 
 **接口路径：** POST /auth/token/refresh
 
-
-
 **请求参数：**
 
 | 参数 | 位置 | 类型 | 必填 | 描述 | 示例/默认值 |
@@ -405,8 +451,6 @@ AuthService --> H5: 成功
 ##### RESTFUL API设计
 
 **接口路径：** POST /auth/logout
-
-
 
 **请求参数：**
 
@@ -1185,7 +1229,8 @@ PaymentService --> H5: status、paidAt、expireAt
     "message":  "查询成功",
     "data":  {
                  "id":  8001,
-                 "appointmentOrderId":  7001,`r`n                 "drugOrderId":  null,
+                 "appointmentOrderId":  7001,
+                 "drugOrderId":  null,
                  "amountCent":  5000,
                  "status":  "SUCCESS",
                  "paidAt":  "2026-07-28T10:02:00+08:00",
@@ -2847,7 +2892,7 @@ NotificationService --> H5: read=true
 ### 6.1 关键建表示例
 
 ```sql
--- 说明：本脚本仅创建 C 端业务表；updated_at 由 Spring Boot 应用层维护。
+-- 说明：仅创建 C 端业务表；updated_at 由 Spring Boot 应用层维护。
 
 
 -- C 端独立登录用户表
@@ -3355,6 +3400,3 @@ comment on table notification is 'C端站内通知表';
 | 第二阶段 | 候补、超时任务、库存核对、通知 | 挂号可靠性完善 |
 | 第三阶段 | 问诊、处方、购药订单与提醒 | 诊后购药闭环 |
 | 第四阶段 | 档案、报告、随访与运营监控 | 健康管理闭环 |
-
-
-
