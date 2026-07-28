@@ -1,4 +1,4 @@
-# 智愈先锋 C 端传统业务后端系统分析与设计
+﻿# 智愈先锋 C 端传统业务后端系统分析与设计
 
 | 项目 | 内容 |
 | --- | --- |
@@ -1134,11 +1134,11 @@ PaymentService --> H5: paymentStatus=SUCCESS
     "code":  "00000",
     "message":  "支付成功",
     "data":  {
-                 "paymentId":  8001,
+                 "paymentId":  8002,
                  "status":  "SUCCESS",
-                 "paidAt":  "2026-07-28T10:02:00+08:00"
+                 "paidAt":  "2026-07-29T10:17:00+08:00"
              },
-    "traceId":  "01J7X9W2"
+    "traceId":  "01J7X-EXAMPLE"
 }
 ```
 
@@ -1185,8 +1185,7 @@ PaymentService --> H5: status、paidAt、expireAt
     "message":  "查询成功",
     "data":  {
                  "id":  8001,
-                 "businessType":  "APPOINTMENT",
-                 "businessId":  7001,
+                 "appointmentOrderId":  7001,`r`n                 "drugOrderId":  null,
                  "amountCent":  5000,
                  "status":  "SUCCESS",
                  "paidAt":  "2026-07-28T10:02:00+08:00",
@@ -1282,16 +1281,17 @@ ConsultationService --> H5: consultationId、status
 | X-Idempotency-Key | Header | String | 是 | 防止重复保存的请求键 | `uuid-v7` |
 | appointmentId | Body | Long | 是 | 已支付的挂号订单 ID | `7001` |
 | chiefComplaint | Body | String | 是 | 患者主诉 | `咳嗽发热三天` |
-| submit | Body | Boolean | 是 | 是否提交给医生 | `true` |
+| submit | Body | Boolean | 是 | `false` 保存为 `DRAFT` 草稿，`true` 提交为 `PENDING` 待接诊 | `true` |
 
 **响应示例：**
 ```json
 {
     "code":  "00000",
-    "message":  "操作成功",
+    "message":  "预问诊已提交",
     "data":  {
-                 "consultationId":  "consultationId",
-                 "status":  "SUCCESS"
+                 "consultationId":  10001,
+                 "status":  "PENDING",
+                 "submittedAt":  "2026-07-29T10:10:00+08:00"
              },
     "traceId":  "01J7X-EXAMPLE"
 }
@@ -1299,8 +1299,8 @@ ConsultationService --> H5: consultationId、status
 
 | 错误码 | HTTP 状态 | 含义 | 触发场景 |
 | --- | --- | --- | --- |
-| A0443 | 404 | 资源不存在或当前用户无可访问资源 | 请求的业务资源未找到或不可访问 |
-| A0506 | 409 | 当前业务状态不允许该操作 | 资源状态不满足创建、修改或支付条件 |
+| A0443 | 409 | 当前状态不允许创建预问诊 | 挂号未支付、已取消或问诊状态不允许保存/提交 |
+| A0506 | 409 | 重复请求或幂等冲突 | 相同业务重复提交或幂等键已被其他参数占用 |
 | A0301 | 403 | 无权访问该患者资源 | 资源不属于当前 C 端用户 |
 
 #### 5.4.2 查询问诊记录列表
@@ -1340,8 +1340,18 @@ ConsultationService --> H5: 分页记录
     "code":  "00000",
     "message":  "查询成功",
     "data":  {
-                 "records":  "records",
-                 "status":  "SUCCESS"
+                 "pageNo":  1,
+                 "pageSize":  20,
+                 "total":  1,
+                 "records":  [
+                                 {
+                                     "id":  10001,
+                                     "appointmentId":  7001,
+                                     "doctorName":  "王医生",
+                                     "status":  "PENDING",
+                                     "updatedAt":  "2026-07-29T10:10:00+08:00"
+                                 }
+                             ]
              },
     "traceId":  "01J7X-EXAMPLE"
 }
@@ -1387,8 +1397,23 @@ ConsultationService --> H5: 问诊详情
     "code":  "00000",
     "message":  "查询成功",
     "data":  {
-                 "consultation":  "consultation",
-                 "status":  "SUCCESS"
+                 "id":  10001,
+                 "status":  "IN_PROGRESS",
+                 "preConsultation":  {
+                                         "chiefComplaint":  "咳嗽发热三天",
+                                         "submittedAt":  "2026-07-29T10:10:00+08:00"
+                                     },
+                 "messages":  [
+                                  {
+                                      "id":  11001,
+                                      "senderType":  "DOCTOR",
+                                      "content":  "请问体温最高多少？",
+                                      "createdAt":  "2026-07-29T10:11:00+08:00"
+                                  }
+                              ],
+                 "prescriptionIds":  [
+
+                                     ]
              },
     "traceId":  "01J7X-EXAMPLE"
 }
@@ -1436,10 +1461,11 @@ ConsultationService --> H5: messageId
 ```json
 {
     "code":  "00000",
-    "message":  "操作成功",
+    "message":  "消息已发送",
     "data":  {
-                 "messageId":  "messageId",
-                 "status":  "SUCCESS"
+                 "messageId":  11002,
+                 "senderType":  "PATIENT",
+                 "createdAt":  "2026-07-29T10:12:00+08:00"
              },
     "traceId":  "01J7X-EXAMPLE"
 }
@@ -1447,7 +1473,7 @@ ConsultationService --> H5: messageId
 
 | 错误码 | HTTP 状态 | 含义 | 触发场景 |
 | --- | --- | --- | --- |
-| A0443 | 404 | 资源不存在或当前用户无可访问资源 | 请求的业务资源未找到或不可访问 |
+| A0443 | 409 | 当前状态不允许创建预问诊 | 挂号未支付、已取消或问诊状态不允许保存/提交 |
 | A0430 | 409 | 当前业务状态不允许该操作 | 资源状态不满足创建、修改或支付条件 |
 | A0301 | 403 | 无权访问该患者资源 | 资源不属于当前 C 端用户 |
 
@@ -1487,8 +1513,18 @@ PrescriptionService --> H5: 处方列表或详情
     "code":  "00000",
     "message":  "查询成功",
     "data":  {
-                 "records":  "records",
-                 "status":  "SUCCESS"
+                 "pageNo":  1,
+                 "pageSize":  20,
+                 "total":  1,
+                 "records":  [
+                                 {
+                                     "id":  12001,
+                                     "consultationId":  10001,
+                                     "doctorName":  "王医生",
+                                     "status":  "ISSUED",
+                                     "issuedAt":  "2026-07-29T10:20:00+08:00"
+                                 }
+                             ]
              },
     "traceId":  "01J7X-EXAMPLE"
 }
@@ -1535,8 +1571,20 @@ PrescriptionService --> H5: 处方详情
     "code":  "00000",
     "message":  "查询成功",
     "data":  {
-                 "prescription":  "prescription",
-                 "status":  "SUCCESS"
+                 "id":  12001,
+                 "status":  "ISSUED",
+                 "doctorName":  "王医生",
+                 "items":  [
+                               {
+                                   "drugId":  13001,
+                                   "drugName":  "阿莫西林胶囊",
+                                   "specification":  "0.25g*24粒",
+                                   "dosage":  "0.5g",
+                                   "frequency":  "每日3次",
+                                   "usage":  "口服",
+                                   "durationDays":  5
+                               }
+                           ]
              },
     "traceId":  "01J7X-EXAMPLE"
 }
@@ -1583,8 +1631,10 @@ PrescriptionService --> H5: 解读内容及免责声明
     "code":  "00000",
     "message":  "查询成功",
     "data":  {
-                 "interpretation":  "interpretation",
-                 "status":  "SUCCESS"
+                 "prescriptionId":  12001,
+                 "content":  "请按医嘱服用，如有不适及时就医。",
+                 "disclaimer":  "AI建议仅供参考，不替代医生诊断",
+                 "generatedAt":  "2026-07-29T10:21:00+08:00"
              },
     "traceId":  "01J7X-EXAMPLE"
 }
@@ -1592,7 +1642,7 @@ PrescriptionService --> H5: 解读内容及免责声明
 
 | 错误码 | HTTP 状态 | 含义 | 触发场景 |
 | --- | --- | --- | --- |
-| B0202 | 404 | 资源不存在或当前用户无可访问资源 | 请求的业务资源未找到或不可访问 |
+| B0202 | 409 | 解读结果尚未生成 | 处方或报告解读尚处于生成中或状态冲突 |
 | A0301 | 403 | 无权访问该患者资源 | 资源不属于当前 C 端用户 |
 
 ### 5.5 处方购药与模拟支付（扩展）
@@ -1633,10 +1683,22 @@ PharmacyService --> H5: 药店及库存列表
 {
     "code":  "00000",
     "message":  "查询成功",
-    "data":  {
-                 "pharmacies":  "pharmacies",
-                 "status":  "SUCCESS"
-             },
+    "data":  [
+                 {
+                     "pharmacyId":  14001,
+                     "name":  "健康药房",
+                     "address":  "北京市东城区示例路1号",
+                     "distanceMeter":  850,
+                     "deliveryMethod":  "COURIER",
+                     "items":  [
+                                   {
+                                       "drugId":  13001,
+                                       "availableCount":  20,
+                                       "unitPriceCent":  3500
+                                   }
+                               ]
+                 }
+             ],
     "traceId":  "01J7X-EXAMPLE"
 }
 ```
@@ -1678,17 +1740,27 @@ DrugOrderService --> H5: 订单与 expireAt
 | X-Idempotency-Key | Header | String | 是 | 防止重复下单的请求键 | `uuid-v7` |
 | prescriptionId | Body | Long | 是 | 本人有效处方 ID | `12001` |
 | pharmacyId | Body | Long | 是 | 选定药店 ID | `14001` |
-| deliveryMethod | Body | String | 是 | 取药方式 | `DELIVERY` |
-| deliveryAddress | Body | String | 条件必填 | 配送到家时的收货地址 | `北京市东城区示例路1号` |
+| deliveryAddress | Body | String | 是 | 快递配送收货地址 | `北京市东城区示例路1号` |
 
 **响应示例：**
 ```json
 {
     "code":  "00000",
-    "message":  "操作成功",
+    "message":  "购药订单已创建，请在15分钟内完成支付",
     "data":  {
-                 "drugOrderId":  "drugOrderId",
-                 "status":  "SUCCESS"
+                 "drugOrderId":  15001,
+                 "status":  "PENDING_PAYMENT",
+                 "deliveryMethod":  "COURIER",
+                 "amountCent":  7000,
+                 "expireAt":  "2026-07-29T10:30:00+08:00",
+                 "paymentId":  8002,
+                 "items":  [
+                               {
+                                   "drugId":  13001,
+                                   "drugName":  "阿莫西林胶囊",
+                                   "quantity":  2
+                               }
+                           ]
              },
     "traceId":  "01J7X-EXAMPLE"
 }
@@ -1696,7 +1768,7 @@ DrugOrderService --> H5: 订单与 expireAt
 
 | 错误码 | HTTP 状态 | 含义 | 触发场景 |
 | --- | --- | --- | --- |
-| B0300 | 404 | 资源不存在或当前用户无可访问资源 | 请求的业务资源未找到或不可访问 |
+| B0300 | 409 | 药品库存不足 | 药店可售库存不足以创建购药订单 |
 | A0443 | 409 | 当前业务状态不允许该操作 | 资源状态不满足创建、修改或支付条件 |
 | A0301 | 403 | 无权访问该患者资源 | 资源不属于当前 C 端用户 |
 
@@ -1738,8 +1810,18 @@ DrugOrderService --> H5: 订单数据
     "code":  "00000",
     "message":  "查询成功",
     "data":  {
-                 "records":  "records",
-                 "status":  "SUCCESS"
+                 "pageNo":  1,
+                 "pageSize":  20,
+                 "total":  1,
+                 "records":  [
+                                 {
+                                     "id":  15001,
+                                     "pharmacyName":  "健康药房",
+                                     "status":  "PENDING_PAYMENT",
+                                     "amountCent":  7000,
+                                     "expireAt":  "2026-07-29T10:30:00+08:00"
+                                 }
+                             ]
              },
     "traceId":  "01J7X-EXAMPLE"
 }
@@ -1785,8 +1867,29 @@ DrugOrderService --> H5: 购药订单详情
     "code":  "00000",
     "message":  "查询成功",
     "data":  {
-                 "drugOrder":  "drugOrder",
-                 "status":  "SUCCESS"
+                 "id":  15001,
+                 "status":  "PENDING_PAYMENT",
+                 "pharmacy":  {
+                                  "id":  14001,
+                                  "name":  "健康药房"
+                              },
+                 "delivery":  {
+                                  "method":  "COURIER",
+                                  "address":  "北京市东城区示例路1号"
+                              },
+                 "items":  [
+                               {
+                                   "drugId":  13001,
+                                   "drugName":  "阿莫西林胶囊",
+                                   "quantity":  2,
+                                   "unitPriceCent":  3500
+                               }
+                           ],
+                 "amountCent":  7000,
+                 "payment":  {
+                                 "id":  8002,
+                                 "status":  "PENDING"
+                             }
              },
     "traceId":  "01J7X-EXAMPLE"
 }
@@ -1834,10 +1937,11 @@ DrugOrderService --> H5: cancelled=true
 ```json
 {
     "code":  "00000",
-    "message":  "操作成功",
+    "message":  "购药订单已取消",
     "data":  {
-                 "drugOrderId":  "drugOrderId",
-                 "status":  "SUCCESS"
+                 "drugOrderId":  15001,
+                 "status":  "CANCELLED",
+                 "cancelledAt":  "2026-07-29T10:18:00+08:00"
              },
     "traceId":  "01J7X-EXAMPLE"
 }
@@ -1937,8 +2041,26 @@ HealthRecordService --> H5: 健康档案
     "code":  "00000",
     "message":  "查询成功",
     "data":  {
-                 "healthRecord":  "healthRecord",
-                 "status":  "SUCCESS"
+                 "profile":  {
+                                 "id":  20001,
+                                 "name":  "张三",
+                                 "gender":  "MALE"
+                             },
+                 "allergies":  [
+                                   {
+                                       "id":  16001,
+                                       "allergen":  "青霉素",
+                                       "reaction":  "皮疹"
+                                   }
+                               ],
+                 "medicalHistories":  [
+                                          {
+                                              "id":  17001,
+                                              "content":  "高血压病史5年",
+                                              "recordedAt":  "2026-07-29"
+                                          }
+                                      ],
+                 "summary":  "已记录1项过敏史和1项既往史"
              },
     "traceId":  "01J7X-EXAMPLE"
 }
@@ -1985,10 +2107,11 @@ HealthRecordService --> H5: 过敏史记录
 ```json
 {
     "code":  "00000",
-    "message":  "操作成功",
+    "message":  "过敏史已保存",
     "data":  {
-                 "allergy":  "allergy",
-                 "status":  "SUCCESS"
+                 "id":  16001,
+                 "allergen":  "青霉素",
+                 "reaction":  "皮疹"
              },
     "traceId":  "01J7X-EXAMPLE"
 }
@@ -2034,10 +2157,12 @@ HealthRecordService --> H5: 更新后的过敏史
 ```json
 {
     "code":  "00000",
-    "message":  "操作成功",
+    "message":  "过敏史已更新",
     "data":  {
-                 "allergy":  "allergy",
-                 "status":  "SUCCESS"
+                 "id":  16001,
+                 "allergen":  "青霉素",
+                 "reaction":  "皮疹",
+                 "updatedAt":  "2026-07-29T10:25:00+08:00"
              },
     "traceId":  "01J7X-EXAMPLE"
 }
@@ -2085,10 +2210,11 @@ HealthRecordService --> H5: 既往史记录
 ```json
 {
     "code":  "00000",
-    "message":  "操作成功",
+    "message":  "既往史已保存",
     "data":  {
-                 "history":  "history",
-                 "status":  "SUCCESS"
+                 "id":  17001,
+                 "content":  "高血压病史5年",
+                 "occurredAt":  "2021-01-01"
              },
     "traceId":  "01J7X-EXAMPLE"
 }
@@ -2134,10 +2260,12 @@ HealthRecordService --> H5: 更新后的既往史
 ```json
 {
     "code":  "00000",
-    "message":  "操作成功",
+    "message":  "既往史已更新",
     "data":  {
-                 "history":  "history",
-                 "status":  "SUCCESS"
+                 "id":  17001,
+                 "content":  "高血压病史5年",
+                 "occurredAt":  "2021-01-01",
+                 "updatedAt":  "2026-07-29T10:25:00+08:00"
              },
     "traceId":  "01J7X-EXAMPLE"
 }
@@ -2185,10 +2313,10 @@ ReportService --> H5: 报告数据
 ```json
 {
     "code":  "00000",
-    "message":  "操作成功",
+    "message":  "报告已录入",
     "data":  {
-                 "report":  "report",
-                 "status":  "SUCCESS"
+                 "reportId":  18001,
+                 "status":  "RECORDED"
              },
     "traceId":  "01J7X-EXAMPLE"
 }
@@ -2235,8 +2363,17 @@ ReportService --> H5: 分页报告列表
     "code":  "00000",
     "message":  "查询成功",
     "data":  {
-                 "records":  "records",
-                 "status":  "SUCCESS"
+                 "pageNo":  1,
+                 "pageSize":  20,
+                 "total":  1,
+                 "records":  [
+                                 {
+                                     "id":  18001,
+                                     "reportName":  "血常规",
+                                     "reportDate":  "2026-07-29",
+                                     "indicatorCount":  1
+                                 }
+                             ]
              },
     "traceId":  "01J7X-EXAMPLE"
 }
@@ -2282,8 +2419,17 @@ ReportService --> H5: 报告详情
     "code":  "00000",
     "message":  "查询成功",
     "data":  {
-                 "report":  "report",
-                 "status":  "SUCCESS"
+                 "id":  18001,
+                 "reportName":  "血常规",
+                 "reportDate":  "2026-07-29",
+                 "indicators":  [
+                                    {
+                                        "name":  "白细胞计数",
+                                        "value":  "12.5",
+                                        "unit":  "10^9/L",
+                                        "referenceRange":  "3.5-9.5"
+                                    }
+                                ]
              },
     "traceId":  "01J7X-EXAMPLE"
 }
@@ -2329,8 +2475,15 @@ ReportService --> H5: 指标说明、就医建议、免责声明
     "code":  "00000",
     "message":  "查询成功",
     "data":  {
-                 "interpretation":  "interpretation",
-                 "status":  "SUCCESS"
+                 "reportId":  18001,
+                 "indicatorExplanations":  [
+                                               {
+                                                   "indicator":  "白细胞计数",
+                                                   "explanation":  "该指标用于反映白细胞数量，建议结合医生意见判断。"
+                                               }
+                                           ],
+                 "suggestedDepartmentId":  301,
+                 "disclaimer":  "AI建议仅供参考，不替代医生诊断"
              },
     "traceId":  "01J7X-EXAMPLE"
 }
@@ -2338,7 +2491,7 @@ ReportService --> H5: 指标说明、就医建议、免责声明
 
 | 错误码 | HTTP 状态 | 含义 | 触发场景 |
 | --- | --- | --- | --- |
-| B0202 | 404 | 资源不存在或当前用户无可访问资源 | 请求的业务资源未找到或不可访问 |
+| B0202 | 409 | 解读结果尚未生成 | 处方或报告解读尚处于生成中或状态冲突 |
 | A0301 | 403 | 无权访问该患者资源 | 资源不属于当前 C 端用户 |
 
 #### 5.6.6 查询与更新用药计划
@@ -2377,11 +2530,17 @@ ReminderService --> H5: 用药计划
 ```json
 {
     "code":  "00000",
-    "message":  "操作成功",
-    "data":  {
-                 "medicationPlan":  "medicationPlan",
-                 "status":  "SUCCESS"
-             },
+    "message":  "查询成功",
+    "data":  [
+                 {
+                     "id":  19001,
+                     "drugName":  "阿莫西林胶囊",
+                     "dosage":  "0.5g",
+                     "frequency":  "每日3次",
+                     "nextReminderAt":  "2026-07-29T14:00:00+08:00",
+                     "status":  "ACTIVE"
+                 }
+             ],
     "traceId":  "01J7X-EXAMPLE"
 }
 ```
@@ -2427,10 +2586,11 @@ ReminderService --> H5: 计划新状态
 ```json
 {
     "code":  "00000",
-    "message":  "操作成功",
+    "message":  "用药计划已更新",
     "data":  {
-                 "medicationPlan":  "medicationPlan",
-                 "status":  "SUCCESS"
+                 "id":  19001,
+                 "status":  "PAUSED",
+                 "nextReminderAt":  null
              },
     "traceId":  "01J7X-EXAMPLE"
 }
@@ -2479,11 +2639,16 @@ FollowUpService --> H5: 随访计划
 ```json
 {
     "code":  "00000",
-    "message":  "操作成功",
-    "data":  {
-                 "followUp":  "followUp",
-                 "status":  "SUCCESS"
-             },
+    "message":  "查询成功",
+    "data":  [
+                 {
+                     "id":  20001,
+                     "type":  "复查",
+                     "dueAt":  "2026-08-10T09:00:00+08:00",
+                     "content":  "两周后复查血常规",
+                     "status":  "PENDING_CONFIRM"
+                 }
+             ],
     "traceId":  "01J7X-EXAMPLE"
 }
 ```
@@ -2528,10 +2693,11 @@ FollowUpService --> H5: 已确认的随访计划
 ```json
 {
     "code":  "00000",
-    "message":  "操作成功",
+    "message":  "随访计划已确认",
     "data":  {
-                 "followUp":  "followUp",
-                 "status":  "SUCCESS"
+                 "id":  20001,
+                 "status":  "CONFIRMED",
+                 "remindAt":  "2026-08-10T09:00:00+08:00"
              },
     "traceId":  "01J7X-EXAMPLE"
 }
@@ -2579,10 +2745,21 @@ NotificationService --> H5: 通知数据
 ```json
 {
     "code":  "00000",
-    "message":  "操作成功",
+    "message":  "查询成功",
     "data":  {
-                 "notifications":  "notifications",
-                 "status":  "SUCCESS"
+                 "pageNo":  1,
+                 "pageSize":  20,
+                 "total":  1,
+                 "records":  [
+                                 {
+                                     "id":  21001,
+                                     "type":  "APPOINTMENT",
+                                     "title":  "挂号成功",
+                                     "content":  "您已成功预约王医生。",
+                                     "read":  false,
+                                     "createdAt":  "2026-07-29T10:17:00+08:00"
+                                 }
+                             ]
              },
     "traceId":  "01J7X-EXAMPLE"
 }
@@ -2629,10 +2806,11 @@ NotificationService --> H5: read=true
 ```json
 {
     "code":  "00000",
-    "message":  "操作成功",
+    "message":  "通知已标记为已读",
     "data":  {
-                 "notifications":  "notifications",
-                 "status":  "SUCCESS"
+                 "id":  21001,
+                 "read":  true,
+                 "readAt":  "2026-07-29T10:27:00+08:00"
              },
     "traceId":  "01J7X-EXAMPLE"
 }
@@ -2653,10 +2831,11 @@ NotificationService --> H5: read=true
 | `c_refresh_token`                             | C 端刷新令牌会话 | `token_hash` 唯一，`user_id`，`expired_at`，`revoked_at` |
 | `patient_profile`                             | 患者基础资料    | `user_id` 唯一，姓名、性别、生日、加密联系方式                        |
 | `patient_allergy` / `patient_medical_history` | 健康病史      | `patient_id` 外键与归属索引                                |
+| `triage_assessment` | 导诊评估记录 | 患者、输入快照、紧急程度与科室推荐快照 |
 | `department` / `doctor` / `schedule_slot`     | 挂号资源      | 启用状态；时段唯一 `(doctor_id,start_time)`                  |
 | `appointment_order`                           | 挂号订单      | `(patient_id,slot_id)` 的有效订单唯一约束，状态、到期时间            |
 | `appointment_waitlist`                        | 候补队列      | `(patient_id,slot_id)` 唯一，`queue_no`                |
-| `payment_order`                               | 抽象支付单     | `business_type + business_id` 唯一，金额、支付状态、到期时间       |
+| `payment_order` | 抽象支付单 | 挂号或购药订单二选一外键，金额、支付状态、到期时间 |
 | `consultation` / `consultation_message`       | 问诊与文字消息   | `appointment_id` 唯一，按问诊和发送时间索引                      |
 | `prescription` / `prescription_item`          | 医生签发处方    | 处方状态、药品、频次、用法、疗程                                    |
 | `pharmacy` / `pharmacy_drug_stock`            | 药店和药品库存   | `(pharmacy_id,drug_id)` 唯一，`available_count >= 0`   |
@@ -2745,6 +2924,19 @@ create table if not exists patient_medical_history (
 );
 create index if not exists idx_patient_history_patient on patient_medical_history(patient_id) where deleted_at is null;
 comment on table patient_medical_history is '患者既往病史表';
+
+-- 导诊评估记录表
+create table if not exists triage_assessment (
+    id bigint generated by default as identity primary key, -- 导诊评估主键
+    patient_id bigint not null references patient_profile(id), -- 发起评估的患者
+    symptom_input jsonb not null, -- 症状、病史和体温等输入快照
+    urgency varchar(20) not null, -- 紧急程度
+    recommended_departments jsonb not null default '[]'::jsonb, -- 推荐科室和理由快照
+    created_at timestamptz not null default now(), -- 创建时间
+    constraint ck_triage_assessment_urgency check (urgency in ('LOW', 'MEDIUM', 'HIGH'))
+);
+create index if not exists idx_triage_assessment_patient_created on triage_assessment(patient_id, created_at desc);
+comment on table triage_assessment is '患者导诊评估记录表';
 
 -- 医院科室表
 create table if not exists department (
@@ -2845,8 +3037,8 @@ comment on table appointment_waitlist is '挂号候补队列表';
 -- 支付抽象订单表
 create table if not exists payment_order (
     id bigint generated by default as identity primary key, -- 支付单主键
-    business_type varchar(30) not null, -- 关联业务类型
-    business_id bigint not null, -- 关联业务主键
+    appointment_order_id bigint references appointment_order(id), -- 关联挂号订单
+    drug_order_id bigint, -- 关联购药订单，后续通过外键约束关联
     payer_user_id bigint not null references c_user(id), -- 付款C端用户
     amount_cent integer not null, -- 应付金额，单位分
     status varchar(20) not null default 'PENDING', -- 支付状态
@@ -2855,15 +3047,16 @@ create table if not exists payment_order (
     provider_transaction_id varchar(128), -- 外部支付流水号
     created_at timestamptz not null default now(), -- 创建时间
     updated_at timestamptz not null default now(), -- 更新时间
-    constraint uk_payment_business unique (business_type, business_id),
     constraint uk_payment_provider_transaction unique (provider_transaction_id),
-    constraint ck_payment_type check (business_type in ('APPOINTMENT', 'DRUG_ORDER')),
+    constraint ck_payment_business check (num_nonnulls(appointment_order_id, drug_order_id) = 1),
     constraint ck_payment_status check (status in ('PENDING', 'SUCCESS', 'FAILED', 'CLOSED')),
     constraint ck_payment_amount check (amount_cent >= 0)
 );
 create index if not exists idx_payment_payer_created on payment_order(payer_user_id, created_at desc);
 create index if not exists idx_payment_expire on payment_order(expire_at) where status = 'PENDING';
-comment on table payment_order is '抽象支付订单表，业务关联由应用层保证';
+create unique index if not exists uk_payment_appointment_order on payment_order(appointment_order_id) where appointment_order_id is not null;
+create unique index if not exists uk_payment_drug_order on payment_order(drug_order_id) where drug_order_id is not null;
+comment on table payment_order is '抽象支付订单表，且仅关联一个挂号订单或购药订单';
 
 -- 在线问诊表
 create table if not exists consultation (
@@ -2871,14 +3064,15 @@ create table if not exists consultation (
     appointment_id bigint not null references appointment_order(id), -- 关联挂号订单
     patient_id bigint not null references patient_profile(id), -- 问诊患者
     doctor_id bigint not null references doctor(id), -- 接诊医生
-    status varchar(20) not null default 'PENDING', -- 问诊状态
+    status varchar(20) not null default 'DRAFT', -- 问诊状态
     pre_consultation jsonb not null default '{}'::jsonb, -- 预问诊结构化内容
+    pre_consultation_submitted_at timestamptz, -- 预问诊提交给医生的时间
     started_at timestamptz, -- 问诊开始时间
     completed_at timestamptz, -- 问诊结束时间
     created_at timestamptz not null default now(), -- 创建时间
     updated_at timestamptz not null default now(), -- 更新时间
     constraint uk_consultation_appointment unique (appointment_id),
-    constraint ck_consultation_status check (status in ('PENDING', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED'))
+    constraint ck_consultation_status check (status in ('DRAFT', 'PENDING', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED'))
 );
 create index if not exists idx_consultation_patient_created on consultation(patient_id, created_at desc);
 create index if not exists idx_consultation_doctor_status on consultation(doctor_id, status, created_at desc);
@@ -2993,8 +3187,8 @@ create table if not exists drug_order (
     prescription_id bigint not null references prescription(id), -- 使用处方
     pharmacy_id bigint not null references pharmacy(id), -- 供药药店
     status varchar(20) not null default 'PENDING_PAYMENT', -- 购药订单状态
-    delivery_method varchar(20) not null, -- 取药方式
-    delivery_address varchar(500), -- 配送地址
+    delivery_method varchar(20) not null default 'COURIER', -- 固定快递配送方式
+    delivery_address varchar(500) not null, -- 快递配送收货地址
     amount_cent integer not null, -- 订单金额，单位分
     expire_at timestamptz, -- 待支付到期时间
     paid_at timestamptz, -- 支付时间
@@ -3002,13 +3196,17 @@ create table if not exists drug_order (
     created_at timestamptz not null default now(), -- 创建时间
     updated_at timestamptz not null default now(), -- 更新时间
     constraint ck_drug_order_status check (status in ('DRAFT', 'PENDING_PAYMENT', 'PAID', 'CANCELLED', 'EXPIRED')),
-    constraint ck_drug_order_delivery check (delivery_method in ('PICKUP', 'DELIVERY')),
-    constraint ck_drug_order_address check (delivery_method <> 'DELIVERY' or delivery_address is not null),
+    constraint ck_drug_order_delivery check (delivery_method = 'COURIER'),
     constraint ck_drug_order_amount check (amount_cent >= 0)
 );
 create index if not exists idx_drug_order_patient_created on drug_order(patient_id, created_at desc);
 create index if not exists idx_drug_order_expire on drug_order(expire_at) where status = 'PENDING_PAYMENT';
 comment on table drug_order is 'C端处方购药订单表';
+
+-- 补充购药订单支付外键，避免 payment_order 的多态关联产生孤儿数据
+alter table payment_order
+    add constraint fk_payment_drug_order
+    foreign key (drug_order_id) references drug_order(id);
 
 -- 购药订单药品明细表
 create table if not exists drug_order_item (
@@ -3157,3 +3355,6 @@ comment on table notification is 'C端站内通知表';
 | 第二阶段 | 候补、超时任务、库存核对、通知 | 挂号可靠性完善 |
 | 第三阶段 | 问诊、处方、购药订单与提醒 | 诊后购药闭环 |
 | 第四阶段 | 档案、报告、随访与运营监控 | 健康管理闭环 |
+
+
+
