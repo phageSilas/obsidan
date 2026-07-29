@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "SPHP-C端后端系分.md",
+                "file": "前端系分模版.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "SPHP-C端后端系分"
+              "title": "前端系分模版"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "SPHP-C端后端系分.md",
+                "file": "前端系分模版.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "SPHP-C端后端系分 的大纲"
+              "title": "前端系分模版 的大纲"
             }
           }
         ],
@@ -173,8 +173,9 @@
   },
   "active": "6ea0bef876bcefa8",
   "lastOpenFiles": [
-    "SPHP-C端后端系分 1.md",
     "SPHP-C端后端系分.md",
+    "前端系分模版.md",
+    "SPHP-C端后端系分 1.md",
     "智慧先锋医院平台产品规格说明书.md",
     "智慧先锋医院平台产品规格说明书 (1).md",
     "后端系统分析.md",
@@ -198,7 +199,6 @@
     "未命名 2.md",
     "通过js获取用户具体位置ip.md",
     "未命名.md",
-    "高德地图api获取ip地址文档.md",
     "AI-agent/马丁的笔记",
     "未命名.base",
     "git",
