@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "SPHP-C端后端系分.md",
+                "file": "SPHP-C端后端系分 2.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "SPHP-C端后端系分"
+              "title": "SPHP-C端后端系分 2"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "SPHP-C端后端系分.md",
+                "file": "SPHP-C端后端系分 2.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "SPHP-C端后端系分 的大纲"
+              "title": "SPHP-C端后端系分 2 的大纲"
             }
           }
         ],
@@ -171,13 +171,14 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "6ea0bef876bcefa8",
+  "active": "34d6b36d87ac3e98",
   "lastOpenFiles": [
+    "SPHP-C端后端系分 1.md",
+    "SPHP-C端后端系分.md",
+    "SPHP-C端后端系分 2.md",
     "前端系分模版.md",
     "SPHP-C端前端系分.md",
     "前端系统分析模板.md",
-    "SPHP-C端后端系分.md",
-    "SPHP-C端后端系分 1.md",
     "智慧先锋医院平台产品规格说明书.md",
     "智慧先锋医院平台产品规格说明书 (1).md",
     "后端系统分析.md",
@@ -198,7 +199,6 @@
     "请假管理页开发方案.md",
     "关于前端实现随时更新获取后端数据的方法.md",
     "未命名 1.md",
-    "未命名 2.md",
     "AI-agent/马丁的笔记",
     "未命名.base",
     "git",

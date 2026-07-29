@@ -1,10 +1,10 @@
-# 智愈先锋 C 端传统业务后端系统分析与设计
+# 智愈先锋 C 端传统业务及 Agent-BFF 后端系统分析与设计
 
 | 项目 | 内容 |
 | --- | --- |
 | 产品名称 | 智愈先锋 AI 驱动医疗健康平台 |
-| 文档范围 | H5 C 端传统业务，不包含 Agent 对话、工具调用、确认编排与审计接口 |
-| 文档版本 | V1.0 |
+| 文档范围 | H5 C 端传统业务及内置 Agent-BFF；不包含 Python Agent 的模型推理、提示词和自主工具实现 |
+| 文档版本 | V1.1 |
 | 技术基线 | Java 21、Spring Boot、PostgreSQL、Redis |
 | 编写日期 | 2026-07-28 |
 
@@ -13,12 +13,15 @@
 | 日期 | 版本 | 修订说明 | 作者 |
 | --- | --- | --- | --- |
 | 2026-07-28 | V1.0 | 初版：C 端传统业务系统分析与接口设计 | 后端团队 |
+| 2026-07-29 | V1.1 | 新增内置 Agent-BFF、统一 SSE、工具回调、执行上下文与审计设计 | 后端团队 |
 
 ## 2. 项目背景与边界
 
 患者通过 H5 完成账号注册登录、手动挂号、文字问诊、处方购药和健康管理。C 端账号系统与医院 B 端账号系统完全独立：两端不共享用户表、角色、JWT 签发密钥、刷新令牌或权限。
 
 本期 MVP 必做：认证、科室/医生/号源查询、挂号锁号、防超卖、模拟支付和挂号订单。在线问诊、购药、档案、提醒和随访按完整闭环设计。所有导诊、报告和处方解读仅展示健康说明，不得形成诊断结论、修改处方或替代执业医生。
+
+为降低 Python Agent 的传统后端对接成本，C 端单体内新增 Agent-BFF 分层。BFF 统一负责 H5 对话 SSE、调用 Python Agent、执行工具、用户上下文、数据权限、错误码转换和审计。Python Agent 仅维护 Function Calling Schema 与模型推理，不直接持有 C 端 JWT，不维护传统业务 API 路径、HTTP 调用细节或业务码映射。
 
 ### 2.1 功能模块树
 
@@ -37,10 +40,15 @@ C 端传统业务
 ├── 处方购药（扩展）
 │   ├── 药店库存查询、购药草稿、模拟支付
 │   └── 药品订单查询
-└── 健康管理（扩展）
+├── 健康管理（扩展）
     ├── 档案、过敏史、既往史、检查报告
     ├── 用药计划、随访计划
     └── 通知
+└── Agent-BFF（扩展）
+    ├── H5 对话 SSE、Python Agent 流式调用
+    ├── 工具回调、执行上下文、工具白名单
+    ├── 同进程传统业务 Service 适配与结果转换
+    └── Agent 操作审计
 ```
 
 ### 2.2 项目结构
@@ -63,7 +71,14 @@ c-end/backend       // C 端独立 Spring Boot 服务，端口 8082
         │       ├── consultation/      // 预问诊、文字问诊、处方查询与解读
         │       ├── order/      / 药店库存查询、购药订单、支付单
         │       ├── health/    // 档案、过敏史、既往史、报告、提醒、随访
-        │       └── notification/     // 站内通知、已读状态
+        │       ├── notification/     // 站内通知、已读状态
+        │       └── agentbff/         // H5 对话、Python Agent 适配、工具执行与审计
+        │           ├── controller/   // SSE 对话与 Agent 内部工具回调入口
+        │           ├── service/      // 会话编排、执行上下文、结果转换
+        │           ├── client/       // Python Agent 流式 HTTP 客户端
+        │           ├── tool/         // 工具注册、参数校验、传统 Service 适配
+        │           ├── security/     // 内部 API Key 与执行上下文校验
+        │           └── audit/        // Agent 会话与工具执行审计
         └── resources/
             ├── application.yml  // C 端服务配置
             └── mapper/           // MyBatis XML（仅复杂 SQL）
@@ -81,7 +96,28 @@ c-end/backend       // C 端独立 Spring Boot 服务，端口 8082
 | `order`        | 药店库存、仅快递配送购药订单、支付单        | 禁止将支付逻辑散落到挂号/健康模块              |
 | `health`       | 档案、报告、用药提醒、随访             | 禁止访问其他患者的健康记录                  |
 | `notification` | C 端通知查询与已读                | 禁止依赖 B 端用户体系                   |
+| `agentbff`     | H5 对话 SSE、Python Agent 适配、工具执行、上下文和审计 | 禁止直接访问数据库；禁止执行支付、处方签发/修改或诊断结论 |
 | `support`      | 幂等、锁库存、超时释放、支付回调、异步任务     | 禁止暴露 Controller 或承载业务编排        |
+### 2.3 后端技术栈
+| 类别       | 技术/组件                  | 版本                       | 用途                                            |
+| -------- | ---------------------- | ------------------------ | --------------------------------------------- |
+| 开发语言     | Java                   | `17`（当前 POM）             | C 端后端开发语言；若要与系分的 Java 21 约束一致，应将父 POM 改为 `21` |
+| 应用框架     | Spring Boot            | `3.5.3`                  | Web 服务、配置管理、依赖注入、定时任务                         |
+| Web 框架   | Spring MVC             | 随 Spring Boot `3.5.3`    | RESTful API、参数校验、全局异常处理                       |
+| ORM 框架   | MyBatis-Plus           | `3.5.7`                  | PostgreSQL 数据访问、Mapper、分页查询                   |
+| 关系数据库    | PostgreSQL + pgvector  | `16`                     | C 端账号、挂号、问诊、购药、健康档案等数据存储                      |
+| 缓存       | Redis                  | `7`                      | Token 会话、图形验证码、幂等键、号源/库存预扣                    |
+| 消息队列     | RabbitMQ               | 建议固定 `3.13.x-management` | 支付超时释放、通知投递、用药提醒、随访任务等异步处理                    |
+| 身份认证     | JWT                    | `0.12.6`                 | C 端独立 JWT Access Token / Refresh Token        |
+| 参数校验     | Jakarta Validation     | 随 Spring Boot `3.5.3`    | 请求 DTO 的非空、长度、格式校验                            |
+| JSON 序列化 | Jackson                | 随 Spring Boot `3.5.3`    | 请求/响应 JSON、时间格式化                              |
+| 数据库驱动    | PostgreSQL JDBC Driver | 由 Spring Boot BOM 管理     | Java 连接 PostgreSQL                            |
+| 构建工具     | Maven                  | `3.9+` 建议                | 多模块构建与依赖管理                                    |
+| 简化开发     | Lombok                 | 由 Spring Boot BOM 管理     | 实体、DTO、日志等样板代码简化                              |
+| 简化开发     | HuTool                 | 由 Spring Boot BOM 管理     | 提供各种便捷工具类                                     |
+| Agent 服务   | Python Agent           | 由 Agent 团队独立管理        | 模型推理、Function Calling Schema、对话编排；由 C 端 BFF 通过 HTTP 调用 |
+
+
 ### 2.3 核心业务流程
 
 ```mermaid
@@ -98,6 +134,24 @@ flowchart TD
     J --> K[支付、用药提醒与随访]
 ```
 
+### 2.4 Agent-BFF 架构与边界
+
+```mermaid
+flowchart LR
+    H5[H5 C 端] -->|Bearer Token / SSE| BFF[Agent-BFF\nC 端 Spring Boot 单体]
+    BFF -->|不透传 C 端 JWT| Agent[Python Agent]
+    Agent -->|X-Agent-Internal-Key\nPOST /internal/agent/tool-executions| BFF
+    BFF -->|同进程 Service 调用| Biz[认证、挂号、问诊、购药、健康模块]
+    Biz --> Infra[PostgreSQL / Redis / RabbitMQ]
+    BFF -->|统一 message/tool_call/tool_result/done| H5
+```
+
+- BFF 不是网关，不新增微服务部署；它是 `c-end/backend` 内部的适配分层。
+- Python Agent 只能声明工具意图和业务参数，真实的用户身份、患者归属、幂等、库存和状态机校验必须由 BFF 与传统业务模块执行。
+- Agent 可以执行查询、导诊记录、挂号、候补、购药订单、提醒和随访等白名单工具；支付、支付密码、处方签发/修改和诊断结论均不向 Agent 暴露工具。
+
+
+> **演示环境安全说明：** 本项目为本地/课堂演示，密码、手机号、身份证号和药店联系电话按存储。任何生产环境、联网部署或真实患者数据场景，必须改用 BCrypt 密码哈希、敏感字段加密与访问审计。接口响应不得返回密码，手机号和身份证号仅以 `***` 形式脱敏展示。
 ## 3. 全局接口约定
 
 ### 3.1 基础约定
@@ -121,12 +175,12 @@ flowchart TD
 }
 ```
 
-| 字段 | 类型 | 说明 |
-| --- | --- | --- |
-| code | string | 五位字符串业务码；成功固定为 `00000` |
-| message | string | 面向调用方的简要消息 |
-| data | object | 当前接口的业务数据，失败时为 `null` |
-| traceId | string | 请求追踪 ID |
+| 字段      | 类型     | 说明                     |
+| ------- | ------ | ---------------------- |
+| code    | string | 五位字符串业务码；成功固定为 `00000` |
+| message | string | 面向调用方的简要消息             |
+| data    | object | 当前接口的业务数据，失败时为 `null`  |
+| traceId | string | 请求追踪 ID                |
 
 列表 `data` 固定为：
 
@@ -157,6 +211,8 @@ flowchart TD
 | `A0240` | 用户验证码错误 | 用户 | 图形验证码错误、过期或已使用 |
 | `A0241` | 用户验证码尝试次数超限 | 用户 | 验证码请求或校验超过频控阈值 |
 | `A0301` | 访问未授权 | 用户 | 缺少有效令牌或访问非本人资源 |
+| `A0310` | Agent 内部调用认证失败 | 用户 | `X-Agent-Internal-Key` 缺失或校验失败 |
+| `A0311` | Agent 执行上下文无效 | 用户 | `executionContextId` 不存在、过期或不属于当前会话 |
 | `A0341` | 用户签名异常 | 用户 | 支付渠道回调签名不匹配 |
 | `A0400` | 用户请求参数错误 | 用户 | 参数格式、必填项或资料校验失败 |
 | `A0402` | 无效的用户输入 | 用户 | 路径或查询中指定的业务资源不存在 |
@@ -164,6 +220,8 @@ flowchart TD
 | `A0430` | 用户输入内容非法 | 用户 | 症状、消息等内容为空、超长或不合规 |
 | `A0441` | 用户支付超时 | 用户 | 超过 15 分钟支付窗口 |
 | `A0443` | 订单已关闭或状态不可操作 | 用户 | 已关闭订单、未支付挂号或不允许的状态转换 |
+| `A0460` | Agent 工具不允许执行 | 用户 | 工具未注册，或尝试调用支付、处方、诊断等禁止工具 |
+| `A0461` | Agent 工具参数错误 | 用户 | 工具名、`toolCallId` 或 `arguments` 不符合 Schema |
 | `A0501` | 请求次数超出限制 | 用户 | 用户访问超过频率限制 |
 | `A0506` | 用户重复请求 | 用户 | 幂等键冲突、重复挂号、重复候补或重复创建问诊 |
 | `B0001` | 系统执行出错 | 系统 | 系统内部未预期异常 |
@@ -185,6 +243,96 @@ flowchart TD
 | 提醒 | `ACTIVE`、`PAUSED`、`COMPLETED` |
 | 随访 | `PENDING_CONFIRM`、`CONFIRMED`、`COMPLETED`、`CANCELLED` |
 
+### 3.5 Agent-BFF 接口约定
+
+#### 3.5.1 H5 对话流接口
+
+**接口路径：** `POST /api/c/v1/agent/chat/stream`
+
+**接口信息：** C 端登录用户调用；响应类型为 `text/event-stream`。BFF 从当前 `SecurityContext` 获取用户身份，创建短期执行上下文后调用 Python Agent，绝不向 Python Agent 透传 C 端 JWT。
+
+| 参数 | 位置 | 类型 | 必填 | 描述 | 示例/默认值 |
+| --- | --- | --- | --- | --- | --- |
+| `Authorization` | Header | string | 是 | C 端 Access Token | `Bearer eyJ...` |
+| `content` | JSON Body | string | 是 | 用户本次对话内容 | `帮我查李医生明天的号` |
+| `sessionId` | JSON Body | string | 否 | 会话 ID；为空时 BFF 创建 | `agent-session-001` |
+| `patientId` | JSON Body | long | 否 | 当前就诊人 ID；BFF 校验其归属 | `1001` |
+
+**SSE 事件契约：**
+
+| 事件 | data 字段 | 说明 |
+| --- | --- | --- |
+| `message` | `sessionId`、`content` | Agent 生成的文本片段 |
+| `tool_call` | `toolCallId`、`toolName`、`arguments` | Agent 请求执行工具 |
+| `tool_result` | `toolCallId`、`success`、`code`、`message`、`data` | BFF 执行工具后的统一结果 |
+| `error` | `code`、`message`、`traceId` | 对话、调用或工具执行异常 |
+| `done` | `sessionId`、`traceId` | 本轮流式响应结束 |
+
+```text
+event: tool_result
+data: {"toolCallId":"call-001","success":true,"code":"00000","message":"查询成功","data":{"doctorName":"李医生","availableSlots":[{"slotId":3001,"remainingCount":3}]},"traceId":"01J7X..."}
+```
+
+#### 3.5.2 Python Agent 工具回调接口
+
+**接口路径：** `POST /internal/agent/tool-executions`
+
+**接口信息：** 仅供 Python Agent 回调。该接口不接受 H5 Bearer Token；BFF 以 `X-Agent-Internal-Key` 校验调用方，再以 Redis 执行上下文恢复当前 C 端用户和就诊人范围。
+
+| 参数 | 位置 | 类型 | 必填 | 描述 | 示例/默认值 |
+| --- | --- | --- | --- | --- | --- |
+| `X-Agent-Internal-Key` | Header | string | 是 | Python Agent 服务内部密钥；仅从配置或环境变量读取 | `***` |
+| `executionContextId` | JSON Body | string | 是 | BFF 为本轮对话创建的短期上下文 ID | `ctx-01J7X...` |
+| `toolCallId` | JSON Body | string | 是 | Agent 本次工具调用唯一 ID；用于审计和防重 | `call-001` |
+| `toolName` | JSON Body | string | 是 | 白名单中的 Function Calling 工具名 | `query_schedule_slots` |
+| `arguments` | JSON Body | object | 是 | 对应工具的业务参数；不得包含 JWT、密码或支付信息 | `{ "doctorId": 12, "date": "2026-07-30" }` |
+
+```json
+{
+  "executionContextId": "ctx-01J7X...",
+  "toolCallId": "call-001",
+  "toolName": "query_schedule_slots",
+  "arguments": {
+    "doctorId": 12,
+    "date": "2026-07-30"
+  }
+}
+```
+
+**响应示例：**
+
+```json
+{
+  "success": true,
+  "code": "00000",
+  "message": "查询成功",
+  "data": {
+    "doctorName": "李医生",
+    "availableSlots": [
+      {
+        "slotId": 3001,
+        "startTime": "09:00",
+        "endTime": "09:30",
+        "remainingCount": 3,
+        "feeCent": 2000
+      }
+    ]
+  },
+  "traceId": "01J7X..."
+}
+```
+
+| 业务码 | HTTP 状态 | 含义 | 触发场景 |
+| --- | --- | --- | --- |
+| `00000` | `200` | 工具执行成功 | BFF 调用传统业务 Service 成功 |
+| `A0310` | `401` | Agent 内部调用认证失败 | API Key 缺失或不匹配 |
+| `A0311` | `401` | Agent 执行上下文无效 | 上下文过期、已删除或会话不匹配 |
+| `A0460` | `403` | Agent 工具不允许执行 | 工具不在白名单或属于支付/处方/诊断类操作 |
+| `A0461` | `400` | Agent 工具参数错误 | 工具参数未通过 Schema 或业务 DTO 校验 |
+| `A0301` | `403` | 访问未授权 | 当前上下文用户无权访问患者或业务资源 |
+| `B0201` | `409` | 系统高并发库存竞争 | Agent 创建挂号时号源已被并发占用 |
+| `B0300` | `409` | 系统资源或库存不足 | Agent 创建购药订单时库存不足 |
+
 ## 4. 核心领域模型
 
 ```plantuml
@@ -203,7 +351,7 @@ hide methods
 class CUser {
     +id: bigint\n用户ID
     +account: varchar\n登录账号
-    +passwordHash: varchar\n密码哈希
+    +password: varchar\n密码（仅演示环境）
     +status: varchar\n账号状态
 }
 class PatientProfile {
@@ -370,7 +518,7 @@ AuthService --> H5: 注册成功
 ```mermaid
 flowchart LR
     A[提交账号密码] --> B[查询 C 端用户]
-    B --> C[校验 BCrypt]
+    B --> C[密码比对]
     C --> D[签发 C 端 access/refresh Token]
 ```
 
@@ -418,7 +566,7 @@ AuthService --> H5: accessToken、refreshToken、expiresIn
 
 | 错误码 | HTTP 状态 | 含义 | 触发场景 |
 | --- | --- | --- | --- |
-| A0210 | 401 | 账号或密码错误 | 账号不存在或 BCrypt 密码校验失败 |
+| A0210 | 401 | 账号或密码错误 | 账号不存在或 输入密码与已保存密码不一致 |
 | A0203 | 403 | 账号已被停用 | `c_user.status` 为 `DISABLED` |
 | A0211 | 429 | 登录暂时锁定 | 连续失败 5 次后的 15 分钟锁定期内 |
 
@@ -619,7 +767,7 @@ ProfileService --> H5: 更新后的资料
 
 ```mermaid
 flowchart LR
-    A[提交旧密码和新密码] --> B[校验旧密码] --> C[更新 BCrypt 哈希] --> D[撤销其他会话]
+    A[提交旧密码和新密码] --> B[校验旧密码] --> C[更新登录密码] --> D[撤销其他会话]
 ```
 
 ```plantuml
@@ -629,7 +777,7 @@ participant AuthService
 database PostgreSQL
 database Redis
 H5 -> AuthService: PUT /auth/password
-AuthService -> PostgreSQL: 校验并更新 password_hash
+AuthService -> PostgreSQL: 校验并更新 password
 AuthService -> Redis: 撤销该用户其他 refreshToken
 AuthService --> H5: passwordChanged=true
 @enduml
@@ -661,7 +809,7 @@ AuthService --> H5: passwordChanged=true
 
 | 错误码 | HTTP 状态 | 含义 | 触发场景 |
 | --- | --- | --- | --- |
-| A0120 | 400 | 当前密码不正确 | `oldPassword` 不能通过 BCrypt 校验 |
+| A0120 | 400 | 当前密码不正确 | `oldPassword` 与已保存密码不一致 |
 | A0120 | 400 | 新密码格式不合法 | 新密码不符合长度或复杂度规则 |
 
 ### 5.2 挂号资源查询与导诊（MVP）
@@ -1183,7 +1331,7 @@ WaitlistService --> H5: waitlistId、排队序号
 
 ```mermaid
 flowchart LR
-    A[输入登录密码] --> B[校验订单归属和有效期] --> C[校验 BCrypt] --> D[事务标记支付成功] --> E[确认挂号]
+    A[输入登录密码] --> B[校验订单归属和有效期] --> C[密码比对] --> D[事务标记支付成功] --> E[确认挂号]
 ```
 
 ```plantuml
@@ -1192,7 +1340,7 @@ participant H5
 participant PaymentService
 database PostgreSQL
 H5 -> PaymentService: POST /payments/{paymentId}/simulate-pay
-PaymentService -> PostgreSQL: 校验订单、密码哈希和支付状态
+PaymentService -> PostgreSQL: 校验订单、密码和支付状态
 PaymentService -> PostgreSQL: PENDING -> SUCCESS，LOCKED -> PAID
 PaymentService --> H5: paymentStatus=SUCCESS
 @enduml
@@ -1771,10 +1919,11 @@ PharmacyService --> H5: 药店及库存列表
                  {
                      "pharmacyId":  14001,
                      "name":  "健康药房",
-                     "address":  "北京市东城区示例路1号",
-                     "distanceMeter":  850,
-                     "deliveryMethod":  "COURIER",
-                     "items":  [
+                       "address":  "北京市东城区示例路1号",
+                       "distanceMeter":  850,
+                       "deliveryMethod":  "COURIER",
+                       "deliveryEtaMinutes":  60,
+                       "items":  [
                                    {
                                        "drugId":  13001,
                                        "availableCount":  20,
@@ -1885,6 +2034,7 @@ DrugOrderService --> H5: 订单数据
 | --- | --- | --- | --- | --- | --- |
 | Authorization | Header | String | 是 | 当前 C 端访问令牌 | `Bearer eyJ...` |
 | status | Query | String | 否 | 订单状态筛选 | `PENDING_PAYMENT` |
+| logisticsStatus | Query | String | 否 | 物流状态筛选：`IN_TRANSIT/TO_RECEIVE/RECEIVED` | `IN_TRANSIT` |
 | pageNo | Query | Integer | 否 | 页码 | `1` |
 | pageSize | Query | Integer | 否 | 每页条数 | `20` |
 
@@ -1902,6 +2052,8 @@ DrugOrderService --> H5: 订单数据
                                      "id":  15001,
                                      "pharmacyName":  "健康药房",
                                      "status":  "PENDING_PAYMENT",
+                                     "logisticsStatus":  "IN_TRANSIT",
+                                     "latestLogisticsNode":  "快件已到达郑州市分拨中心",
                                      "amountCent":  7000,
                                      "expireAt":  "2026-07-29T10:30:00+08:00"
                                  }
@@ -1959,7 +2111,21 @@ DrugOrderService --> H5: 购药订单详情
                               },
                  "delivery":  {
                                   "method":  "COURIER",
-                                  "address":  "北京市东城区示例路1号"
+                                  "address":  "北京市东城区示例路1号",
+                                  "company":  "演示快递",
+                                  "trackingNo":  "SF202607290001",
+                                  "logisticsStatus":  "IN_TRANSIT",
+                                  "latestNode":  "快件已到达郑州市分拨中心",
+                                  "traces":  [
+                                                 {
+                                                     "node":  "药店已发货",
+                                                     "occurredAt":  "2026-07-29T11:00:00+08:00"
+                                                 },
+                                                 {
+                                                     "node":  "快件已到达郑州市分拨中心",
+                                                     "occurredAt":  "2026-07-29T15:30:00+08:00"
+                                                 }
+                                             ]
                               },
                  "items":  [
                                {
@@ -2037,7 +2203,60 @@ DrugOrderService --> H5: cancelled=true
 | A0443 | 409 | 当前业务状态不允许该操作 | 资源状态不满足创建、修改或支付条件 |
 | A0301 | 403 | 无权访问该患者资源 | 资源不属于当前 C 端用户 |
 
-#### 5.5.5 模拟支付购药订单
+#### 5.5.5 确认购药订单收货
+
+```mermaid
+flowchart LR
+    A[用户确认收货] --> B[校验订单归属与物流状态] --> C[更新物流状态为已收货] --> D[返回确认结果]
+```
+
+```plantuml
+@startuml
+actor 患者
+participant H5
+participant DrugOrderService
+database PostgreSQL
+患者 -> H5 : 点击确认收货
+H5 -> DrugOrderService : POST /drug-orders/{drugOrderId}/confirm-receipt
+DrugOrderService -> PostgreSQL : 校验 patient_id 与 TO_RECEIVE 状态
+DrugOrderService -> PostgreSQL : 更新 logistics_status=RECEIVED
+DrugOrderService --> H5 : 返回确认收货结果
+@enduml
+```
+
+##### RESTFUL API设计
+
+**接口路径：** POST /drug-orders/{drugOrderId}/confirm-receipt
+
+**请求参数：**
+
+| 参数 | 位置 | 类型 | 必填 | 描述 | 示例/默认值 |
+| --- | --- | --- | --- | --- | --- |
+| Authorization | Header | String | 是 | 当前 C 端访问令牌 | `Bearer eyJ...` |
+| X-Idempotency-Key | Header | String | 是 | 防止重复确认收货的请求键 | `uuid-v7` |
+| drugOrderId | Path | Long | 是 | 待确认收货的购药订单 ID | `15001` |
+
+**响应示例：**
+```json
+{
+  "code": "00000",
+  "message": "确认收货成功",
+  "data": {
+    "drugOrderId": 15001,
+    "logisticsStatus": "RECEIVED",
+    "receivedAt": "2026-07-30T10:00:00+08:00"
+  },
+  "traceId": "01J7X-LOGISTICS"
+}
+```
+
+| 错误码 | HTTP 状态 | 含义 | 触发场景 |
+| --- | --- | --- | --- |
+| A0402 | 404 | 购药订单不存在 | `drugOrderId` 未找到 |
+| A0443 | 409 | 当前物流状态不可确认收货 | 订单尚未进入 `TO_RECEIVE` 状态或已确认收货 |
+| A0301 | 403 | 无权操作该订单 | 订单不属于当前患者 |
+
+#### 5.5.6 模拟支付购药订单
 
 ```mermaid
 flowchart LR
@@ -2907,13 +3126,13 @@ NotificationService --> H5: read=true
 
 ## 6. PostgreSQL 数据库设计
 
-所有主表使用 `bigint generated by default as identity` 主键、`timestamptz not null default now()` 创建和更新时间，业务删除优先使用 `deleted_at` 软删除。身份证号、联系人电话等敏感列采用应用层加密后存储；密码仅保存 BCrypt 哈希。
+所有主表使用 `bigint generated by default as identity` 主键、`timestamptz not null default now()` 创建和更新时间，业务删除优先使用 `deleted_at` 软删除。身份证号、联系电话和密码均按存储；接口响应中必须按规则脱敏展示。
 
 | 表名                                            | 用途        | 核心字段与约束                                             |
 | --------------------------------------------- | --------- | --------------------------------------------------- |
-| `c_user`                                      | C 端独立账号   | `account` 唯一，`password_hash`，`status`               |
+| `c_user`                                      | C 端独立账号   | `account` 唯一，`password`，`status`               |
 | `c_refresh_token`                             | C 端刷新令牌会话 | `token_hash` 唯一，`user_id`，`expired_at`，`revoked_at` |
-| `patient_profile`                             | 患者基础资料    | `user_id` 唯一，姓名、性别、生日、加密联系方式                        |
+| `patient_profile`                             | 患者基础资料    | `user_id` 唯一，姓名、性别、生日、联系方式（响应脱敏）                        |
 | `patient_allergy` / `patient_medical_history` | 健康病史      | `patient_id` 外键与归属索引                                |
 | `triage_assessment` | 导诊评估记录 | 患者、输入快照、紧急程度与科室推荐快照 |
 | `department` / `doctor` / `schedule_slot`     | 挂号资源      | 启用状态；时段唯一 `(doctor_id,start_time)`                  |
@@ -2923,12 +3142,13 @@ NotificationService --> H5: read=true
 | `consultation` / `consultation_message`       | 问诊与文字消息   | `appointment_id` 唯一，按问诊和发送时间索引                      |
 | `prescription` / `prescription_item`          | 医生签发处方    | 处方状态、药品、频次、用法、疗程                                    |
 | `pharmacy` / `pharmacy_drug_stock`            | 药店和药品库存   | `(pharmacy_id,drug_id)` 唯一，`available_count >= 0`   |
-| `drug_order` / `drug_order_item`              | 购药订单与明细   | 订单状态、配送信息、预留到期时间                                    |
+| `drug_order` / `drug_order_item` / `drug_order_logistics_trace` | 购药订单、明细与物流轨迹 | 订单状态、快递状态、物流节点、预留到期时间 |
 | `patient_report` / `patient_report_indicator` | 检查报告      | 报告归属、指标值与参考区间                                       |
 | `medication_plan` / `follow_up_plan`          | 提醒与随访     | 状态、下次提醒时间、患者归属                                      |
 | `notification`                                | C 端通知     | `(user_id,created_at desc)` 索引、已读时间                 |
+| `agent_tool_audit`                             | Agent 工具审计 | `(session_id,tool_call_id)` 唯一；仅保存参数/结果摘要，不保存敏感原文 |
 
-### 6.1 关键建表示例
+### 6.1 建表示例
 
 ```sql
 -- 说明：仅创建 C 端业务表；updated_at 由 Spring Boot 应用层维护。
@@ -2938,7 +3158,7 @@ NotificationService --> H5: read=true
 create table if not exists c_user (
     id bigint generated by default as identity primary key, -- 用户主键
     account varchar(32) not null, -- C 端登录账号
-    password_hash varchar(100) not null, -- BCrypt 密码哈希
+    password varchar(64) not null, -- 登录密码，仅限演示环境
     status varchar(20) not null default 'ACTIVE', -- 账号状态
     last_login_at timestamptz, -- 最近登录时间
     created_at timestamptz not null default now(), -- 创建时间
@@ -2971,8 +3191,8 @@ create table if not exists patient_profile (
     name varchar(64), -- 患者姓名
     gender varchar(16), -- 性别
     birthday date, -- 出生日期
-    phone_ciphertext varchar(512), -- 加密后的联系电话
-    id_card_ciphertext varchar(1024), -- 加密后的身份证号
+    phone varchar(20), -- 联系电话，仅限演示环境
+    id_card_no varchar(32), -- 身份证号，仅限演示环境
     emergency_contact varchar(128), -- 紧急联系人信息
     created_at timestamptz not null default now(), -- 创建时间
     updated_at timestamptz not null default now(), -- 更新时间
@@ -3237,12 +3457,14 @@ create table if not exists pharmacy (
     address varchar(500) not null, -- 药店地址
     longitude numeric(10, 7), -- 经度
     latitude numeric(10, 7), -- 纬度
-    phone_ciphertext varchar(512), -- 加密后的药店联系电话
+    delivery_eta_minutes integer not null default 60, -- 快递预计送达分钟数
+    phone varchar(20), -- 药店联系电话，仅限演示环境
     status varchar(20) not null default 'ENABLED', -- 药店状态
     created_at timestamptz not null default now(), -- 创建时间
     updated_at timestamptz not null default now(), -- 更新时间
     deleted_at timestamptz, -- 软删除时间
-    constraint ck_pharmacy_status check (status in ('ENABLED', 'DISABLED'))
+    constraint ck_pharmacy_status check (status in ('ENABLED', 'DISABLED')),
+    constraint ck_pharmacy_delivery_eta check (delivery_eta_minutes > 0)
 );
 create index if not exists idx_pharmacy_status on pharmacy(status) where deleted_at is null;
 comment on table pharmacy is '药店基础信息表';
@@ -3273,6 +3495,12 @@ create table if not exists drug_order (
     status varchar(20) not null default 'PENDING_PAYMENT', -- 购药订单状态
     delivery_method varchar(20) not null default 'COURIER', -- 固定快递配送方式
     delivery_address varchar(500) not null, -- 快递配送收货地址
+    logistics_status varchar(20), -- 快递物流状态，支付后开始流转
+    logistics_company varchar(64), -- 快递公司名称
+    tracking_no varchar(64), -- 快递单号
+    shipped_at timestamptz, -- 药店发货时间
+    delivered_at timestamptz, -- 快递签收待确认时间
+    received_at timestamptz, -- 用户确认收货时间
     amount_cent integer not null, -- 订单金额，单位分
     expire_at timestamptz, -- 待支付到期时间
     paid_at timestamptz, -- 支付时间
@@ -3281,16 +3509,31 @@ create table if not exists drug_order (
     updated_at timestamptz not null default now(), -- 更新时间
     constraint ck_drug_order_status check (status in ('DRAFT', 'PENDING_PAYMENT', 'PAID', 'CANCELLED', 'EXPIRED')),
     constraint ck_drug_order_delivery check (delivery_method = 'COURIER'),
+    constraint ck_drug_order_logistics_status check (logistics_status is null or logistics_status in ('PENDING_SHIPMENT', 'IN_TRANSIT', 'TO_RECEIVE', 'RECEIVED')),
     constraint ck_drug_order_amount check (amount_cent >= 0)
 );
 create index if not exists idx_drug_order_patient_created on drug_order(patient_id, created_at desc);
 create index if not exists idx_drug_order_expire on drug_order(expire_at) where status = 'PENDING_PAYMENT';
+create index if not exists idx_drug_order_logistics on drug_order(patient_id, logistics_status, updated_at desc) where logistics_status is not null;
 comment on table drug_order is 'C端处方购药订单表';
 
 -- 补充购药订单支付外键，避免 payment_order 的多态关联产生孤儿数据
 alter table payment_order
     add constraint fk_payment_drug_order
     foreign key (drug_order_id) references drug_order(id);
+
+-- 购药订单物流轨迹表
+create table if not exists drug_order_logistics_trace (
+    id bigint generated by default as identity primary key, -- 物流轨迹主键
+    drug_order_id bigint not null references drug_order(id), -- 所属购药订单
+    logistics_status varchar(20) not null, -- 当前物流状态快照
+    node varchar(500) not null, -- 物流节点说明
+    occurred_at timestamptz not null, -- 节点发生时间
+    created_at timestamptz not null default now(), -- 创建时间
+    constraint ck_logistics_trace_status check (logistics_status in ('PENDING_SHIPMENT', 'IN_TRANSIT', 'TO_RECEIVE', 'RECEIVED'))
+);
+create index if not exists idx_logistics_trace_order_time on drug_order_logistics_trace(drug_order_id, occurred_at desc);
+comment on table drug_order_logistics_trace is '购药订单快递物流轨迹表';
 
 -- 购药订单药品明细表
 create table if not exists drug_order_item (
@@ -3391,6 +3634,27 @@ create index if not exists idx_notification_user_created on notification(user_id
 create index if not exists idx_notification_user_unread on notification(user_id, created_at desc) where read_at is null and deleted_at is null;
 comment on table notification is 'C端站内通知表';
 
+-- Agent工具执行审计表
+create table if not exists agent_tool_audit (
+    id bigint generated by default as identity primary key, -- 审计主键
+    session_id varchar(128) not null, -- Agent会话标识
+    tool_call_id varchar(128) not null, -- Agent工具调用标识
+    tool_name varchar(128) not null, -- 已执行的白名单工具名称
+    user_id bigint not null references c_user(id), -- 发起操作的C端用户
+    patient_id bigint references patient_profile(id), -- 当前就诊人，可为空
+    argument_summary jsonb not null default '{}'::jsonb, -- 脱敏后的请求参数摘要
+    success boolean not null, -- 工具执行是否成功
+    result_code varchar(5) not null, -- 五位业务码
+    result_summary jsonb not null default '{}'::jsonb, -- 脱敏后的结果摘要
+    trace_id varchar(64) not null, -- 请求链路追踪标识
+    duration_ms integer not null check (duration_ms >= 0), -- 工具执行耗时，单位毫秒
+    created_at timestamptz not null default now(), -- 创建时间
+    constraint uk_agent_tool_audit_session_call unique (session_id, tool_call_id)
+);
+create index if not exists idx_agent_tool_audit_user_created on agent_tool_audit(user_id, created_at desc);
+create index if not exists idx_agent_tool_audit_trace on agent_tool_audit(trace_id);
+comment on table agent_tool_audit is 'Agent-BFF工具执行审计表，仅保存脱敏摘要';
+
 
 ```
 
@@ -3402,27 +3666,166 @@ comment on table notification is 'C端站内通知表';
 2. 创建订单执行 Redis Lua 脚本：校验余量大于零、扣减余量、写入 15 分钟锁定标记，保证原子性。
 3. Redis 扣减成功后，在 PostgreSQL 事务中创建订单、支付单和库存流水；事务失败时执行补偿归还 Redis 库存。
 4. 支付、取消和超时处理以订单状态条件更新保证幂等。超时任务扫描 `LOCKED/PENDING_PAYMENT` 且 `expire_at < now()` 的订单，关闭支付单并释放预留。
-5. 每分钟校验 Redis 与 PostgreSQL 库存差异，发生差异时暂停该时段下单并告警、重建缓存。
 
 ### 7.2 密码、认证与数据权限
 
 - 图形验证码以哈希形式存入 Redis，120 秒过期且验证一次即删除；按 IP 和账号限流。
-- 登录密码和模拟支付复用同一 BCrypt 校验，但支付请求不记录密码明文、哈希或可逆日志。
-- JWT 设置 `aud=c-h5` 和独立签名密钥；C 端网关拒绝 B 端 `aud`，B 端网关同样拒绝 C 端 `aud`。
+- 登录密码和模拟支付均采用密码比对；密码不得出现在响应、日志或异常信息中。
+- C 端、B 端后端服务分别配置独立 JWT 签名密钥和认证过滤器；两套服务独立部署时无需依赖 `aud` 字段区分。
+- C 端服务只校验 C 端 Token，B 端服务只校验 B 端 Token；Agent-BFF 仅从 C 端 `SecurityContext` 读取用户身份。
 - 所有患者资源查询强制追加 `patient_id = currentPatientId`，禁止仅按资源 ID 读取；病历、处方、报告和订单不提供匿名访问。
 
 ### 7.3 异步任务与通知
 
-- 超时释放、候补通知、用药提醒和随访提醒通过持久化任务表或消息队列触发，任务消费必须以业务唯一键幂等。
-- 支付成功后，购药订单用事务外盒模式创建用药计划；失败可重试，不影响已成功支付的订单。
-- 通知仅写入当前 C 端用户的 `notification`，不向 B 端账号域写入患者消息。
+本项目使用 RabbitMQ 解耦订单超时处理、通知创建、用药提醒和随访提醒。C 端后端通过 `RabbitTemplate` 发送消息，消费者负责执行具体业务；不引入微服务网关或复杂的分布式事务框架。
+
+#### 7.3.1 RabbitMQ 基础结构
+
+| 类型 | 名称 | 说明 |
+| --- | --- | --- |
+| Topic Exchange | `cend.business.exchange` | C 端业务事件交换机 |
+| 死信 Exchange | `cend.dlx.exchange` | 消费失败或延迟到期后的死信交换机 |
+| 延迟队列 | `cend.appointment.delay.queue` | 挂号锁号后的 15 分钟延迟队列 |
+| 延迟队列 | `cend.drug-order.delay.queue` | 购药待支付后的 15 分钟延迟队列 |
+| 业务队列 | `cend.appointment.timeout.queue` | 处理挂号订单超时释放 |
+| 业务队列 | `cend.drug-order.timeout.queue` | 处理购药订单超时释放库存 |
+| 业务队列 | `cend.notification.queue` | 创建 C 端站内通知 |
+| 业务队列 | `cend.reminder.queue` | 发送用药提醒 |
+| 业务队列 | `cend.follow-up.queue` | 发送随访提醒 |
+| 死信队列 | `cend.dead-letter.queue` | 保存消费失败的消息，供演示时人工排查 |
+
+#### 7.3.2 路由键约定
+
+| 路由键 | 触发时机 | 消费结果 |
+| --- | --- | --- |
+| `appointment.locked` | 挂号订单锁号成功 | 进入挂号延迟队列，15 分钟后检查是否支付 |
+| `appointment.timeout` | 挂号订单超时 | 订单未支付时更新为 `EXPIRED` 并释放号源 |
+| `drug-order.pending` | 购药订单创建成功 | 进入购药延迟队列，15 分钟后检查是否支付 |
+| `drug-order.timeout` | 购药订单超时 | 订单未支付时更新为 `EXPIRED` 并释放药品库存 |
+| `notification.create` | 挂号成功、候补成功、支付成功等 | 写入当前 C 端用户的 `notification` 表 |
+| `reminder.due` | 用药计划到达提醒时间 | 创建用药提醒通知 |
+| `follow-up.due` | 随访计划到达提醒时间 | 创建随访提醒通知 |
+
+#### 7.3.3 延迟消息处理
+
+RabbitMQ 不依赖额外延迟插件，使用“队列 TTL + 死信交换机”实现 15 分钟超时：
+
+```text
+创建挂号/购药订单
+-> 数据库事务提交成功
+-> 发送 locked/pending 消息到延迟队列
+-> 延迟队列 TTL = 15 分钟
+-> 消息过期后进入死信交换机
+-> 路由至 timeout 业务队列
+-> 消费者查询订单最新状态
+-> 未支付则关闭订单并释放库存
+-> 已支付则直接确认消息，不做任何修改
+```
+
+挂号与购药订单的延迟队列统一设置：
+
+```
+x-message-ttl = 900000
+x-dead-letter-exchange = cend.dlx.exchange
+```
+#### 7.3.4 消息发送与消费规则
+
+- 订单、支付、候补等数据库操作成功提交后，再发送 RabbitMQ 消息，避免事务回滚后仍产生无效消息。
+- 项目可使用 Spring 的 `@TransactionalEventListener(phase = AFTER_COMMIT)` 配合 `RabbitTemplate.convertAndSend(...)` 发送消息。
+- 消息体至少包含：`eventId`、`eventType`、`businessId`、`userId`、`occurredAt`。
+- 消费者必须幂等：以 `eventId` 或“业务 ID + 事件类型”判断是否已处理。可用redis的setnx实现
+- 超时消费者更新订单时必须使用条件更新，例如仅允许：
+    - 挂号订单：`LOCKED -> EXPIRED`
+    - 购药订单：`PENDING_PAYMENT -> EXPIRED`
+- 消费失败时不无限重试；消息进入 `cend.dead-letter.queue`，演示时通过日志和 RabbitMQ 管理界面排查。
+
+#### 7.3.5 提醒与通知
+
+- 用药提醒和随访提醒不使用长期延迟消息。
+- `@Scheduled` 定时扫描到期的 `medication_plan`、`follow_up_plan`，仅负责发送 `reminder.due` 或 `follow-up.due` 消息。
+- RabbitMQ 消费者统一写入当前 C 端用户的 `notification` 表。
+- 通知消息不写入 B 端用户体系，C/B 通知数据保持隔离。
+
+### 7.4 内置 Agent-BFF
+
+#### 7.4.1 对话与工具执行流程
+
+```mermaid
+flowchart TD
+    A[H5 携带 C 端 JWT 发起对话] --> B[BFF 校验 JWT 并读取 SecurityContext]
+    B --> C[创建 executionContextId 写入 Redis]
+    C --> D[调用 Python Agent 流式对话接口]
+    D --> E{Agent 是否请求工具}
+    E -->|否| F[BFF 转发 message SSE]
+    E -->|是| G[Python 以内部 API Key 回调 BFF]
+    G --> H[校验 API Key、上下文、白名单与参数]
+    H --> I[调用同进程传统业务 Service]
+    I --> J[归属、幂等、库存与状态机校验]
+    J --> K[记录工具审计并返回 tool_result]
+    K --> D
+    D --> F
+    F --> L[发送 done SSE]
+```
+
+```plantuml
+@startuml
+actor Patient as H5
+participant "AgentBffController" as BFF
+participant "ExecutionContextService\nRedis" as Context
+participant "Python Agent" as Agent
+participant "AgentToolExecutionController" as ToolApi
+participant "Traditional Business Service" as Biz
+database "PostgreSQL" as DB
+participant "AgentAuditService" as Audit
+
+H5 -> BFF: POST /api/c/v1/agent/chat/stream\nBearer C端JWT + content
+BFF -> BFF: 从 SecurityContext 获取 userId
+BFF -> Context: 创建 executionContextId\n(userId、允许 patientId、sessionId、traceId)
+BFF -> Agent: 流式对话请求\ncontent + executionContextId
+Agent --> BFF: message / tool_call
+BFF --> H5: SSE message / tool_call
+Agent -> ToolApi: POST /internal/agent/tool-executions\nAPI Key + toolCallId + arguments
+ToolApi -> Context: 校验 API Key 与 executionContextId
+ToolApi -> Biz: 调用白名单工具
+Biz -> DB: 执行业务校验与读写
+DB --> Biz: 业务结果 / 五位业务码
+Biz --> ToolApi: 统一工具结果
+ToolApi -> Audit: 记录参数摘要、结果、traceId、耗时
+Audit -> DB: 写入审计记录
+ToolApi --> Agent: tool_result
+Agent --> BFF: 最终文本 / done
+BFF --> H5: SSE message / done
+@enduml
+```
+
+#### 7.4.2 执行上下文、工具与幂等规则
+
+- BFF 在 H5 对话开始时生成不可预测的 `executionContextId`，在 Redis 使用键 `cend:agent:context:{executionContextId}` 保存 30 分钟；上下文仅保存 `userId`、允许访问的 `patientId` 集合、`sessionId`、`traceId` 与过期时间，不保存 C 端 JWT、密码或支付信息。
+- BFF 调用 Python Agent 时仅传递对话内容、脱敏用户展示信息、允许就诊人范围和 `executionContextId`。Python Agent 调用工具时必须同步取得 BFF 的 `tool_result` 后再继续推理。
+- `toolCallId` 与 `executionContextId` 组合在 Redis 保存 24 小时，避免 Agent 重试造成重复执行；创建型工具同时由 BFF 生成 `X-Idempotency-Key` 并复用传统业务模块的幂等机制。
+- 工具注册表必须显式维护“工具名、参数 DTO、目标 Service、是否写操作、是否允许 Agent 执行”。禁止根据 Agent 传入的 URL、HTTP 方法或任意类名进行动态路由。
+
+| 工具类别 | 允许工具示例 | BFF 实际调用目标 | 限制 |
+| --- | --- | --- | --- |
+| 查询 | `query_departments`、`query_schedule_slots`、`query_prescriptions`、`recommend_pharmacies` | `registration`、`consultation`、`order` 查询 Service | 只返回当前用户/就诊人可见数据 |
+| 导诊与问诊 | `create_triage_assessment`、`save_pre_consultation`、`send_consultation_message` | `triage`、`consultation` Service | 不得输出诊断结论，不得替代医生开方 |
+| 挂号 | `create_appointment`、`join_waitlist`、`cancel_appointment` | `registration` Service | 仍校验患者归属、号源余量、状态与幂等 |
+| 购药与健康 | `create_drug_order`、`update_medication_plan`、`confirm_follow_up` | `order`、`health` Service | 仅快递配送；仍校验库存、地址与订单状态 |
+| 禁止 | 支付、支付密码、处方签发/修改、诊断结论 | 不注册工具 | 返回 `A0460` |
+
+#### 7.4.3 安全、审计与部署约束
+
+- `X-Agent-Internal-Key` 仅由 `AGENT_INTERNAL_KEY` 环境变量或配置中心注入；BFF 采用常量时间比较校验，日志不得打印请求头、密钥或完整参数。
+- Agent 工具审计写入 PostgreSQL 的 `agent_tool_audit` 技术表，记录 `session_id`、`tool_call_id`、`tool_name`、`user_id`、`patient_id`、参数摘要、结果业务码、`trace_id`、执行耗时和创建时间；密码、Token、身份证全号、支付信息不得入库或写日志。
+- Python Agent 只允许从 BFF 可访问的本机或内网地址调用；`/internal/agent/**` 不对 H5、浏览器跨域或公网暴露。
+- BFF 直接调用同进程业务 Service，不通过本机 HTTP 再调用 Controller；传统模块仍是最终业务规则、数据权限和事务边界的唯一执行者。
 
 ## 8. 验收与测试场景
 
 | 场景 | 预期结果 |
 | --- | --- |
 | 验证码错误、过期、重复使用 | 注册失败；验证码不可重复验证 |
-| C/B Token 混用 | 网关拒绝，返回未认证 |
+| C/B Token 混用 | 对方独立服务认证过滤器拒绝，返回未认证 |
 | 两人并发抢最后一个号源 | 仅一人创建 `LOCKED` 订单，另一人返回 `B0201` |
 | 重复提交创建或支付 | 根据幂等键返回首次结果，不重复扣库存或重复支付 |
 | 15 分钟未支付 | 订单和支付单关闭，库存准确归还 |
@@ -3430,6 +3833,15 @@ comment on table notification is 'C端站内通知表';
 | 重复支付回调 | 仅首次改变状态，后续回调成功 ACK 且不重复执行业务动作 |
 | 非本人访问档案、处方、报告或订单 | 返回 `A0301` 或资源不存在，不泄露资源信息 |
 | 报告/处方解读 | 仅展示说明和“仅供参考，不替代医生诊断”声明，不输出确诊或修改处方 |
+| H5 发起 Agent 对话 | BFF 从 C 端 `SecurityContext` 生成有效 `executionContextId`；Python Agent 不接收 C 端 JWT |
+| Python Agent 工具回调 | 使用正确内部 API Key 和执行上下文后，BFF 调用同进程业务 Service 并返回 `tool_result` |
+| Agent 内部 API Key 错误 | 返回 `A0310`，不执行工具，审计记录失败摘要 |
+| Agent 执行上下文过期 | 返回 `A0311`，不恢复用户身份，不执行工具 |
+| Agent 调用未知或禁止工具 | 返回 `A0460`；支付、支付密码、处方签发/修改和诊断类工具均不可调用 |
+| Agent 创建挂号或购药订单重试 | `toolCallId` 与传统幂等键共同生效，不重复创建订单或扣减库存 |
+| Agent 越权访问患者资源 | BFF 与传统业务模块均校验患者归属，返回 `A0301` 且不泄露资源数据 |
+| Agent 工具审计 | 审计表记录工具、参数摘要、结果码、traceId、耗时；不记录 Token、密码、证件全号和支付信息 |
+| Agent SSE 事件 | H5 仅处理 BFF 输出的 `message`、`tool_call`、`tool_result`、`error`、`done`，无需适配 Python 私有流协议 |
 
 ## 9. 排期建议
 
@@ -3439,3 +3851,4 @@ comment on table notification is 'C端站内通知表';
 | 第二阶段 | 候补、超时任务、库存核对、通知 | 挂号可靠性完善 |
 | 第三阶段 | 问诊、处方、购药订单与提醒 | 诊后购药闭环 |
 | 第四阶段 | 档案、报告、随访与运营监控 | 健康管理闭环 |
+| 第五阶段 | 内置 Agent-BFF、Python Agent 对接、工具审计与 SSE 联调 | AI 助手可控调用传统业务闭环 |
