@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "SPHP-C端前端系分.md",
+                "file": "1/SPHP_后端系分.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "SPHP-C端前端系分"
+              "title": "SPHP_后端系分"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "SPHP-C端前端系分.md",
+                "file": "1/SPHP_后端系分.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "SPHP-C端前端系分 的大纲"
+              "title": "SPHP_后端系分 的大纲"
             }
           }
         ],
@@ -171,11 +171,13 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "34d6b36d87ac3e98",
+  "active": "6ea0bef876bcefa8",
   "lastOpenFiles": [
+    "SPHP-C端前端系分.md",
+    "1/SPHP_后端系分.md",
+    "1/SPHP-前端系分.md",
     "1",
     "SPHP-C端前端系分 1.md",
-    "SPHP-C端前端系分.md",
     "SPHP-C端后端系分 2.md",
     "前端系统分析模板.md",
     "SPHP-C端后端系分 1.md",
@@ -198,7 +200,6 @@
     "个人薪资后端修改.md",
     "工资条管理页可行性结论与后端补充方案.md",
     "未命名 3.md",
-    "请假管理页开发方案.md",
     "AI-agent/马丁的笔记",
     "未命名.base",
     "git",
@@ -210,7 +211,6 @@
     "未命名 3.base",
     "未命名 2.base",
     "未命名 1.base",
-    "assets/frontend-prototypes",
     "Attachment/image-30.png",
     "Attachment/image-29.png",
     "Attachment/image-28.png",

@@ -1,6 +1,9 @@
 {
   "customFileOrder": {
-    "1": [],
+    "1": [
+      "1/SPHP_后端系分.md",
+      "1/SPHP-前端系分.md"
+    ],
     "/": [
       "1",
       "SPHP-C端前端系分.md",
