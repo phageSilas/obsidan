@@ -25,12 +25,14 @@
             "id": "0c94e49c7fbd316b",
             "type": "leaf",
             "state": {
-              "type": "release-notes",
+              "type": "markdown",
               "state": {
-                "currentVersion": "1.13.4"
+                "file": "管理系统设计/Hutool的使用.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-book-up",
-              "title": "版本说明 1.13.4"
+              "icon": "lucide-file",
+              "title": "Hutool的使用"
             }
           }
         ],
@@ -157,7 +159,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1/SPHP_后端系分.md",
+                "file": "管理系统设计/Hutool的使用.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -188,6 +190,13 @@
   },
   "active": "0c94e49c7fbd316b",
   "lastOpenFiles": [
+    "管理系统设计/Redis缓存减少数据库压力.md",
+    "管理系统设计/Redis其他功能.md",
+    "管理系统设计/Rabbitmq与消息幂等.md",
+    "管理系统设计/redis分布式锁.md",
+    "管理系统设计/Hutool的使用.md",
+    "管理系统设计/补充入转调离模块的高级功能.md",
+    "管理系统设计/Mybatis-plus的使用.md",
     "SPHP-C端前端系分.md",
     "1/SPHP_后端系分.md",
     "1/SPHP-前端系分.md",
@@ -201,11 +210,6 @@
     "智慧先锋医院平台产品规格说明书.md",
     "智慧先锋医院平台产品规格说明书 (1).md",
     "后端系统分析.md",
-    "管理系统设计/Redis缓存减少数据库压力.md",
-    "管理系统设计/补充入转调离模块的高级功能.md",
-    "管理系统设计/Rabbitmq与消息幂等.md",
-    "管理系统设计/redis分布式锁.md",
-    "管理系统设计/Redis其他功能.md",
     "HRMS答辩.md",
     "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具基础篇.md",
     "未命名 4.md",
@@ -213,8 +217,6 @@
     "JAVA/JAVASE/比较抽象的SE基础/枚举类.md",
     "面试/项目/Ragent/分块-向量化-存入向量数据库.md",
     "个人薪资后端修改.md",
-    "工资条管理页可行性结论与后端补充方案.md",
-    "未命名 3.md",
     "AI-agent/马丁的笔记",
     "未命名.base",
     "git",
