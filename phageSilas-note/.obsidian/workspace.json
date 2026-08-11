@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "前端系分模版.md",
+                "file": "面试/熙牛医疗面试.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "前端系分模版"
+              "title": "熙牛医疗面试"
             }
           }
         ],
@@ -159,7 +159,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "前端系分模版.md",
+                "file": "面试/熙牛医疗面试.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -190,6 +190,12 @@
   },
   "active": "0c94e49c7fbd316b",
   "lastOpenFiles": [
+    "面试/项目/短链接/简历特点分析.md",
+    "面试/项目/短链接/微服务专题.md",
+    "面试/项目/Ragent/简历项目特点解析.md",
+    "面试/项目/Ragent/面试说法.md",
+    "面试/项目/Ragent/检索与召回.md",
+    "前端系分模版.md",
     "管理系统设计/Hutool的使用.md",
     "管理系统设计/Redis缓存减少数据库压力.md",
     "管理系统设计/Redis其他功能.md",
@@ -206,17 +212,11 @@
     "前端系统分析模板.md",
     "SPHP-C端后端系分 1.md",
     "SPHP-C端后端系分.md",
-    "前端系分模版.md",
     "智慧先锋医院平台产品规格说明书.md",
     "智慧先锋医院平台产品规格说明书 (1).md",
     "后端系统分析.md",
     "HRMS答辩.md",
     "JAVA/JavaWeb/JavaWeb和Spring常用注解及工具基础篇.md",
-    "未命名 4.md",
-    "重构用户表.md",
-    "JAVA/JAVASE/比较抽象的SE基础/枚举类.md",
-    "面试/项目/Ragent/分块-向量化-存入向量数据库.md",
-    "个人薪资后端修改.md",
     "AI-agent/马丁的笔记",
     "未命名.base",
     "git",
