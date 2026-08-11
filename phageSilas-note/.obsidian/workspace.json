@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "管理系统设计/Hutool的使用.md",
+                "file": "前端系分模版.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Hutool的使用"
+              "title": "前端系分模版"
             }
           }
         ],
@@ -159,7 +159,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "管理系统设计/Hutool的使用.md",
+                "file": "前端系分模版.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -190,11 +190,11 @@
   },
   "active": "0c94e49c7fbd316b",
   "lastOpenFiles": [
+    "管理系统设计/Hutool的使用.md",
     "管理系统设计/Redis缓存减少数据库压力.md",
     "管理系统设计/Redis其他功能.md",
     "管理系统设计/Rabbitmq与消息幂等.md",
     "管理系统设计/redis分布式锁.md",
-    "管理系统设计/Hutool的使用.md",
     "管理系统设计/补充入转调离模块的高级功能.md",
     "管理系统设计/Mybatis-plus的使用.md",
     "SPHP-C端前端系分.md",
