@@ -133,7 +133,6 @@
       "面试/项目/Ragent/Attachment/image-7.png",
       "面试/项目/Ragent/Attachment/image-8.png",
       "面试/项目/Ragent/Attachment/image-9.png",
-      "面试/项目/Ragent/Attachment/image-3.png",
       "面试/项目/Ragent/Attachment/image-4.png",
       "面试/项目/Ragent/Attachment/image-5.png",
       "面试/项目/Ragent/Attachment/image-1.png",
@@ -171,9 +170,6 @@
     ],
     "面试/项目/Ragent/MCP-server/Attachment": [
       "面试/项目/Ragent/MCP-server/Attachment/image.png",
-      "面试/项目/Ragent/MCP-server/Attachment/image-1.png",
-      "面试/项目/Ragent/MCP-server/Attachment/image-2.png",
-      "面试/项目/Ragent/MCP-server/Attachment/image-3.png",
       "面试/项目/Ragent/MCP-server/Attachment/image-4.png"
     ],
     "面试/agent": [
@@ -185,9 +181,7 @@
       "面试/agent/Attachment/image.png"
     ],
     "面试/Attachment": [
-      "面试/Attachment/image-1.png",
-      "面试/Attachment/image-2.png",
-      "面试/Attachment/image.png"
+      "面试/Attachment/image-2.png"
     ],
     "面试/JavaSE": [
       "面试/JavaSE/未命名.md",
@@ -224,20 +218,17 @@
       "面试/JVM/Attachment/image-19.png",
       "面试/JVM/Attachment/image-20.png",
       "面试/JVM/Attachment/image-21.png",
-      "面试/JVM/Attachment/image-22.png",
       "面试/JVM/Attachment/image-23.png",
       "面试/JVM/Attachment/image-16.png",
       "面试/JVM/Attachment/image-17.png",
       "面试/JVM/Attachment/image-18.png",
       "面试/JVM/Attachment/image-15.png",
-      "面试/JVM/Attachment/01.png",
       "面试/JVM/Attachment/6f03db4b39351325d4640abec124ef6d_720.jpg",
       "面试/JVM/Attachment/dc7e9d94-36d0-465e-9738-6283634dfb46.png",
       "面试/JVM/Attachment/image-4.png",
       "面试/JVM/Attachment/image-5.png",
       "面试/JVM/Attachment/image-6.png",
       "面试/JVM/Attachment/image-7.png",
-      "面试/JVM/Attachment/image-8.png",
       "面试/JVM/Attachment/image-9.png",
       "面试/JVM/Attachment/image-10.png",
       "面试/JVM/Attachment/image-11.png",
@@ -419,8 +410,7 @@
       "JAVA/JAVASE/SE基础/Attachment/image.png",
       "JAVA/JAVASE/SE基础/Attachment/image-1.png",
       "JAVA/JAVASE/SE基础/Attachment/image-2.png",
-      "JAVA/JAVASE/SE基础/Attachment/Pasted image 20250718205909.png",
-      "JAVA/JAVASE/SE基础/Attachment/Pasted image 20250718210356.png"
+      "JAVA/JAVASE/SE基础/Attachment/Pasted image 20250718205909.png"
     ],
     "JAVA/JavaWeb": [
       "JAVA/JavaWeb/MyBatis-plus.md",
@@ -511,24 +501,7 @@
       "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-19.png",
       "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-20.png",
       "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-1.png",
-      "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-2.png",
-      "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-3.png",
-      "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-4.png",
-      "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-5.png",
-      "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-6.png",
-      "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-7.png",
-      "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-8.png",
-      "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-9.png",
-      "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-10.png",
-      "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-11.png",
-      "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-12.png",
-      "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-13.png",
-      "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-14.png",
-      "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-15.png",
-      "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-16.png",
-      "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-17.png",
-      "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-18.png",
-      "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image.png"
+      "JAVA/JavaWeb/SpringBoot/Mybatis/Attachment/image-15.png"
     ],
     "JAVA/MySQL": [
       "JAVA/MySQL/多表.md",
@@ -592,14 +565,11 @@
       "JAVA/Redis/Attachment/image-10.png",
       "JAVA/Redis/Attachment/image-9.png",
       "JAVA/Redis/Attachment/image-8.png",
-      "JAVA/Redis/Attachment/image-7.png",
       "JAVA/Redis/Attachment/image-6.png",
       "JAVA/Redis/Attachment/image-5.png",
       "JAVA/Redis/Attachment/image-4.png",
-      "JAVA/Redis/Attachment/image-1.png",
       "JAVA/Redis/Attachment/image-2.png",
-      "JAVA/Redis/Attachment/image-3.png",
-      "JAVA/Redis/Attachment/image.png"
+      "JAVA/Redis/Attachment/image-3.png"
     ],
     "JAVA/SpringCloud微服务": [
       "JAVA/SpringCloud微服务/Attachment",

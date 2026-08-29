@@ -34,9 +34,21 @@
               "icon": "lucide-file",
               "title": "熙牛医疗面试"
             }
+          },
+          {
+            "id": "c88dbc4b070e80ba",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.13.7"
+              },
+              "icon": "lucide-book-up",
+              "title": "版本说明 1.13.7"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -159,7 +171,6 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "面试/熙牛医疗面试.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -184,11 +195,10 @@
       "daily-notes:打开/创建今天的日记": false,
       "templates:插入模板": false,
       "command-palette:打开命令面板": false,
-      "obsidian-excalidraw-plugin:新建绘图文件": false,
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "0c94e49c7fbd316b",
+  "active": "c88dbc4b070e80ba",
   "lastOpenFiles": [
     "面试/项目/短链接/简历特点分析.md",
     "面试/项目/短链接/微服务专题.md",
